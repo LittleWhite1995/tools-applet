@@ -1,0 +1,99 @@
+<view class="shell">
+  <navigation-bar title="单位换算" back="{{true}}" color="#15231f" background="#f8f0ee"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">CONVERTER</view>
+          <view class="hero-title">常用单位快速换算</view>
+          <view class="hero-desc">长度、面积、重量、体积、温度，一页搞定。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="measurement" size="84rpx" color="#a85b52" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">选择类型</view>
+
+        <view class="category-grid">
+          <view
+            wx:for="{{categoryTabs}}"
+            wx:key="value"
+            class="category-item {{activeCategory === item.value ? 'is-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onCategoryTap"
+          >{{item.label}}</view>
+        </view>
+
+        <view class="converter-panel">
+          <view class="unit-card">
+            <view class="unit-head">
+              <view class="unit-label">输入数值</view>
+              <picker mode="selector" range="{{unitOptions}}" range-key="label" value="{{fromUnitIndex}}" bindchange="onFromUnitChange">
+                <view class="unit-picker">
+                  <text>{{fromUnitName}}</text>
+                  <t-icon name="chevron-down" size="28rpx" color="#a85b52" />
+                </view>
+              </picker>
+            </view>
+            <view class="value-row">
+              <input
+                class="value-input"
+                type="text"
+                value="{{fromValue}}"
+                placeholder="请输入数值"
+                placeholder-class="input-placeholder"
+                bindinput="onValueInput"
+              />
+              <view class="value-symbol">{{fromUnitSymbol}}</view>
+            </view>
+          </view>
+
+          <view class="swap-row">
+            <view class="swap-button" bindtap="onSwapTap">
+              <t-icon name="swap" size="38rpx" color="#a85b52" />
+            </view>
+          </view>
+
+          <view class="unit-card result-unit-card">
+            <view class="unit-head">
+              <view class="unit-label">换算结果</view>
+              <picker mode="selector" range="{{unitOptions}}" range-key="label" value="{{toUnitIndex}}" bindchange="onToUnitChange">
+                <view class="unit-picker">
+                  <text>{{toUnitName}}</text>
+                  <t-icon name="chevron-down" size="28rpx" color="#a85b52" />
+                </view>
+              </picker>
+            </view>
+            <view class="result-row">
+              <view class="result-value">{{toValue}}</view>
+              <view class="value-symbol">{{toUnitSymbol}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="clear-button" block shape="round" size="large" theme="default" bind:tap="onClearTap">
+            清空重算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="reference-card">
+        <view class="card-title">常用参考</view>
+        <view class="reference-list">
+          <view
+            wx:for="{{commonRows}}"
+            wx:key="label"
+            class="reference-row"
+          >
+            <view class="reference-label">{{item.label}}</view>
+            <view class="reference-value">{{item.value}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

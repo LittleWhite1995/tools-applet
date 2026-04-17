@@ -1,0 +1,80 @@
+<view class="shell">
+  <navigation-bar title="搜索工具" back="{{true}}" color="#15231f" background="#edf5f1"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="search-panel">
+        <t-search
+          class="search"
+          t-class-input-container="search-input"
+          value="{{inputValue}}"
+          placeholder="想用什么工具？搜一下"
+          shape="round"
+          clearable
+          bind:change="onSearchChange"
+          bind:submit="onSearchSubmit"
+        />
+
+        <view class="result-summary">
+          <view class="summary-title">
+            <block wx:if="{{queryText}}">“{{queryText}}” 的搜索结果</block>
+            <block wx:else>全部工具</block>
+          </view>
+          <view class="summary-count">{{results.length}} 个匹配项</view>
+        </view>
+      </view>
+
+      <view wx:if="{{results.length}}" class="result-list">
+        <view
+          wx:for="{{results}}"
+          wx:key="id"
+          class="result-card {{pressedKey === item.id ? 'is-pressing' : ''}}"
+          bindtap="onResultTap"
+          data-name="{{item.title}}"
+          data-path="{{item.path}}"
+          data-press-key="{{item.id}}"
+          bindtouchstart="onPressStart"
+          bindtouchend="onPressEnd"
+          bindtouchcancel="onPressEnd"
+        >
+          <view class="tool-icon tone-{{item.tone}}">
+            <t-icon name="{{item.icon}}" size="42rpx" color="{{item.iconColor}}" />
+          </view>
+
+          <view class="result-main">
+            <view class="result-topline">
+              <view class="result-title">{{item.title}}</view>
+              <t-tag class="result-tag" shape="round" theme="primary" variant="light">{{item.category}}</t-tag>
+            </view>
+            <view class="result-desc">{{item.desc}}</view>
+          </view>
+
+          <view class="result-action">
+            <text>{{item.actionText}}</text>
+            <t-icon name="chevron-right" size="26rpx" color="#6f7f7a" />
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <view class="empty-icon">
+          <t-icon name="search-error" size="72rpx" color="#78908a" />
+        </view>
+        <view class="empty-title">没有找到相关工具</view>
+        <view class="empty-desc">换个关键词试试，工具名称、分类和常用别名都可以搜。</view>
+        <view class="suggestion-row">
+          <t-tag
+            wx:for="{{suggestions}}"
+            wx:key="*this"
+            class="suggestion-tag"
+            shape="round"
+            theme="primary"
+            variant="light"
+            data-keyword="{{item}}"
+            bind:click="onSuggestionTap"
+          >{{item}}</t-tag>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

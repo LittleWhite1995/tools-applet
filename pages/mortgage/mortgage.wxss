@@ -1,0 +1,410 @@
+page {
+  background: #f4f7f5;
+  color: #15231f;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f7f5;
+}
+
+.page-scroll {
+  flex: 1;
+  height: 0;
+  min-height: 0;
+  background: #f4f7f5;
+}
+
+.page {
+  min-height: 100%;
+  padding: 24rpx 28rpx 56rpx;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+}
+
+.hero-panel,
+.hero-mark,
+.segment-control,
+.field-row,
+.year-input-row,
+.quick-year-row,
+.button-row,
+.result-head,
+.summary-grid,
+.schedule-row {
+  display: flex;
+}
+
+.hero-panel {
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 210rpx;
+  padding: 34rpx 34rpx 32rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(135deg, rgba(247, 239, 217, 0.96), rgba(248, 251, 250, 0.92)),
+    linear-gradient(90deg, rgba(154, 106, 25, 0.12), rgba(47, 117, 103, 0.07));
+  box-shadow: 0 22rpx 50rpx rgba(73, 58, 30, 0.1);
+}
+
+.hero-panel::before {
+  position: absolute;
+  right: -120rpx;
+  top: -92rpx;
+  width: 420rpx;
+  height: 340rpx;
+  border-radius: 80rpx;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0) 12%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 255, 255, 0) 84%),
+    linear-gradient(150deg, rgba(154, 106, 25, 0.1), rgba(47, 117, 103, 0));
+  transform: rotate(-16deg);
+  content: '';
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  width: 460rpx;
+}
+
+.hero-kicker {
+  color: #9a6a19;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.hero-title {
+  margin-top: 12rpx;
+  color: #142a25;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-desc {
+  margin-top: 10rpx;
+  color: #6d6251;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.hero-mark {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 34rpx;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.form-card,
+.result-card {
+  margin-top: 24rpx;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+}
+
+.card-title {
+  color: #19251f;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.segment-control {
+  padding: 8rpx;
+  margin-top: 24rpx;
+  border-radius: 999rpx;
+  background: #f1f6f3;
+}
+
+.repay-segment {
+  margin-top: 16rpx;
+}
+
+.segment-item {
+  flex: 1;
+  height: 66rpx;
+  border-radius: 999rpx;
+  color: #73817d;
+  font-size: 25rpx;
+  font-weight: 600;
+  line-height: 66rpx;
+  text-align: center;
+}
+
+.segment-item.is-active {
+  color: #9a6a19;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(94, 70, 29, 0.08);
+}
+
+.field-list {
+  margin-top: 24rpx;
+}
+
+.field-row {
+  align-items: center;
+  min-height: 104rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 26rpx;
+  box-sizing: border-box;
+  background: #f5f9f7;
+}
+
+.field-row + .field-row {
+  margin-top: 16rpx;
+}
+
+.quick-year-row {
+  align-items: center;
+  flex: none;
+}
+
+.year-input-row {
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.quick-year-item {
+  flex: none;
+  min-width: 82rpx;
+  height: 48rpx;
+  padding: 0 16rpx;
+  border: 1rpx solid #e6eee9;
+  border-radius: 999rpx;
+  box-sizing: border-box;
+  color: #71817c;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 46rpx;
+  text-align: center;
+  background: #ffffff;
+}
+
+.quick-year-item + .quick-year-item {
+  margin-left: 10rpx;
+}
+
+.quick-year-item.is-active {
+  border-color: rgba(154, 106, 25, 0.32);
+  color: #9a6a19;
+  background: #f7efd9;
+}
+
+.field-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.field-label {
+  color: #7d8985;
+  font-size: 22rpx;
+}
+
+.field-input {
+  width: 100%;
+  height: 50rpx;
+  margin-top: 7rpx;
+  color: #19251f;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.year-input {
+  flex: 1;
+  min-width: 120rpx;
+  margin-top: 0;
+}
+
+.input-placeholder {
+  color: #a1ada9;
+  font-weight: 500;
+}
+
+.field-unit {
+  flex: none;
+  min-width: 68rpx;
+  color: #7d8985;
+  font-size: 24rpx;
+  font-weight: 600;
+  text-align: right;
+}
+
+.button-row {
+  margin-top: 24rpx;
+}
+
+.calculate-button {
+  --td-button-primary-bg-color: #9a6a19;
+  --td-button-primary-border-color: #9a6a19;
+  --td-button-primary-active-bg-color: #7f5715;
+  --td-button-primary-active-border-color: #7f5715;
+}
+
+.result-head {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.result-label {
+  color: #7d8985;
+  font-size: 23rpx;
+}
+
+.result-value {
+  margin-top: 8rpx;
+  color: #142a25;
+  font-size: 48rpx;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.result-badge {
+  min-width: 104rpx;
+  height: 48rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: #f7efd9;
+  color: #9a6a19;
+  font-size: 24rpx;
+  font-weight: 700;
+  line-height: 48rpx;
+  text-align: center;
+}
+
+.summary-grid {
+  margin-top: 28rpx;
+}
+
+.summary-item {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 26rpx;
+  background: #f5f9f7;
+}
+
+.summary-item + .summary-item {
+  margin-left: 18rpx;
+}
+
+.summary-label {
+  color: #7d8985;
+  font-size: 22rpx;
+}
+
+.summary-value {
+  margin-top: 10rpx;
+  color: #19251f;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.decrease-tip {
+  margin-top: 20rpx;
+  padding: 18rpx 22rpx;
+  border-radius: 24rpx;
+  background: #f7efd9;
+  color: #9a6a19;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.schedule-card {
+  margin-top: 22rpx;
+  padding: 22rpx 24rpx;
+  border-radius: 26rpx;
+  background: #f5f9f7;
+}
+
+.schedule-title {
+  color: #19251f;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.schedule-list {
+  margin-top: 8rpx;
+}
+
+.schedule-row {
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88rpx;
+  color: #6f7f7a;
+  font-size: 24rpx;
+}
+
+.schedule-row + .schedule-row {
+  border-top: 1rpx solid #e6eee9;
+}
+
+.schedule-period {
+  flex: none;
+  width: 150rpx;
+}
+
+.schedule-detail {
+  min-width: 0;
+  flex: 1;
+  text-align: right;
+}
+
+.schedule-money {
+  color: #19251f;
+  font-weight: 700;
+}
+
+.schedule-sub {
+  margin-top: 6rpx;
+  color: #8b9793;
+  font-size: 21rpx;
+  line-height: 1.35;
+}
+
+.result-empty {
+  margin-top: 26rpx;
+  color: #7d8985;
+  font-size: 25rpx;
+  line-height: 1.5;
+}
+
+.reset-link {
+  margin-top: 24rpx;
+  color: #9a6a19;
+  font-size: 26rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding-left: 22rpx;
+    padding-right: 22rpx;
+  }
+
+  .hero-copy {
+    width: 420rpx;
+  }
+
+  .hero-title {
+    font-size: 34rpx;
+  }
+
+  .result-value {
+    font-size: 42rpx;
+  }
+}

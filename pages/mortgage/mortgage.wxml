@@ -1,0 +1,149 @@
+<view class="shell">
+  <navigation-bar title="房贷计算器" back="{{true}}" color="#15231f" background="#edf5f1"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">MORTGAGE</view>
+          <view class="hero-title">算清月供和总利息</view>
+          <view class="hero-desc">商业贷、公积金、组合贷都能快速估算。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="houses" size="84rpx" color="#9a6a19" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">贷款方案</view>
+
+        <view class="segment-control">
+          <view
+            wx:for="{{loanTypes}}"
+            wx:key="value"
+            class="segment-item {{loanType === item.value ? 'is-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onLoanTypeTap"
+          >{{item.label}}</view>
+        </view>
+
+        <view class="segment-control repay-segment">
+          <view
+            wx:for="{{repayTypes}}"
+            wx:key="value"
+            class="segment-item {{repayType === item.value ? 'is-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onRepayTypeTap"
+          >{{item.label}}</view>
+        </view>
+
+        <view class="field-list">
+          <view wx:if="{{loanType !== 'fund'}}" class="field-row">
+            <view class="field-main">
+              <view class="field-label">商业贷金额</view>
+              <input class="field-input" type="digit" value="{{commercialAmount}}" placeholder="请输入商业贷金额" placeholder-class="input-placeholder" data-field="commercialAmount" bindinput="onInput" />
+            </view>
+            <view class="field-unit">万元</view>
+          </view>
+
+          <view wx:if="{{loanType !== 'commercial'}}" class="field-row">
+            <view class="field-main">
+              <view class="field-label">公积金金额</view>
+              <input class="field-input" type="digit" value="{{fundAmount}}" placeholder="请输入公积金金额" placeholder-class="input-placeholder" data-field="fundAmount" bindinput="onInput" />
+            </view>
+            <view class="field-unit">万元</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-main">
+              <view class="field-label">贷款年限</view>
+              <view class="year-input-row">
+                <input class="field-input year-input" type="number" value="{{years}}" placeholder="请输入贷款年限" placeholder-class="input-placeholder" data-field="years" bindinput="onInput" />
+                <view class="quick-year-row">
+                  <view
+                    wx:for="{{quickYears}}"
+                    wx:key="*this"
+                    class="quick-year-item {{years === item ? 'is-active' : ''}}"
+                    data-year="{{item}}"
+                    bindtap="onQuickYearTap"
+                  >{{item}} 年</view>
+                </view>
+              </view>
+            </view>
+            <view class="field-unit">年</view>
+          </view>
+
+          <view wx:if="{{loanType !== 'fund'}}" class="field-row">
+            <view class="field-main">
+              <view class="field-label">商业贷年利率</view>
+              <input class="field-input" type="digit" value="{{commercialRate}}" placeholder="请输入商业贷利率" placeholder-class="input-placeholder" data-field="commercialRate" bindinput="onInput" />
+            </view>
+            <view class="field-unit">%</view>
+          </view>
+
+          <view wx:if="{{loanType !== 'commercial'}}" class="field-row">
+            <view class="field-main">
+              <view class="field-label">公积金年利率</view>
+              <input class="field-input" type="digit" value="{{fundRate}}" placeholder="请输入公积金利率" placeholder-class="input-placeholder" data-field="fundRate" bindinput="onInput" />
+            </view>
+            <view class="field-unit">%</view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            开始计算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">{{repayType === 'principal' ? '首月月供' : '每月月供'}}</view>
+            <view class="result-value">{{result.firstMonth}}</view>
+          </view>
+          <view class="result-badge">{{hasResult ? result.months + ' 期' : '待计算'}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">总利息</view>
+            <view class="summary-value">{{result.totalInterest}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">还款总额</view>
+            <view class="summary-value">{{result.totalRepayment}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult && result.monthlyDecrease}}" class="decrease-tip">
+          每月约递减 {{result.monthlyDecrease}}
+        </view>
+
+        <view wx:if="{{hasResult}}" class="schedule-card">
+          <view class="schedule-title">全部还款明细（{{result.months}} 期）</view>
+          <view class="schedule-list">
+            <view
+              wx:for="{{schedule}}"
+              wx:key="period"
+              class="schedule-row"
+            >
+              <view class="schedule-period">第 {{item.period}} 期</view>
+              <view class="schedule-detail">
+                <view class="schedule-money">{{item.payment}}</view>
+                <view class="schedule-sub">本金 {{item.principal}} / 利息 {{item.interest}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="result-empty">
+          填好金额、年限和利率后，这里会显示月供与总利息。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新计算</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

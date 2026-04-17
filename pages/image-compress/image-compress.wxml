@@ -1,0 +1,139 @@
+<view class="shell">
+  <navigation-bar title="图片压缩" back="{{true}}" color="#15231f" background="#edf5ec"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">IMAGE COMPRESS</view>
+          <view class="hero-title">本地压缩图片体积</view>
+          <view class="hero-desc">不上传图片，压缩后可保存到相册。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="file-zip" size="84rpx" color="#4d7b35" />
+        </view>
+      </view>
+
+      <view class="upload-card">
+        <view class="card-head">
+          <view class="card-title">选择图片</view>
+          <view class="card-subtitle">本地处理</view>
+        </view>
+
+        <view wx:if="{{hasImage}}" class="image-preview {{isCompressing ? 'is-disabled' : ''}}">
+          <image class="preview-image" src="{{originalPath}}" mode="aspectFill"></image>
+          <view class="image-info">
+            <view class="image-title">原图</view>
+            <view class="image-desc">{{originalSize}} / {{originalDimensions}}</view>
+          </view>
+          <view class="change-button {{isCompressing ? 'is-disabled' : ''}}" bindtap="onChooseImage">更换</view>
+        </view>
+
+        <view wx:else class="uploader {{isCompressing ? 'is-disabled' : ''}}" bindtap="onChooseImage" aria-role="button">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="46rpx" color="#4d7b35" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一张图片</view>
+            <view class="upload-desc">支持 JPG、PNG 等常见图片</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-card">
+        <view class="card-title">压缩设置</view>
+
+        <view class="setting-block">
+          <view class="setting-label">压缩质量</view>
+          <view class="option-row">
+            <view
+              wx:for="{{qualityOptions}}"
+              wx:key="value"
+              class="quality-option {{qualityMode === item.value ? 'is-active' : ''}} {{isCompressing ? 'is-disabled' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onQualityTap"
+            >
+              <view class="option-title">{{item.label}}</view>
+              <view class="option-desc">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="setting-block">
+          <view class="setting-label">最大边长</view>
+          <view class="width-row">
+            <view
+              wx:for="{{widthOptions}}"
+              wx:key="value"
+              class="width-option {{maxWidth === item.value ? 'is-active' : ''}} {{isCompressing ? 'is-disabled' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onWidthTap"
+            >{{item.label}}</view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button
+            class="compress-button"
+            block
+            shape="round"
+            size="large"
+            theme="primary"
+            loading="{{isCompressing}}"
+            bind:tap="onCompress"
+          >
+            {{isCompressing ? '压缩中' : '开始压缩'}}
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">压缩结果</view>
+            <view class="result-value">{{compressedSize}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{hasResult ? compressionRatio : '待压缩'}}</view>
+        </view>
+
+        <view class="compare-grid">
+          <view class="compare-item">
+            <view class="compare-label">原图</view>
+            <view class="compare-value">{{originalSize}}</view>
+            <view class="compare-sub">{{originalDimensions}}</view>
+          </view>
+          <view class="compare-item">
+            <view class="compare-label">压缩后</view>
+            <view class="compare-value">{{compressedSize}}</view>
+            <view class="compare-sub">{{compressedDimensions}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="compressed-preview">
+          <image class="compressed-image" src="{{compressedPath}}" mode="aspectFit"></image>
+        </view>
+
+        <view wx:else class="result-empty">
+          选择图片并点击压缩后，这里会显示新文件体积和预览。
+        </view>
+
+        <view class="save-row">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '压缩图已生成' : '生成后可保存'}}</view>
+            <view class="save-desc">{{hasResult ? '如果满意，就保存到相册' : '图片只在本地处理'}}</view>
+          </view>
+          <view
+            class="save-action {{hasResult && !isSaving ? 'is-enabled' : ''}}"
+            bindtap="onSave"
+            aria-role="button"
+          >
+            <t-icon wx:if="{{!isSaving}}" name="download" size="34rpx" color="{{hasResult ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else name="loading" size="34rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="compressCanvas" class="compress-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>

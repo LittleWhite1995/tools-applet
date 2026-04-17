@@ -1,0 +1,237 @@
+<view class="shell">
+  <navigation-bar title="餐饮投资计算器" back="{{true}}" color="#15231f" background="#edf5f1"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">RESTAURANT</view>
+          <view class="hero-title">算清开店投入和回本线</view>
+          <view class="hero-desc">适合餐饮新店筹备、保本测算和门店经营复盘。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="shop" size="84rpx" color="#24584d" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="module-tabs">
+          <view
+            wx:for="{{modules}}"
+            wx:key="value"
+            class="module-tab {{activeModule === item.value ? 'is-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onModuleTap"
+          >{{item.label}}</view>
+        </view>
+
+        <block wx:if="{{activeModule === 'cost'}}">
+          <view class="field-list">
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">每月房租</view>
+                <input class="field-input" type="digit" value="{{monthlyRent}}" placeholder="请输入每月房租" placeholder-class="input-placeholder" data-field="monthlyRent" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">几个月一付</view>
+                <input class="field-input" type="number" value="{{rentPayMonths}}" placeholder="请输入付款月数" placeholder-class="input-placeholder" data-field="rentPayMonths" bindinput="onInput" />
+              </view>
+              <view class="field-unit">个月</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">押金</view>
+                <input class="field-input" type="digit" value="{{rentDeposit}}" placeholder="请输入押金" placeholder-class="input-placeholder" data-field="rentDeposit" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">转让费/中介费</view>
+                <input class="field-input" type="digit" value="{{transferFee}}" placeholder="没有可不填" placeholder-class="input-placeholder" data-field="transferFee" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">加盟费/学习费</view>
+                <input class="field-input" type="digit" value="{{franchiseFee}}" placeholder="没有可不填" placeholder-class="input-placeholder" data-field="franchiseFee" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">装修费/广告费</view>
+                <input class="field-input" type="digit" value="{{decorationAdCost}}" placeholder="请输入装修和广告费用" placeholder-class="input-placeholder" data-field="decorationAdCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">设备费</view>
+                <input class="field-input" type="digit" value="{{equipmentCost}}" placeholder="请输入设备费用" placeholder-class="input-placeholder" data-field="equipmentCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">首批物料</view>
+                <input class="field-input" type="digit" value="{{openingStock}}" placeholder="请输入首批物料费用" placeholder-class="input-placeholder" data-field="openingStock" bindinput="onInput" />
+              </view>
+              <view class="field-unit">万元</view>
+            </view>
+          </view>
+        </block>
+
+        <block wx:elif="{{activeModule === 'breakEven'}}">
+          <view class="field-list">
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">线下毛利率</view>
+                <input class="field-input" type="digit" value="{{offlineGrossMarginRate}}" placeholder="请输入线下毛利率" placeholder-class="input-placeholder" data-field="offlineGrossMarginRate" bindinput="onInput" />
+              </view>
+              <view class="field-unit">%</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">外卖毛利率</view>
+                <input class="field-input" type="digit" value="{{deliveryGrossMarginRate}}" placeholder="请输入外卖毛利率" placeholder-class="input-placeholder" data-field="deliveryGrossMarginRate" bindinput="onInput" />
+              </view>
+              <view class="field-unit">%</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">线下销售占比</view>
+                <input class="field-input" type="digit" value="{{offlineSalesRate}}" placeholder="请输入线下销售占比" placeholder-class="input-placeholder" data-field="offlineSalesRate" bindinput="onInput" />
+              </view>
+              <view class="field-unit">%</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">外卖销售占比</view>
+                <input class="field-input" type="digit" value="{{deliverySalesRate}}" placeholder="请输入外卖销售占比" placeholder-class="input-placeholder" data-field="deliverySalesRate" bindinput="onInput" />
+              </view>
+              <view class="field-unit">%</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">月租金</view>
+                <input class="field-input" type="digit" value="{{fixedRent}}" placeholder="请输入月租金" placeholder-class="input-placeholder" data-field="fixedRent" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">月人工</view>
+                <input class="field-input" type="digit" value="{{fixedLabor}}" placeholder="请输入月人工成本" placeholder-class="input-placeholder" data-field="fixedLabor" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">水电杂费</view>
+                <input class="field-input" type="digit" value="{{fixedUtilities}}" placeholder="请输入水电杂费" placeholder-class="input-placeholder" data-field="fixedUtilities" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">其他固定成本</view>
+                <input class="field-input" type="digit" value="{{fixedOther}}" placeholder="没有可不填" placeholder-class="input-placeholder" data-field="fixedOther" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+          </view>
+        </block>
+
+        <block wx:else>
+          <view class="field-list">
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">月营业额</view>
+                <input class="field-input" type="digit" value="{{monthlyRevenue}}" placeholder="请输入月营业额" placeholder-class="input-placeholder" data-field="monthlyRevenue" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">食材成本</view>
+                <input class="field-input" type="digit" value="{{foodCost}}" placeholder="请输入食材成本" placeholder-class="input-placeholder" data-field="foodCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">人工成本</view>
+                <input class="field-input" type="digit" value="{{laborCost}}" placeholder="请输入人工成本" placeholder-class="input-placeholder" data-field="laborCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">房租成本</view>
+                <input class="field-input" type="digit" value="{{rentCost}}" placeholder="请输入房租成本" placeholder-class="input-placeholder" data-field="rentCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">平台费用</view>
+                <input class="field-input" type="digit" value="{{platformCost}}" placeholder="外卖佣金等，没有可不填" placeholder-class="input-placeholder" data-field="platformCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">水电杂费</view>
+                <input class="field-input" type="digit" value="{{utilityCost}}" placeholder="请输入水电杂费" placeholder-class="input-placeholder" data-field="utilityCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+            <view class="field-row">
+              <view class="field-main">
+                <view class="field-label">其他支出</view>
+                <input class="field-input" type="digit" value="{{otherCost}}" placeholder="没有可不填" placeholder-class="input-placeholder" data-field="otherCost" bindinput="onInput" />
+              </view>
+              <view class="field-unit">元</view>
+            </view>
+          </view>
+        </block>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            开始计算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">{{result.primaryLabel}}</view>
+            <view class="result-value">{{result.primaryValue}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{result.badge}}</view>
+        </view>
+
+        <view wx:if="{{hasResult && result.notice}}" class="result-notice">{{result.notice}}</view>
+
+        <view wx:if="{{hasResult}}" class="result-list">
+          <view
+            wx:for="{{result.rows}}"
+            wx:key="label"
+            class="result-row"
+          >
+            <view class="row-label">{{item.label}}</view>
+            <view class="row-value">{{item.value}}</view>
+          </view>
+        </view>
+
+        <view class="result-tip">{{result.tip}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

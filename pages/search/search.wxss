@@ -1,0 +1,257 @@
+page {
+  background: #f4f7f5;
+  color: #15231f;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f7f5;
+}
+
+.page-scroll {
+  flex: 1;
+  height: 0;
+  min-height: 0;
+  background: #f4f7f5;
+}
+
+.page {
+  min-height: 100%;
+  padding: 24rpx 28rpx 56rpx;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+}
+
+.search-panel {
+  padding-top: 4rpx;
+}
+
+.search,
+.result-list,
+.result-card,
+.result-topline,
+.result-action,
+.summary-title,
+.empty-state,
+.empty-icon,
+.suggestion-row,
+.tool-icon {
+  display: flex;
+}
+
+.search {
+  display: block;
+  margin-bottom: 24rpx;
+  --td-search-bg-color: transparent;
+}
+
+.search-input {
+  height: 92rpx !important;
+  border-radius: 46rpx !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 16rpx 46rpx rgba(33, 73, 65, 0.08);
+}
+
+.result-summary {
+  padding: 2rpx 4rpx 28rpx;
+}
+
+.summary-title {
+  align-items: center;
+  color: #17231f;
+  font-size: 34rpx;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.summary-count {
+  margin-top: 10rpx;
+  color: #72817d;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.result-list {
+  flex-direction: column;
+}
+
+.result-card {
+  align-items: center;
+  min-height: 154rpx;
+  margin-bottom: 22rpx;
+  padding: 26rpx 24rpx;
+  border-radius: 32rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+  transform: translateZ(0);
+  transition: transform 80ms ease-out, opacity 80ms ease-out;
+}
+
+.tool-icon {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 22rpx;
+  margin-right: 22rpx;
+}
+
+.tone-mint {
+  color: #2f7567;
+  background: #e5f3ef;
+}
+
+.tone-sky {
+  color: #2d6895;
+  background: #e7f0f7;
+}
+
+.tone-amber {
+  color: #9a6a19;
+  background: #f7efd9;
+}
+
+.tone-violet {
+  color: #6655a6;
+  background: #eeeaf8;
+}
+
+.tone-coral {
+  color: #a85b52;
+  background: #f7e8e4;
+}
+
+.tone-green {
+  color: #4d7b35;
+  background: #e7f1df;
+}
+
+.tone-deep {
+  color: #24584d;
+  background: #e5f3ef;
+}
+
+.result-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.result-topline {
+  align-items: center;
+  min-width: 0;
+}
+
+.result-title {
+  min-width: 0;
+  max-width: 340rpx;
+  flex: none;
+  color: #19251f;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-tag {
+  flex: none;
+  margin-left: 14rpx;
+  --td-tag-primary-color: #24584d;
+  --td-tag-primary-light-color: #e5f3ef;
+}
+
+.result-desc {
+  margin-top: 9rpx;
+  color: #7d8985;
+  font-size: 24rpx;
+  line-height: 1.35;
+}
+
+.result-action {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34rpx;
+  margin-left: 12rpx;
+  color: #6f7f7a;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.result-action text {
+  display: none;
+}
+
+.empty-state {
+  align-items: center;
+  flex-direction: column;
+  padding: 96rpx 44rpx 40rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  align-items: center;
+  justify-content: center;
+  width: 132rpx;
+  height: 132rpx;
+  border-radius: 34rpx;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+}
+
+.empty-title {
+  margin-top: 30rpx;
+  color: #19251f;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  margin-top: 12rpx;
+  color: #7d8985;
+  font-size: 25rpx;
+  line-height: 1.5;
+}
+
+.suggestion-row {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30rpx;
+}
+
+.suggestion-tag {
+  margin: 8rpx;
+  --td-tag-primary-color: #24584d;
+  --td-tag-primary-light-color: #e5f3ef;
+}
+
+.is-pressing {
+  opacity: 0.94;
+  transform: scale(0.99) translateZ(0);
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding-left: 22rpx;
+    padding-right: 22rpx;
+  }
+
+  .tool-icon {
+    width: 70rpx;
+    height: 70rpx;
+    margin-right: 18rpx;
+  }
+
+  .result-title {
+    max-width: 280rpx;
+  }
+}

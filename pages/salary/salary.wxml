@@ -1,0 +1,177 @@
+<view class="shell">
+  <navigation-bar title="工资计算器" back="{{true}}" color="#15231f" background="#f2eff8"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">SALARY</view>
+          <view class="hero-title">算清每月到手工资</view>
+          <view class="hero-desc">填入税前月薪，快速估算个税、五险一金和实际收入。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="wallet" size="84rpx" color="#6655a6" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">薪资信息</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-salary">
+              <t-icon name="money" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">税前月薪</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{grossSalary}}"
+                placeholder="请输入税前月薪"
+                placeholder-class="input-placeholder"
+                data-field="grossSalary"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+
+          <view class="field-row social-field">
+            <view class="field-icon tone-social">
+              <t-icon name="user-safety" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label-row">
+                <view class="field-label">五险个人扣除</view>
+                <view class="social-total">合计 {{socialTotalRate}}%</view>
+              </view>
+              <view class="social-list">
+                <view
+                  wx:for="{{socialItems}}"
+                  wx:key="name"
+                  class="social-item"
+                >
+                  <view class="social-name-wrap">
+                    <view class="social-name">{{item.name}}</view>
+                    <view wx:if="{{item.payer}}" class="social-payer">{{item.payer}}</view>
+                  </view>
+                  <view class="social-rate-box">
+                    <input
+                      class="social-rate-input"
+                      type="digit"
+                      value="{{item.rate}}"
+                      data-index="{{index}}"
+                      bindinput="onSocialRateInput"
+                    />
+                    <view class="social-rate-unit">%</view>
+                  </view>
+                  <view class="social-amount">{{item.amount}}</view>
+                </view>
+              </view>
+              <view class="social-note">标注“单位缴纳”的项目通常个人无需缴纳，如有特殊情况可自行调整比例。</view>
+            </view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-fund">
+              <t-icon name="saving-pot" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">公积金个人比例</view>
+              <view class="fund-input-row">
+                <input
+                  class="field-input fund-input"
+                  type="digit"
+                  value="{{fundRate}}"
+                  placeholder="请输入公积金比例"
+                  placeholder-class="input-placeholder"
+                  data-field="fundRate"
+                  bindinput="onInput"
+                />
+                <view class="quick-fund-row">
+                  <view
+                    wx:for="{{quickFundRates}}"
+                    wx:key="*this"
+                    class="quick-fund-item {{fundRate === item ? 'is-active' : ''}}"
+                    data-rate="{{item}}"
+                    bindtap="onQuickFundTap"
+                  >{{item}}%</view>
+                </view>
+              </view>
+            </view>
+            <view class="field-unit">%</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-deduct">
+              <t-icon name="coupon" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">专项附加扣除</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{specialDeduction}}"
+                placeholder="没有可不填"
+                placeholder-class="input-placeholder"
+                data-field="specialDeduction"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            计算到手工资
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">预计到手</view>
+            <view class="result-value">{{result.takeHome}}</view>
+          </view>
+          <view class="result-badge">{{hasResult ? result.netRate : '待计算'}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">个人所得税</view>
+            <view class="summary-value">{{result.tax}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">五险一金</view>
+            <view class="summary-value">{{result.contribution}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="detail-card">
+          <view class="detail-row">
+            <view class="detail-label">五险扣除</view>
+            <view class="detail-value">{{result.social}}</view>
+          </view>
+          <view class="detail-row">
+            <view class="detail-label">公积金扣除</view>
+            <view class="detail-value">{{result.fund}}</view>
+          </view>
+          <view class="detail-row">
+            <view class="detail-label">应纳税所得额</view>
+            <view class="detail-value">{{result.taxable}}</view>
+          </view>
+          <view class="detail-tip">按 5000 元起征点和月度速算扣除数估算。</view>
+        </view>
+
+        <view wx:else class="result-empty">
+          填好税前月薪后，这里会显示到手工资、个税和扣除明细。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新计算</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

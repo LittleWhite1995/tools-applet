@@ -1,0 +1,241 @@
+page {
+  background: #f4f7f5;
+  color: #15231f;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f7f5;
+}
+
+.page-scroll {
+  flex: 1;
+  height: 0;
+  min-height: 0;
+  background: #f4f7f5;
+}
+
+.page {
+  min-height: 100%;
+  padding: 24rpx 28rpx 56rpx;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+}
+
+.hero-panel,
+.hero-mark,
+.guide-card,
+.guide-icon,
+.notice-row {
+  display: flex;
+}
+
+.hero-panel {
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 230rpx;
+  padding: 34rpx 34rpx 32rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(135deg, rgba(222, 240, 233, 0.96), rgba(248, 251, 250, 0.92)),
+    linear-gradient(90deg, rgba(36, 88, 77, 0.14), rgba(47, 117, 103, 0.07));
+  box-shadow: 0 22rpx 50rpx rgba(27, 70, 58, 0.1);
+}
+
+.hero-panel::before {
+  position: absolute;
+  right: -120rpx;
+  top: -92rpx;
+  width: 420rpx;
+  height: 340rpx;
+  border-radius: 80rpx;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0) 12%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 255, 255, 0) 84%),
+    linear-gradient(150deg, rgba(36, 88, 77, 0.1), rgba(47, 117, 103, 0));
+  transform: rotate(-16deg);
+  content: '';
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  width: 460rpx;
+}
+
+.hero-kicker {
+  color: #24584d;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.hero-title {
+  margin-top: 12rpx;
+  color: #142a25;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-desc {
+  margin-top: 10rpx;
+  color: #5e716c;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.hero-mark {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 34rpx;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.intro-card,
+.section-card {
+  margin-top: 24rpx;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+}
+
+.intro-title,
+.section-title {
+  color: #19251f;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.intro-desc {
+  margin-top: 14rpx;
+  color: #5e716c;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.guide-list {
+  margin-top: 24rpx;
+}
+
+.guide-card {
+  align-items: flex-start;
+  padding: 28rpx;
+  border-radius: 30rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16rpx 38rpx rgba(34, 63, 57, 0.06);
+}
+
+.guide-card + .guide-card {
+  margin-top: 18rpx;
+}
+
+.guide-icon {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 74rpx;
+  height: 74rpx;
+  border-radius: 22rpx;
+  background: #e6f1ed;
+}
+
+.guide-copy {
+  min-width: 0;
+  flex: 1;
+  margin-left: 22rpx;
+}
+
+.guide-title {
+  color: #19251f;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.guide-desc {
+  margin-top: 8rpx;
+  color: #5e716c;
+  font-size: 25rpx;
+  line-height: 1.55;
+}
+
+.tip-list,
+.notice-list {
+  margin-top: 18rpx;
+}
+
+.tip-row {
+  padding: 20rpx 0;
+}
+
+.tip-row + .tip-row {
+  border-top: 1rpx solid #e4eee9;
+}
+
+.tip-name {
+  color: #24584d;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.tip-text {
+  margin-top: 8rpx;
+  color: #5e716c;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.notice-row {
+  align-items: flex-start;
+}
+
+.notice-row + .notice-row {
+  margin-top: 18rpx;
+}
+
+.notice-dot {
+  flex: none;
+  width: 10rpx;
+  height: 10rpx;
+  margin-top: 14rpx;
+  border-radius: 999rpx;
+  background: #24584d;
+}
+
+.notice-text {
+  min-width: 0;
+  flex: 1;
+  margin-left: 16rpx;
+  color: #5e716c;
+  font-size: 24rpx;
+  line-height: 1.55;
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding-left: 22rpx;
+    padding-right: 22rpx;
+  }
+
+  .hero-copy {
+    width: 420rpx;
+  }
+
+  .hero-title {
+    font-size: 34rpx;
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
+    "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
+    "t-tag": "/miniprogram_npm/tdesign-miniprogram/tag/tag"
+  }
+}

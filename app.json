@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/qrcode/qrcode",
+    "pages/bmi/bmi",
+    "pages/mortgage/mortgage",
+    "pages/salary/salary",
+    "pages/converter/converter",
+    "pages/image-compress/image-compress",
+    "pages/guide/guide",
+    "pages/restaurant/restaurant"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "renderer": "skyline",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

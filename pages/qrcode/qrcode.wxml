@@ -1,0 +1,125 @@
+<view class="shell">
+  <navigation-bar title="二维码生成" back="{{true}}" color="#15231f" background="#edf5f1"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">QR CODE</view>
+          <view class="hero-title">把文字变成二维码</view>
+          <view class="hero-desc">支持文本、链接和带 logo 的分享码。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="qrcode" size="86rpx" color="#2f7567" />
+        </view>
+      </view>
+
+      <view class="input-card">
+        <view class="card-head">
+          <view class="card-title">内容</view>
+          <view class="card-count">{{inputValue.length}} 字</view>
+        </view>
+        <textarea
+          class="content-textarea"
+          value="{{inputValue}}"
+          maxlength="500"
+          placeholder="粘贴文字或链接，马上变成二维码"
+          placeholder-class="textarea-placeholder"
+          show-confirm-bar="{{false}}"
+          disable-default-padding="{{true}}"
+          bindinput="onInput"
+        />
+      </view>
+
+      <view class="logo-card">
+        <view class="card-head">
+          <view class="card-title">中间 logo</view>
+          <view class="card-subtitle">可选</view>
+        </view>
+
+        <view wx:if="{{logoPath}}" class="logo-preview">
+          <image class="logo-image" src="{{logoPath}}" mode="aspectFill"></image>
+          <view class="logo-info">
+            <view class="logo-title">已添加 logo</view>
+            <view class="logo-desc">生成时会嵌入二维码中心</view>
+          </view>
+          <view class="logo-remove" bindtap="onRemoveLogo" aria-role="button">
+            <t-icon name="close" size="28rpx" color="#7d8985" />
+          </view>
+        </view>
+
+        <view wx:else class="logo-uploader" bindtap="onChooseLogo" aria-role="button">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="42rpx" color="#2f7567" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">上传图片</view>
+            <view class="upload-desc">建议使用清晰的方形图标</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="action-row">
+        <t-button
+          class="generate-button {{canGenerate ? '' : 'is-idle'}}"
+          block
+          shape="round"
+          size="large"
+          theme="primary"
+          bind:tap="onGenerate"
+        >
+          生成二维码
+        </t-button>
+      </view>
+
+      <view class="preview-card">
+        <view class="preview-head">
+          <view class="preview-title">生成结果</view>
+          <view class="preview-status {{hasGenerated ? 'is-ready' : ''}}">
+            {{hasGenerated ? '已生成' : '等待生成'}}
+          </view>
+        </view>
+
+        <view class="preview-frame">
+          <block wx:if="{{hasGenerated}}">
+            <t-qrcode
+              id="qrcodePreview"
+              value="{{qrValue}}"
+              icon="{{logoPath}}"
+              icon-size="{{iconSize}}"
+              size="{{qrSize}}"
+              level="H"
+              color="#142a25"
+              bg-color="#ffffff"
+              borderless
+            />
+          </block>
+          <block wx:else>
+            <view class="preview-empty">
+              <t-icon name="qrcode" size="84rpx" color="#8aa29b" />
+              <view class="preview-empty-text">二维码会出现在这里</view>
+            </view>
+          </block>
+        </view>
+
+        <view class="preview-footer">
+          <view class="save-copy">
+            <view class="save-title">{{hasGenerated ? '可以保存到相册了' : '生成后可保存图片'}}</view>
+            <view class="save-desc">{{hasGenerated ? '建议扫码测试后再分享' : '支持带 logo 的二维码'}}</view>
+          </view>
+
+          <view
+            class="save-action {{hasGenerated && !isSaving ? 'is-enabled' : ''}}"
+            bindtap="onSave"
+            aria-role="button"
+          >
+            <t-icon wx:if="{{!isSaving}}" name="download" size="34rpx" color="{{hasGenerated ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else name="loading" size="34rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>

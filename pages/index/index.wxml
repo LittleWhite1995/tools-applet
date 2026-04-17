@@ -1,0 +1,120 @@
+<!--index.wxml-->
+<view class="shell">
+  <navigation-bar title="" back="{{false}}" color="white" background="transparent"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="top-area">
+        <t-search
+          class="search"
+          t-class-input-container="search-input"
+          placeholder="想用什么工具？搜一下"
+          shape="round"
+          clearable
+          bind:submit="onSearchSubmit"
+        />
+
+        <view class="quick-tags">
+          <t-tag
+            wx:for="{{quickTags}}"
+            wx:key="*this"
+            class="quick-tag"
+            shape="round"
+            theme="primary"
+            variant="light"
+            data-keyword="{{item}}"
+            bind:click="onQuickTagTap"
+          >{{item}}</t-tag>
+        </view>
+      </view>
+
+      <view
+        class="hero-card {{pressedKey === 'hero' ? 'is-pressing' : ''}}"
+        bindtap="onToolTap"
+        data-name="餐饮投资计算器"
+        data-path="/pages/restaurant/restaurant"
+        data-press-key="hero"
+        bindtouchstart="onPressStart"
+        bindtouchend="onPressEnd"
+        bindtouchcancel="onPressEnd"
+      >
+        <view class="hero-copy">
+          <view class="hero-badge">
+            <t-icon name="star-filled" size="22rpx" color="#24584d" />
+            <text>开店测算</text>
+          </view>
+          <view class="hero-title">餐饮投资计算器</view>
+          <view class="hero-desc">开店成本、保本线和经营分析</view>
+          <view class="hero-action">
+            <text>立即体验</text>
+            <t-icon name="arrow-right" size="28rpx" color="#24584d" />
+          </view>
+        </view>
+        <view class="hero-visual">
+          <t-icon name="shop" size="116rpx" color="#9fb4ae" />
+        </view>
+      </view>
+
+      <view class="section-head">
+        <view class="section-title">热门工具</view>
+        <view class="section-more" bindtap="onViewAllTools">
+          <text>全部</text>
+          <t-icon name="chevron-right" size="24rpx" color="#72817d" />
+        </view>
+      </view>
+
+      <view class="tool-grid">
+        <view
+          wx:for="{{hotTools}}"
+          wx:key="id"
+          class="tool-card {{pressedKey === item.id ? 'is-pressing' : ''}}"
+          bindtap="onToolTap"
+          data-name="{{item.title}}"
+          data-path="{{item.path}}"
+          data-press-key="{{item.id}}"
+          bindtouchstart="onPressStart"
+          bindtouchend="onPressEnd"
+          bindtouchcancel="onPressEnd"
+        >
+          <view class="tool-icon tone-{{item.tone}}">
+            <t-icon name="{{item.icon}}" size="38rpx" color="{{item.iconColor}}" />
+          </view>
+          <view class="tool-title">{{item.title}}</view>
+          <view class="tool-desc">{{item.desc}}</view>
+        </view>
+      </view>
+
+      <view class="section-head topic-section-head">
+        <view class="section-title">精选专题</view>
+      </view>
+
+      <view class="topic-list">
+        <view
+          wx:for="{{topicCards}}"
+          wx:key="id"
+          class="topic-card topic-{{item.tone}} {{pressedKey === item.pressKey ? 'is-pressing' : ''}}"
+          bindtap="onToolTap"
+          data-name="{{item.title}}"
+          data-path="{{item.path}}"
+          data-press-key="{{item.pressKey}}"
+          bindtouchstart="onPressStart"
+          bindtouchend="onPressEnd"
+          bindtouchcancel="onPressEnd"
+        >
+          <view class="topic-copy">
+            <view class="topic-label">{{item.label}}</view>
+            <view class="topic-title">{{item.title}}</view>
+            <view class="topic-desc">{{item.desc}}</view>
+            <t-button class="topic-button" shape="round" size="medium" theme="primary" variant="base">
+              {{item.button}}
+            </t-button>
+          </view>
+          <view class="topic-icon">
+            <t-icon name="{{item.icon}}" size="118rpx" color="currentColor" />
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>
