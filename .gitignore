@@ -1,0 +1,44 @@
+# 微信小程序编译目录
+miniprogram_npm/
+dist/
+dist_dev/
+dist_prod/
+
+# 微信开发者工具配置
+.project
+.settings/
+.servers/
+
+# Node.js dependencies
+node_modules/
+
+# npm package files
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+
+# Temp files
+tmp/
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# VS Code
+.vscode/
+
+# WebStorm
+.idea/
+
+# Vim
+*.swp
+*.swo
