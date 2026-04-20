@@ -32,7 +32,7 @@
   padding-left: var(--left);
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   height: 100%;
   box-sizing: border-box;
 }
@@ -54,7 +54,6 @@
   border-bottom: 2px solid var(--weui-FG-0);
   transform: rotate(45deg);
   box-sizing: border-box;
-  margin-top: 6px;
 }
 
 .weui-navigation-bar__center {
