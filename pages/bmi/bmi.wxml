@@ -1,5 +1,5 @@
 <view class="shell">
-  <navigation-bar title="BMI 计算" back="{{true}}" color="#15231f" background="#edf5f1"></navigation-bar>
+  <navigation-bar title="BMI 计算" back="{{true}}" color="#15231f" background="#f5fbf8"></navigation-bar>
 
   <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="page">
@@ -103,3 +103,4 @@
     </view>
   </scroll-view>
 </view>
+

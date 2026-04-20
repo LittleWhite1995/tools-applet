@@ -1,5 +1,5 @@
 page {
-  background: #f4f7f5;
+  background: #f8fbf9;
   color: #15231f;
   height: 100vh;
   overflow: hidden;
@@ -10,14 +10,14 @@ page {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page-scroll {
   flex: 1;
   height: 0;
   min-height: 0;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page {
@@ -25,7 +25,7 @@ page {
   padding: 24rpx 28rpx 56rpx;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+    linear-gradient(180deg, #f5fbf8 0%, #fdfefd 34%, #f8fbf9 100%);
 }
 
 .hero-panel,
@@ -52,7 +52,7 @@ page {
   background:
     linear-gradient(135deg, rgba(230, 240, 248, 0.96), rgba(248, 251, 250, 0.92)),
     linear-gradient(90deg, rgba(45, 104, 149, 0.14), rgba(106, 145, 176, 0.08));
-  box-shadow: 0 22rpx 50rpx rgba(27, 70, 58, 0.1);
+  box-shadow: 0 18rpx 38rpx rgba(27, 70, 58, 0.07);
 }
 
 .hero-panel::before {
@@ -113,8 +113,8 @@ page {
   padding: 30rpx;
   border-radius: 34rpx;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+  background: #ffffff;
+  box-shadow: 0 14rpx 32rpx rgba(34, 63, 57, 0.05);
 }
 
 .card-title {
@@ -366,3 +366,4 @@ page {
     font-size: 34rpx;
   }
 }
+

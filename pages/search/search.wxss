@@ -1,5 +1,5 @@
 page {
-  background: #f4f7f5;
+  background: #f8fbf9;
   color: #15231f;
   height: 100vh;
   overflow: hidden;
@@ -10,14 +10,14 @@ page {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page-scroll {
   flex: 1;
   height: 0;
   min-height: 0;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page {
@@ -25,7 +25,7 @@ page {
   padding: 24rpx 28rpx 56rpx;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+    linear-gradient(180deg, #f5fbf8 0%, #fdfefd 34%, #f8fbf9 100%);
 }
 
 .search-panel {
@@ -54,8 +54,8 @@ page {
 .search-input {
   height: 92rpx !important;
   border-radius: 46rpx !important;
-  background: rgba(255, 255, 255, 0.94) !important;
-  box-shadow: 0 16rpx 46rpx rgba(33, 73, 65, 0.08);
+  background: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 14rpx 36rpx rgba(33, 73, 65, 0.05);
 }
 
 .result-summary {
@@ -88,8 +88,8 @@ page {
   padding: 26rpx 24rpx;
   border-radius: 32rpx;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+  background: #ffffff;
+  box-shadow: 0 14rpx 32rpx rgba(34, 63, 57, 0.05);
   transform: translateZ(0);
   transition: transform 80ms ease-out, opacity 80ms ease-out;
 }
@@ -205,7 +205,7 @@ page {
   height: 132rpx;
   border-radius: 34rpx;
   background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+  box-shadow: 0 14rpx 32rpx rgba(34, 63, 57, 0.05);
 }
 
 .empty-title {
@@ -255,3 +255,4 @@ page {
     max-width: 280rpx;
   }
 }
+

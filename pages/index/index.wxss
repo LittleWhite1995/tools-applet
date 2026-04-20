@@ -1,6 +1,6 @@
 /* index.wxss */
 page {
-  background: #f4f7f5;
+  background: #f8fbf9;
   color: #15231f;
   height: 100vh;
   overflow: hidden;
@@ -11,14 +11,14 @@ page {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page-scroll {
   flex: 1;
   height: 0;
   min-height: 0;
-  background: #f4f7f5;
+  background: #f8fbf9;
 }
 
 .page {
@@ -26,7 +26,7 @@ page {
   padding: 24rpx 28rpx 56rpx;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, #edf5f1 0%, #f8faf9 34%, #f4f7f5 100%);
+    linear-gradient(180deg, #f5fbf8 0%, #fdfefd 34%, #f8fbf9 100%);
 }
 
 .top-area {
@@ -53,8 +53,8 @@ page {
 .search-input {
   height: 92rpx !important;
   border-radius: 46rpx !important;
-  background: rgba(255, 255, 255, 0.94) !important;
-  box-shadow: 0 16rpx 46rpx rgba(33, 73, 65, 0.08);
+  background: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 14rpx 36rpx rgba(33, 73, 65, 0.05);
 }
 
 .quick-tags {
@@ -85,7 +85,7 @@ page {
   background:
     linear-gradient(135deg, rgba(224, 240, 234, 0.96), rgba(246, 250, 248, 0.92)),
     linear-gradient(90deg, rgba(36, 88, 77, 0.12), rgba(63, 115, 161, 0.08));
-  box-shadow: 0 24rpx 54rpx rgba(27, 70, 58, 0.12);
+  box-shadow: 0 18rpx 40rpx rgba(27, 70, 58, 0.08);
 }
 
 .hero-card::before {
@@ -163,7 +163,7 @@ page {
   width: 150rpx;
   height: 150rpx;
   border-radius: 38rpx;
-  background: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.46);
 }
 
 .section-head {
@@ -202,8 +202,8 @@ page {
   padding: 30rpx 28rpx 26rpx;
   border-radius: 32rpx;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18rpx 44rpx rgba(34, 63, 57, 0.07);
+  background: #ffffff;
+  box-shadow: 0 14rpx 32rpx rgba(34, 63, 57, 0.05);
 }
 
 .hero-card,
@@ -279,7 +279,7 @@ page {
   border-radius: 42rpx;
   overflow: hidden;
   box-sizing: border-box;
-  box-shadow: 0 24rpx 54rpx rgba(24, 54, 47, 0.12);
+  box-shadow: 0 18rpx 40rpx rgba(24, 54, 47, 0.08);
 }
 
 .topic-card + .topic-card {
@@ -287,8 +287,8 @@ page {
 }
 
 .topic-deep {
-  color: #b6d6c9;
-  background: linear-gradient(135deg, #123d34, #183f3a 58%, #254a42);
+  color: #c8e6dd;
+  background: linear-gradient(135deg, #1f5f54, #183f3a 58%, #0f3028);
 }
 
 .topic-copy {
@@ -303,8 +303,8 @@ page {
   height: 44rpx;
   padding: 0 22rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.18);
-  color: #d9eee6;
+  background: rgba(255, 255, 255, 0.24);
+  color: #f2fbf7;
   font-size: 20rpx;
   font-weight: 700;
 }
@@ -319,7 +319,7 @@ page {
 
 .topic-desc {
   margin-top: 10rpx;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 25rpx;
   line-height: 1.5;
 }
@@ -329,7 +329,7 @@ page {
   min-width: 190rpx;
   --td-button-primary-bg-color: #ffffff;
   --td-button-primary-border-color: #ffffff;
-  --td-button-primary-color: #24584d;
+  --td-button-primary-color: #183f3a;
   --td-button-primary-active-bg-color: #dceee7;
   --td-button-primary-active-border-color: #dceee7;
 }
@@ -378,6 +378,9 @@ page {
   }
 
   .hero-visual {
-    width: 124rpx;
+    width: 150rpx;
+    height: 150rpx;
   }
 }
+
+

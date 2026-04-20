@@ -56,7 +56,7 @@ page {
   background:
     linear-gradient(135deg, rgba(233, 244, 230, 0.96), rgba(248, 251, 250, 0.92)),
     linear-gradient(90deg, rgba(77, 123, 53, 0.14), rgba(47, 117, 103, 0.06));
-  box-shadow: 0 22rpx 50rpx rgba(42, 72, 38, 0.1);
+  box-shadow: 0 18rpx 38rpx rgba(42, 72, 38, 0.07);
 }
 
 .hero-panel::before {
@@ -118,8 +118,8 @@ page {
   padding: 30rpx;
   border-radius: 34rpx;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18rpx 44rpx rgba(37, 69, 34, 0.07);
+  background: #ffffff;
+  box-shadow: 0 14rpx 32rpx rgba(37, 69, 34, 0.05);
 }
 
 .card-head {
@@ -435,3 +435,4 @@ page {
     font-size: 23rpx;
   }
 }
+
