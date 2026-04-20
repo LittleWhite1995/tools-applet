@@ -1,0 +1,189 @@
+<view class="shell">
+  <navigation-bar title="基础代谢率" back="{{true}}" color="#15231f" background="#fff8f5"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">BMR CALCULATOR</view>
+          <view class="hero-title">了解身体基础消耗</view>
+          <view class="hero-desc">基础代谢率是你每天静息状态下消耗的热量。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="activity" size="84rpx" color="#c4622d" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">基础数据</view>
+
+        <view class="gender-row">
+          <view class="gender-label">性别</view>
+          <view class="gender-selector">
+            <view
+              class="gender-chip {{gender === 'male' ? 'active' : ''}}"
+              bindtap="onGenderSelect"
+              data-gender="male"
+            >
+              <view class="gender-chip-icon">
+                <t-icon name="gender-male" size="28rpx" color="{{gender === 'male' ? '#fff' : '#c4622d'}}" />
+              </view>
+              <text class="gender-text">男性</text>
+            </view>
+            <view
+              class="gender-chip {{gender === 'female' ? 'active' : ''}}"
+              bindtap="onGenderSelect"
+              data-gender="female"
+            >
+              <view class="gender-chip-icon">
+                <t-icon name="gender-female" size="28rpx" color="{{gender === 'female' ? '#fff' : '#c4622d'}}" />
+              </view>
+              <text class="gender-text">女性</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-age">
+              <t-icon name="calendar" size="38rpx" color="#c4622d" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">年龄</view>
+              <input
+                class="field-input"
+                type="number"
+                value="{{ageValue}}"
+                placeholder="请输入年龄"
+                placeholder-class="input-placeholder"
+                data-field="ageValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">岁</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-height">
+              <t-icon name="measurement" size="38rpx" color="#c4622d" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">身高</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{heightValue}}"
+                placeholder="请输入身高"
+                placeholder-class="input-placeholder"
+                data-field="heightValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">cm</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-weight">
+              <t-icon name="root-list" size="38rpx" color="#c4622d" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">体重</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{weightValue}}"
+                placeholder="请输入体重"
+                placeholder-class="input-placeholder"
+                data-field="weightValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">kg</view>
+          </view>
+        </view>
+
+        <view class="card-title" style="margin-top: 32rpx;">日常活动水平</view>
+        <view class="activity-selector">
+          <view
+            wx:for="{{activityOptions}}"
+            wx:key="id"
+            class="activity-btn {{activityKey === item.id ? 'active' : ''}}"
+            bindtap="onActivitySelect"
+            data-key="{{item.id}}"
+          >
+            <view class="activity-icon">
+              <t-icon name="{{item.icon}}" size="32rpx" color="{{activityKey === item.id ? '#fff' : '#c4622d'}}" />
+            </view>
+            <view class="activity-label">{{item.label}}</view>
+            <view class="activity-desc">{{item.desc}}</view>
+          </view>
+        </view>
+
+        <view class="helper-note">
+          BMR 是静息状态的基础消耗，TDEE 会结合你的活动水平一起估算。
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            计算 BMR
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">基础代谢率 BMR</view>
+            <view class="result-value-row">
+              <view class="result-value">{{result.bmr}}</view>
+              <view class="result-unit">千卡/天</view>
+            </view>
+          </view>
+          <view class="result-badge">{{hasResult ? result.activityLabel : '待计算'}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">每日总消耗 TDEE</view>
+            <view class="summary-value">{{result.tdee}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">估算方式</view>
+            <view class="summary-value summary-small">Mifflin-St Jeor</view>
+            <view class="summary-note">根据年龄、身高、体重和性别估算基础代谢</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="detail-card">
+          <view class="detail-desc">{{result.summary}}</view>
+
+          <view class="goal-grid">
+            <view class="goal-item">
+              <view class="goal-label">减脂参考</view>
+              <view class="goal-value">{{result.cut}}</view>
+              <view class="goal-unit">千卡/天</view>
+            </view>
+            <view class="goal-item">
+              <view class="goal-label">维持当前</view>
+              <view class="goal-value">{{result.maintain}}</view>
+              <view class="goal-unit">千卡/天</view>
+            </view>
+            <view class="goal-item">
+              <view class="goal-label">增重参考</view>
+              <view class="goal-value">{{result.gain}}</view>
+              <view class="goal-unit">千卡/天</view>
+            </view>
+          </view>
+
+          <view class="detail-tip">结果适合成年人日常参考，不代替专业营养或医疗建议。</view>
+        </view>
+
+        <view wx:else class="result-empty">
+          完成填写后，这里会显示基础代谢、每日总消耗和热量参考。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新填写</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -4,7 +4,7 @@ const { hotTools, topicCards } = require('../../utils/tool-catalog')
 Page({
   data: {
     pressedKey: '',
-    quickTags: ['图片处理', '餐饮开店', '生活计算', '经营分析'],
+    quickTags: ['生活健康', '亲戚关系', '计算', '定投', '图片压缩'],
     hotTools,
     topicCards,
   },

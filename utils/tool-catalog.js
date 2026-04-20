@@ -31,7 +31,7 @@ const hotTools = [
     icon: 'heart',
     iconColor: '#2d6895',
     tone: 'sky',
-    category: '生活计算',
+    category: '生活健康',
     path: '/pages/bmi/bmi',
     keywords: ['bmi', '体重', '身高', '健康', '指数'],
   },
@@ -81,6 +81,43 @@ const hotTools = [
   },
 ]
 
+// 更多工具 - 可搜索，不在首页展示
+const moreTools = [
+  {
+    id: 'bmr',
+    title: '基础代谢率',
+    desc: '了解身体每日基础消耗',
+    icon: 'activity',
+    iconColor: '#c4622d',
+    tone: 'coral',
+    category: '生活健康',
+    path: '/pages/bmr/bmr',
+    keywords: ['bmr', '基础代谢', '代谢率', '热量', '卡路里', '每日消耗'],
+  },
+  {
+    id: 'relationship',
+    title: '亲戚关系计算器',
+    desc: '快速算出称呼，姑舅姨表不再卡壳',
+    icon: 'usergroup',
+    iconColor: '#8b5a4a',
+    tone: 'coral',
+    category: '生活计算',
+    path: '/pages/relationship/relationship',
+    keywords: ['亲戚', '称呼', '关系', '家庭', '家族', '姑妈', '舅舅', '姨妈', '表哥', '堂姐'],
+  },
+  {
+    id: 'compound',
+    title: '复利 / 定投计算器',
+    desc: '估算长期复利增长和每月定投结果',
+    icon: 'saving-pot',
+    iconColor: '#3f7a4b',
+    tone: 'green',
+    category: '理财计算',
+    path: '/pages/compound/compound',
+    keywords: ['复利', '定投', '理财', '投资', '基金', '本金', '收益率', '年化', '长期投资'],
+  },
+]
+
 const topicCards = [
   {
     id: 'guide',
@@ -88,7 +125,7 @@ const topicCards = [
     title: '全能工具箱使用指南',
     desc: '快速了解搜索、热门工具和高频能力的使用方式',
     icon: 'book-open',
-    iconColor: '#b6d6c9',
+    iconColor: '#24584d',
     button: '查看指南',
     tone: 'deep',
     pressKey: 'topic-guide',
@@ -105,6 +142,11 @@ const toolCatalog = [
     actionText: '打开工具',
   })),
   ...hotTools.map((item) => ({
+    ...item,
+    type: 'tool',
+    actionText: '打开工具',
+  })),
+  ...moreTools.map((item) => ({
     ...item,
     type: 'tool',
     actionText: '打开工具',
@@ -138,6 +180,7 @@ const searchTools = (keyword) => {
 module.exports = {
   featuredTools,
   hotTools,
+  moreTools,
   topicCards,
   toolCatalog,
   searchTools,

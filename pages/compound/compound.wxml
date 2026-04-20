@@ -1,0 +1,186 @@
+<view class="shell">
+  <navigation-bar title="复利 / 定投计算器" back="{{true}}" color="#15231f" background="#f6fbf7"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">COMPOUNDING</view>
+          <view class="hero-title">算算长期复利后有多少资产</view>
+          <view class="hero-desc">支持初始本金和每月定投，按月复利估算长期投资结果。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="saving-pot" size="84rpx" color="#3f7a4b" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">投资设置</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-principal">
+              <t-icon name="saving-pot" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">初始本金</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{principalValue}}"
+                placeholder="不填可按纯定投估算"
+                placeholder-class="input-placeholder"
+                data-field="principalValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-monthly">
+              <t-icon name="wallet" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">每月定投</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{monthlyValue}}"
+                placeholder="不填可按纯复利估算"
+                placeholder-class="input-placeholder"
+                data-field="monthlyValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-rate">
+              <t-icon name="activity" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">年化收益率</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{annualRateValue}}"
+                placeholder="例如 6 或 8"
+                placeholder-class="input-placeholder"
+                data-field="annualRateValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">%</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-years">
+              <t-icon name="calendar" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">投资年限</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{yearsValue}}"
+                placeholder="支持 0.5、3、10 这类填写"
+                placeholder-class="input-placeholder"
+                data-field="yearsValue"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">年</view>
+          </view>
+        </view>
+
+        <view class="quick-panel">
+          <view class="quick-group">
+            <view class="quick-label">常用年化</view>
+            <view class="quick-row">
+              <view
+                wx:for="{{quickRateOptions}}"
+                wx:key="*this"
+                class="quick-chip {{annualRateValue === item ? 'active' : ''}}"
+                data-rate="{{item}}"
+                bindtap="onQuickRateTap"
+              >{{item}}%</view>
+            </view>
+          </view>
+
+          <view class="quick-group">
+            <view class="quick-label">常用年限</view>
+            <view class="quick-row">
+              <view
+                wx:for="{{quickYearOptions}}"
+                wx:key="*this"
+                class="quick-chip {{yearsValue === item ? 'active' : ''}}"
+                data-years="{{item}}"
+                bindtap="onQuickYearTap"
+              >{{item}}年</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="helper-note">
+          使用月复利模型估算：先把年化收益率换算成等效月收益率，再按每月复利计算；每月定投默认在月末投入一次。
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            开始估算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">预计期末总资产</view>
+            <view class="result-value">{{result.totalAssetsCompact}}</view>
+            <view wx:if="{{hasResult}}" class="result-caption">{{result.totalAssets}}</view>
+          </view>
+          <view class="result-badge">{{hasResult ? result.planLabel : '待计算'}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">累计投入</view>
+            <view class="summary-value">{{result.totalInvested}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">累计收益</view>
+            <view class="summary-value">{{result.totalProfit}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">收益占比</view>
+            <view class="summary-value">{{result.profitRate}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">等效月收益率</view>
+            <view class="summary-value">{{result.monthlyRate}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="detail-card">
+          <view class="detail-row">
+            <view class="detail-label">初始本金复利后</view>
+            <view class="detail-value">{{result.principalFuture}}</view>
+          </view>
+          <view class="detail-row">
+            <view class="detail-label">定投累计终值</view>
+            <view class="detail-value">{{result.sipFuture}}</view>
+          </view>
+          <view class="detail-tip">{{result.summary}}</view>
+        </view>
+
+        <view wx:else class="result-empty">
+          填好参数后，这里会显示复利后的总资产、累计投入和收益拆分。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新填写</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

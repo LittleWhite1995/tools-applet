@@ -1,0 +1,117 @@
+<view class="shell">
+  <navigation-bar title="亲戚关系计算器" back="{{true}}" color="#15231f" background="#fbf4f1"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">KINSHIP</view>
+          <view class="hero-title">一键算出该怎么称呼</view>
+          <view class="hero-desc">输入“爸爸的姐姐的儿子”这类关系链，快速得到常见叫法。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="usergroup" size="84rpx" color="#8b5a4a" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">关系输入</view>
+
+        <view class="gender-row">
+          <view class="gender-label">我是</view>
+          <view class="gender-selector">
+            <view
+              class="gender-chip {{selfGender === 'male' ? 'active' : ''}}"
+              data-gender="male"
+              bindtap="onGenderSelect"
+            >
+              <view class="gender-chip-icon">
+                <t-icon name="gender-male" size="28rpx" color="{{selfGender === 'male' ? '#fff' : '#8b5a4a'}}" />
+              </view>
+              <text class="gender-chip-text">男性</text>
+            </view>
+            <view
+              class="gender-chip {{selfGender === 'female' ? 'active' : ''}}"
+              data-gender="female"
+              bindtap="onGenderSelect"
+            >
+              <view class="gender-chip-icon">
+                <t-icon name="gender-female" size="28rpx" color="{{selfGender === 'female' ? '#fff' : '#8b5a4a'}}" />
+              </view>
+              <text class="gender-chip-text">女性</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="builder-card">
+          <view class="input-head">
+            <view class="input-label">关系路径</view>
+          </view>
+          <view wx:if="{{relationSteps.length}}" class="path-card">
+            <view
+              wx:for="{{relationSteps}}"
+              wx:key="index"
+              class="path-segment"
+            >
+              <view wx:if="{{index > 0}}" class="path-arrow">›</view>
+              <view class="path-chip">{{item}}</view>
+            </view>
+          </view>
+          <view wx:if="{{relationSteps.length && !canAppendMore}}" class="path-limit">
+            这层关系先算到这儿，再往下就有点绕了。
+          </view>
+
+          <view class="result-card inline-result-card">
+            <view class="result-head">
+              <view>
+                <view class="result-label">计算结果</view>
+                <view class="result-value">{{result.title}}</view>
+              </view>
+              <view class="result-badge">{{result.badge}}</view>
+            </view>
+            <view wx:if="{{!result.hasResult}}" class="result-empty">
+              选好关系后，结果会显示在这里。
+            </view>
+          </view>
+
+          <view class="builder-actions">
+            <view class="builder-action builder-action-clear" bindtap="onClear">清空</view>
+            <view class="builder-action builder-action-delete" bindtap="onDeleteStep">删除一步</view>
+          </view>
+        </view>
+
+        <view class="helper-banner">
+          不确定怎么写时，直接用下面这些常见关系词来拼。
+        </view>
+        <view class="example-row">
+          <view
+            wx:for="{{exampleQueries}}"
+            wx:key="*this"
+            class="example-chip"
+            data-query="{{item}}"
+            bindtap="onExampleTap"
+          >{{item}}</view>
+        </view>
+
+        <view class="relation-groups">
+          <view
+            wx:for="{{relationGroups}}"
+            wx:key="title"
+            class="group-card"
+          >
+            <view class="group-title">{{item.title}}</view>
+            <view class="token-grid">
+              <view
+                wx:for="{{item.items}}"
+                wx:key="*this"
+                class="token-chip"
+                data-token="{{item}}"
+                bindtap="onAppendToken"
+              >{{item}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
