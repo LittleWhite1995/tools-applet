@@ -57,12 +57,39 @@ Page({
     })
   },
 
+  openMiniProgram({ name, shortLink }) {
+    if (!shortLink) {
+      wx.showToast({
+        title: `${name} 还没配置好`,
+        icon: 'none',
+      })
+      return
+    }
+
+    wx.navigateToMiniProgram({
+      shortLink,
+      fail: (error) => {
+        if (String(error.errMsg || '').includes('cancel')) return
+
+        wx.showToast({
+          title: '跳转失败，请稍后再试',
+          icon: 'none',
+        })
+      },
+    })
+  },
+
   onToolTap(event) {
-    const { name, path } = event.currentTarget.dataset
+    const { name, path, shortLink } = event.currentTarget.dataset
 
     this.setData({
       pressedKey: '',
     }, () => {
+      if (shortLink) {
+        this.openMiniProgram({ name, shortLink })
+        return
+      }
+
       if (path) {
         wx.navigateTo({
           url: path,
@@ -75,5 +102,19 @@ Page({
         icon: 'none',
       })
     })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '日常要用的小工具，这里基本齐了',
+      path: '/pages/index/index',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '日常要用的小工具，这里基本齐了',
+      query: '',
+    }
   },
 })

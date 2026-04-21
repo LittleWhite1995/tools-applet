@@ -1,4 +1,6 @@
 {
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true,
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",

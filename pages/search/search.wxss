@@ -134,6 +134,11 @@ page {
   background: #e7f1df;
 }
 
+.tone-red {
+  color: #c83737;
+  background: #fbe8e8;
+}
+
 .tone-deep {
   color: #24584d;
   background: #e5f3ef;

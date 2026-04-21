@@ -253,6 +253,11 @@ page {
   background: #e7f1df;
 }
 
+.tone-red {
+  color: #c83737;
+  background: #fbe8e8;
+}
+
 .tool-title {
   color: #19251f;
   font-size: 30rpx;

@@ -1,0 +1,119 @@
+<view class="shell">
+  <navigation-bar title="商品保质期计算器" back="{{true}}" color="#15231f" background="#fffaf3"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">SHELF LIFE</view>
+          <view class="hero-title">快速算出商品什么时候到期</view>
+          <view class="hero-desc">输入生产日期和保质期时长，马上看见到期参考日和当前状态。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="calendar" size="84rpx" color="#b67f2e" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">保质期设置</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-date">
+              <t-icon name="calendar" size="38rpx" color="#b67f2e" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">生产日期</view>
+              <picker
+                class="field-picker"
+                mode="date"
+                value="{{manufactureDate}}"
+                end="{{todayDate}}"
+                data-field="manufactureDate"
+                bindchange="onDateChange"
+              >
+                <view class="picker-value {{manufactureDate ? 'has-value' : ''}}">
+                  {{manufactureDate || '请选择生产日期'}}
+                </view>
+              </picker>
+            </view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-life">
+              <t-icon name="activity" size="38rpx" color="#b67f2e" />
+            </view>
+            <view class="field-main shelf-life-main">
+              <view class="field-label">保质期</view>
+              <view class="shelf-life-control">
+                <input
+                  class="field-input shelf-life-input"
+                  type="number"
+                  value="{{shelfLifeValue}}"
+                  placeholder="请输入数值"
+                  placeholder-class="input-placeholder"
+                  data-field="shelfLifeValue"
+                  bindinput="onInput"
+                />
+                <view class="unit-selector">
+                  <view
+                    wx:for="{{unitOptions}}"
+                    wx:key="id"
+                    class="unit-chip {{unitKey === item.id ? 'active' : ''}}"
+                    data-unit="{{item.id}}"
+                    bindtap="onUnitSelect"
+                  >{{item.label}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="helper-note">
+          按常见标注口径估算：生产日期当天计入保质期；按“月 / 年”计算时，会先按自然月或自然年顺延，再减去 1 天。
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            开始计算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">到期参考日</view>
+            <view class="result-value">{{result.expiryDate}}</view>
+          </view>
+          <view class="result-badge badge-{{result.statusTheme}}">{{result.badge}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">当前状态</view>
+            <view class="summary-value">{{result.statusText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">距离到期</view>
+            <view class="summary-value">{{result.distanceText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">保质期设置</view>
+            <view class="summary-value">{{result.shelfLifeText}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="detail-card">
+          <view class="detail-note">结果用于日常查看和快速核对，实际以商品包装标注、开封条件和储存要求为准。</view>
+        </view>
+
+        <view wx:else class="result-empty">
+          填好生产日期和保质期后，这里会显示到期参考日、剩余天数和是否过期。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新填写</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

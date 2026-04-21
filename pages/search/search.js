@@ -6,7 +6,7 @@ Page({
     queryText: '',
     pressedKey: '',
     results: [],
-    suggestions: ['图片处理', '二维码', '生活计算', '餐饮开店'],
+    suggestions: ['社保', '图片处理', '生活健康', '餐饮开店'],
   },
 
   onLoad(options) {
@@ -62,12 +62,39 @@ Page({
     })
   },
 
+  openMiniProgram({ name, shortLink }) {
+    if (!shortLink) {
+      wx.showToast({
+        title: `${name} 还没配置好`,
+        icon: 'none',
+      })
+      return
+    }
+
+    wx.navigateToMiniProgram({
+      shortLink,
+      fail: (error) => {
+        if (String(error.errMsg || '').includes('cancel')) return
+
+        wx.showToast({
+          title: '跳转失败，请稍后再试',
+          icon: 'none',
+        })
+      },
+    })
+  },
+
   onResultTap(event) {
-    const { name, path } = event.currentTarget.dataset
+    const { name, path, shortLink } = event.currentTarget.dataset
 
     this.setData({
       pressedKey: '',
     }, () => {
+      if (shortLink) {
+        this.openMiniProgram({ name, shortLink })
+        return
+      }
+
       if (path) {
         wx.navigateTo({
           url: path,

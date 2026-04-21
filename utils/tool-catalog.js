@@ -58,15 +58,15 @@ const hotTools = [
     keywords: ['工资', '薪资', '税后', '个税', '五险一金', '到手工资'],
   },
   {
-    id: 'converter',
-    title: '单位换算',
-    desc: '长度面积重量快捷换',
-    icon: 'measurement',
-    iconColor: '#a85b52',
-    tone: 'coral',
-    category: '生活计算',
-    path: '/pages/converter/converter',
-    keywords: ['单位', '换算', '长度', '面积', '重量', '体积', '温度'],
+    id: 'social-security-card',
+    title: '电子社保卡',
+    desc: '社保查询与医保码',
+    icon: 'user-safety',
+    iconColor: '#c83737',
+    tone: 'red',
+    category: '民生服务',
+    shortLink: '#小程序://电子社保卡/Tm6FppEAraGw4Hg',
+    keywords: ['电子社保卡', '社保', '医保', '医保码', '社保卡', '民生服务'],
   },
   {
     id: 'image-compress',
@@ -83,6 +83,17 @@ const hotTools = [
 
 // 更多工具 - 可搜索，不在首页展示
 const moreTools = [
+  {
+    id: 'converter',
+    title: '单位换算',
+    desc: '长度面积重量快捷换',
+    icon: 'measurement',
+    iconColor: '#a85b52',
+    tone: 'coral',
+    category: '生活计算',
+    path: '/pages/converter/converter',
+    keywords: ['单位', '换算', '长度', '面积', '重量', '体积', '温度'],
+  },
   {
     id: 'bmr',
     title: '基础代谢率',
@@ -116,6 +127,17 @@ const moreTools = [
     path: '/pages/compound/compound',
     keywords: ['复利', '定投', '理财', '投资', '基金', '本金', '收益率', '年化', '长期投资'],
   },
+  {
+    id: 'shelf-life',
+    title: '商品保质期计算器',
+    desc: '快速算出到期日和剩余天数',
+    icon: 'calendar',
+    iconColor: '#b67f2e',
+    tone: 'amber',
+    category: '生活计算',
+    path: '/pages/shelf-life/shelf-life',
+    keywords: ['保质期', '到期', '过期', '商品', '食品', '生产日期', '有效期', '保鲜'],
+  },
 ]
 
 const topicCards = [
@@ -144,12 +166,12 @@ const toolCatalog = [
   ...hotTools.map((item) => ({
     ...item,
     type: 'tool',
-    actionText: '打开工具',
+    actionText: item.shortLink ? '跳转小程序' : '打开工具',
   })),
   ...moreTools.map((item) => ({
     ...item,
     type: 'tool',
-    actionText: '打开工具',
+    actionText: item.shortLink ? '跳转小程序' : '打开工具',
   })),
   ...topicCards.map((item) => ({
     ...item,
