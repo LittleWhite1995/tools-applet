@@ -1,0 +1,291 @@
+<view class="shell">
+  <navigation-bar title="打牌记账" back="{{true}}" color="#15231f" background="#f7f5fb"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">POKER LEDGER</view>
+          <view class="hero-title">输赢记清，收局算清</view>
+          <view class="hero-desc">单人本地记账，不联网也能自动结算谁付谁。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="money" size="84rpx" color="#6655a6" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">当前牌局</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-player">
+              <t-icon name="usergroup" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">添加玩家</view>
+              <view class="player-input-row">
+                <input
+                  class="field-input player-input"
+                  type="text"
+                  value="{{playerNameInput}}"
+                  placeholder="输入玩家名字"
+                  placeholder-class="input-placeholder"
+                  data-field="playerNameInput"
+                  bindinput="onInput"
+                />
+                <view class="mini-action" bindtap="onAddPlayer">添加</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="player-section">
+          <view class="section-label">玩家名单</view>
+          <view wx:if="{{players.length}}" class="player-list">
+            <view
+              wx:for="{{players}}"
+              wx:key="id"
+              class="player-chip"
+            >
+              <text>{{item.name}}</text>
+              <view class="player-chip-close" data-id="{{item.id}}" bindtap="onRemovePlayer">
+                <t-icon name="close" size="20rpx" color="#8a78b5" />
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty-inline">先加玩家，再开始记输赢。</view>
+        </view>
+
+        <view class="helper-note">
+          记录只保存在当前设备和当前微信里，不会同步到其他手机。记账时建议大家一起确认，收局结算更清楚。
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">记一笔输赢</view>
+
+        <view class="field-list compact-fields">
+          <picker
+            wx:if="{{players.length >= 2}}"
+            mode="selector"
+            range="{{players}}"
+            range-key="name"
+            value="{{selectedLoserIndex}}"
+            data-role="loser"
+            bindchange="onPickerChange"
+          >
+            <view class="field-row compact selector-row">
+              <view class="field-icon tone-loser">
+                <text class="field-icon-text loser">输</text>
+              </view>
+              <view class="field-main">
+                <view class="field-label">输家</view>
+                <view class="selector-value {{selectedLoserName ? 'is-filled' : ''}}">
+                  {{selectedLoserName || '点这里选择输家'}}
+                </view>
+              </view>
+              <view class="selector-action">{{selectedLoserName ? '重选' : '选择'}}</view>
+            </view>
+          </picker>
+          <view wx:else class="field-row compact selector-row is-disabled">
+            <view class="field-icon tone-loser">
+              <text class="field-icon-text loser">输</text>
+            </view>
+            <view class="field-main">
+              <view class="field-label">输家</view>
+              <view class="selector-value">先添加至少 2 位玩家</view>
+            </view>
+          </view>
+
+          <picker
+            wx:if="{{players.length >= 2}}"
+            mode="selector"
+            range="{{players}}"
+            range-key="name"
+            value="{{selectedWinnerIndex}}"
+            data-role="winner"
+            bindchange="onPickerChange"
+          >
+            <view class="field-row compact selector-row">
+              <view class="field-icon tone-winner">
+                <text class="field-icon-text winner">赢</text>
+              </view>
+              <view class="field-main">
+                <view class="field-label">赢家</view>
+                <view class="selector-value {{selectedWinnerName ? 'is-filled' : ''}}">
+                  {{selectedWinnerName || '点这里选择赢家'}}
+                </view>
+              </view>
+              <view class="selector-action">{{selectedWinnerName ? '重选' : '选择'}}</view>
+            </view>
+          </picker>
+          <view wx:else class="field-row compact selector-row is-disabled">
+            <view class="field-icon tone-winner">
+              <text class="field-icon-text winner">赢</text>
+            </view>
+            <view class="field-main">
+              <view class="field-label">赢家</view>
+              <view class="selector-value">先添加至少 2 位玩家</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="selection-preview {{selectedLoserName && selectedWinnerName ? 'is-ready' : ''}}">
+          {{selectedPreviewText}}
+        </view>
+
+        <view class="field-list compact-fields amount-fields">
+          <view class="field-row compact">
+            <view class="field-icon tone-amount">
+              <t-icon name="money" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">金额</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{amountInput}}"
+                placeholder="请输入金额"
+                placeholder-class="input-placeholder"
+                data-field="amountInput"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+
+          <view class="field-row compact">
+            <view class="field-icon tone-note">
+              <t-icon name="wallet" size="38rpx" color="#6655a6" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">备注</view>
+              <input
+                class="field-input"
+                type="text"
+                value="{{noteInput}}"
+                placeholder="可选，例如自摸、包牌"
+                placeholder-class="input-placeholder"
+                data-field="noteInput"
+                bindinput="onInput"
+              />
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="primary-button" block shape="round" size="large" theme="primary" bind:tap="onAddRecord">
+            加入这一笔
+          </t-button>
+        </view>
+
+        <view class="record-section">
+          <view class="section-label">当前记录</view>
+          <view wx:if="{{recordsView.length}}" class="record-list">
+            <view
+              wx:for="{{recordsView}}"
+              wx:key="id"
+              class="record-item"
+            >
+              <view class="record-main">
+                <view class="record-title">{{item.loserName}} → {{item.winnerName}}</view>
+                <view wx:if="{{item.noteText}}" class="record-note">{{item.noteText}}</view>
+              </view>
+              <view class="record-side">
+                <view class="record-amount">{{item.amountText}} 元</view>
+                <view class="record-delete" data-id="{{item.id}}" bindtap="onDeleteRecord">删除</view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty-inline">还没有记录，记上一笔就会自动开始结算。</view>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="settlement-head">
+          <view>
+            <view class="settlement-title">自动结算</view>
+            <view class="settlement-subtitle">按净输赢合并，少转几笔也能算清。</view>
+          </view>
+          <view class="settlement-badge">{{summary.transferCount}} 笔转账</view>
+        </view>
+
+        <view class="settlement-stats">
+          <view class="stat-pill">
+            <text class="stat-label">玩家</text>
+            <text class="stat-value">{{players.length}}人</text>
+          </view>
+          <view class="stat-pill">
+            <text class="stat-label">记录</text>
+            <text class="stat-value">{{summary.totalRounds}}笔</text>
+          </view>
+          <view class="stat-pill">
+            <text class="stat-label">流水</text>
+            <text class="stat-value">{{summary.totalAmount}}元</text>
+          </view>
+        </view>
+
+        <view class="detail-card">
+          <view class="detail-title">每人净输赢</view>
+          <view wx:if="{{summary.netPlayers.length}}" class="balance-list">
+            <view
+              wx:for="{{summary.netPlayers}}"
+              wx:key="id"
+              class="balance-item {{item.toneClass}}"
+            >
+              <view class="balance-name">{{item.name}}</view>
+              <view class="balance-meta">
+                <view class="balance-status">{{item.statusText}}</view>
+                <view class="balance-value">{{item.netText}} 元</view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty-inline">先添加玩家，结算结果会显示在这里。</view>
+
+          <view class="detail-title transfer-title">建议结算</view>
+          <view wx:if="{{summary.transfers.length}}" class="transfer-list">
+            <view
+              wx:for="{{summary.transfers}}"
+              wx:key="id"
+              class="transfer-item"
+            >
+              <view class="transfer-text">{{item.fromName}} 付给 {{item.toName}}</view>
+              <view class="transfer-value">{{item.amountText}} 元</view>
+            </view>
+          </view>
+          <view wx:else class="empty-inline">记完输赢后，这里会自动算出谁付谁。</view>
+        </view>
+
+        <view class="settlement-actions">
+          <t-button class="primary-button save-button" block shape="round" size="large" theme="primary" bind:tap="onSaveSession">
+            保存到本机
+          </t-button>
+          <view class="new-session-link" bindtap="onNewSession">清空并新开一局</view>
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">本机牌局</view>
+        <view wx:if="{{savedSessions.length}}" class="saved-list">
+          <view
+            wx:for="{{savedSessions}}"
+            wx:key="id"
+            class="saved-item"
+          >
+            <view class="saved-main">
+              <view class="saved-title">{{item.title}}</view>
+              <view class="saved-meta">{{item.metaText}} · {{item.savedAtText}}</view>
+              <view class="saved-desc">当前流水 {{item.totalAmountText}} 元，建议结算 {{item.summary.transferCount}} 笔</view>
+            </view>
+            <view class="saved-actions">
+              <view class="saved-action" data-id="{{item.id}}" bindtap="onLoadSession">继续记</view>
+              <view class="saved-action danger" data-id="{{item.id}}" bindtap="onDeleteSession">删除</view>
+            </view>
+          </view>
+        </view>
+        <view wx:else class="empty-inline">还没有保存过牌局，点上面的“保存到本机”后会出现在这里。</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -104,6 +104,11 @@ page {
   margin-right: 22rpx;
 }
 
+.tool-icon-image {
+  width: 58rpx;
+  height: 58rpx;
+}
+
 .tone-mint {
   color: #2f7567;
   background: #e5f3ef;
@@ -137,6 +142,11 @@ page {
 .tone-red {
   color: #c83737;
   background: #fbe8e8;
+}
+
+.tone-indigo {
+  color: #5d67d8;
+  background: #cfd8ff;
 }
 
 .tone-deep {

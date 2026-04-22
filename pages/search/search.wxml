@@ -39,7 +39,13 @@
           bindtouchcancel="onPressEnd"
         >
           <view class="tool-icon tone-{{item.tone}}">
-            <t-icon name="{{item.icon}}" size="42rpx" color="{{item.iconColor}}" />
+            <image
+              wx:if="{{item.iconImage}}"
+              class="tool-icon-image"
+              src="{{item.iconImage}}"
+              mode="aspectFit"
+            />
+            <t-icon wx:else name="{{item.icon}}" size="42rpx" color="{{item.iconColor}}" />
           </view>
 
           <view class="result-main">

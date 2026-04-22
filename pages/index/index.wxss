@@ -223,6 +223,11 @@ page {
   margin-bottom: 28rpx;
 }
 
+.tool-icon-image {
+  width: 54rpx;
+  height: 54rpx;
+}
+
 .tone-mint {
   color: #2f7567;
   background: #e5f3ef;
@@ -256,6 +261,11 @@ page {
 .tone-red {
   color: #c83737;
   background: #fbe8e8;
+}
+
+.tone-indigo {
+  color: #5d67d8;
+  background: #cfd8ff;
 }
 
 .tool-title {
