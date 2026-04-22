@@ -128,6 +128,16 @@ const moreTools = [
     keywords: ['复利', '定投', '理财', '投资', '基金', '本金', '收益率', '年化', '长期投资'],
   },
   {
+    id: 'sky-stardust',
+    title: 'Sky星尘',
+    desc: '光遇游戏攻略工具',
+    iconImage: '/assets/icons/sky-stardust.png',
+    tone: 'indigo',
+    shortLink: '#小程序://Sky星尘/XHNcq07v6tucvth',
+    category: '游戏工具',
+    keywords: ['Sky星尘', '光遇', '攻略', '游戏工具', 'Sky', '星尘'],
+  },
+  {
     id: 'shelf-life',
     title: '商品保质期计算器',
     desc: '快速算出到期日和剩余天数',
@@ -137,6 +147,17 @@ const moreTools = [
     category: '生活计算',
     path: '/pages/shelf-life/shelf-life',
     keywords: ['保质期', '到期', '过期', '商品', '食品', '生产日期', '有效期', '保鲜'],
+  },
+  {
+    id: 'poker-ledger',
+    title: '打牌记账',
+    desc: '本地记输赢，自动结算谁付谁',
+    icon: 'money',
+    iconColor: '#6655a6',
+    tone: 'violet',
+    category: '棋牌工具',
+    path: '/pages/poker-ledger/poker-ledger',
+    keywords: ['打牌', '麻将', '扑克', '记账', '牌局', '结算', '输赢', '谁付谁'],
   },
 ]
 
