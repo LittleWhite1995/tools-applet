@@ -32,6 +32,9 @@ const getExampleQueries = (selfGender) => ([
   '儿子的儿子',
 ])
 
+const APPEND_STOP_TEXT = '这层关系先算到这儿，再往下就有点绕了。'
+const APPEND_STOP_TOAST = '先算到这儿，再往下就有点绕了'
+
 const tokenAliases = {
   爸爸: '爸爸',
   父亲: '爸爸',
@@ -172,6 +175,26 @@ const relationTitleMap = {
   mfm: { title: '外曾祖母' },
   mmf: { title: '外曾祖父' },
   mmm: { title: '外曾祖母' },
+  ffob: { title: '伯公' },
+  ffobw: { title: '伯婆' },
+  fflb: { title: '叔公' },
+  fflbw: { title: '叔婆' },
+  ffxs: { title: '姑婆' },
+  ffxsh: { title: '姑公' },
+  fmxb: { title: '舅公' },
+  fmxbw: { title: '舅婆' },
+  fmxs: { title: '姨婆' },
+  fmxsh: { title: '姨公' },
+  mfob: { title: '伯外公' },
+  mfobw: { title: '伯外婆' },
+  mflb: { title: '叔外公' },
+  mflbw: { title: '叔外婆' },
+  mfxs: { title: '姑外婆' },
+  mfxsh: { title: '姑外公' },
+  mmxb: { title: '舅外公' },
+  mmxbw: { title: '舅外婆' },
+  mmxs: { title: '姨外婆' },
+  mmxsh: { title: '姨外公' },
   fob: { title: '伯父' },
   flb: { title: '叔叔' },
   fos: { title: '姑妈' },
@@ -214,6 +237,10 @@ const relationTitleMap = {
   flbs: { title: '堂哥 / 堂弟', note: '堂系称呼会受对方年龄影响，这里返回常见叫法。' },
   fobd: { title: '堂姐 / 堂妹', note: '堂系称呼会受对方年龄影响，这里返回常见叫法。' },
   flbd: { title: '堂姐 / 堂妹', note: '堂系称呼会受对方年龄影响，这里返回常见叫法。' },
+  fobsw: { title: '堂嫂 / 堂弟媳', note: '堂亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  flbsw: { title: '堂嫂 / 堂弟媳', note: '堂亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  fobdh: { title: '堂姐夫 / 堂妹夫', note: '堂亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  flbdh: { title: '堂姐夫 / 堂妹夫', note: '堂亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
   foss: { title: '表哥 / 表弟', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
   flss: { title: '表哥 / 表弟', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
   mobs: { title: '表哥 / 表弟', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
@@ -226,6 +253,26 @@ const relationTitleMap = {
   mlbd: { title: '表姐 / 表妹', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
   mosd: { title: '表姐 / 表妹', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
   mlsd: { title: '表姐 / 表妹', note: '表亲称呼会受对方年龄影响，这里返回常见叫法。' },
+  fossw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  flssw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mobsw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mlbsw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mossw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mlssw: { title: '表嫂 / 表弟媳', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  fosdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  flsdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mobdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mlbdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mosdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  mlsdh: { title: '表姐夫 / 表妹夫', note: '表亲配偶称呼会受对方年龄影响，这里返回常见叫法。' },
+  sss: { title: '曾孙' },
+  ssd: { title: '曾孙女' },
+  sds: { title: '曾外孙' },
+  sdd: { title: '曾外孙女' },
+  dss: { title: '外曾孙' },
+  dsd: { title: '外曾孙女' },
+  dds: { title: '外曾孙' },
+  ddd: { title: '外曾孙女' },
 }
 
 const relationKeys = Object.keys(relationTitleMap)
@@ -240,6 +287,17 @@ const getEmptyResult = () => ({
 const canPathContinue = (relationPath) => relationKeys.some((item) => (
   item.startsWith(relationPath) && item !== relationPath
 ))
+
+const getDraftCapability = (relationPath, stepCount) => {
+  const hasResolved = Boolean(relationTitleMap[relationPath])
+  const canAppendMore = relationPath ? canPathContinue(relationPath) : true
+
+  return {
+    hasResolved,
+    canAppendMore,
+    canUseDraft: !stepCount || hasResolved || canAppendMore,
+  }
+}
 
 const normalizeInput = (value) => String(value || '')
   .trim()
@@ -265,12 +323,14 @@ const getDraftMeta = (value) => {
   const relationPath = relationSteps.reduce((total, item) => (
     total + (tokenToPath[item] || '')
   ), '')
+  const capability = getDraftCapability(relationPath, relationSteps.length)
 
   return {
     normalized,
     relationSteps,
     relationPath,
-    canAppendMore: relationPath ? canPathContinue(relationPath) : true,
+    canAppendMore: capability.canAppendMore,
+    canUseDraft: capability.canUseDraft,
   }
 }
 
@@ -309,6 +369,7 @@ const parseRelation = (value) => {
 Page({
   data: {
     selfGender: 'female',
+    appendStopText: APPEND_STOP_TEXT,
     relationInput: '',
     relationSteps: [],
     relationPath: '',
@@ -352,7 +413,7 @@ Page({
 
     if (this.data.relationSteps.length && !this.data.canAppendMore) {
       wx.showToast({
-        title: '先算到这儿，再往下就有点绕了',
+        title: APPEND_STOP_TOAST,
         icon: 'none',
       })
       return
@@ -362,9 +423,9 @@ Page({
     const nextValue = currentValue ? `${currentValue}的${token}` : token
     const nextDraft = getDraftMeta(nextValue)
 
-    if (!relationTitleMap[nextDraft.relationPath] && !nextDraft.canAppendMore) {
+    if (!nextDraft.canUseDraft) {
       wx.showToast({
-        title: '这个方向暂不支持继续往下算',
+        title: APPEND_STOP_TOAST,
         icon: 'none',
       })
       return

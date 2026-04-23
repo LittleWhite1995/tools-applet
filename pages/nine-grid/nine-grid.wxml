@@ -1,0 +1,157 @@
+<view class="shell">
+  <navigation-bar title="九宫格切图" back="{{true}}" color="#362018" background="#fbf1ed"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">NINE GRID</view>
+          <view class="hero-title">一张图切成 9 张朋友圈方图</view>
+          <view class="hero-desc">本地处理，不上传原图，生成后可按顺序保存到相册。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="image" size="84rpx" color="#c4622d" />
+        </view>
+      </view>
+
+      <view class="upload-card">
+        <view class="card-head">
+          <view class="card-title">选择图片</view>
+          <view class="card-subtitle">输出 JPG</view>
+        </view>
+
+        <view wx:if="{{hasImage}}" class="image-preview {{isGenerating ? 'is-disabled' : ''}}">
+          <image class="preview-thumb" src="{{originalPath}}" mode="aspectFill"></image>
+          <view class="image-info">
+            <view class="image-title">原图已就绪</view>
+            <view class="image-desc">{{originalSize}} / {{originalDimensions}}</view>
+          </view>
+          <view class="change-button" bindtap="onChooseImage">更换</view>
+        </view>
+
+        <view wx:else class="uploader" bindtap="onChooseImage">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="46rpx" color="#c4622d" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一张图片</view>
+            <view class="upload-desc">竖图、横图、正方形都可以</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="crop-card">
+        <view class="card-head">
+          <view class="card-title">裁切预览</view>
+          <view class="card-subtitle">3 × 3</view>
+        </view>
+
+        <view wx:if="{{hasImage}}">
+          <view class="option-row">
+            <view
+              wx:for="{{cropOptions}}"
+              wx:key="value"
+              class="crop-option {{cropMode === item.value ? 'is-active' : ''}} {{isGenerating ? 'is-disabled' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onCropModeTap"
+            >
+              <view class="option-title">{{item.label}}</view>
+              <view class="option-desc">{{item.desc}}</view>
+            </view>
+          </view>
+
+          <view class="preview-box">
+            <image class="crop-preview-image" src="{{originalPath}}" style="{{cropPreviewStyle}}" mode="scaleToFill"></image>
+            <view class="grid-line vertical line-1"></view>
+            <view class="grid-line vertical line-2"></view>
+            <view class="grid-line horizontal line-1"></view>
+            <view class="grid-line horizontal line-2"></view>
+          </view>
+
+          <view class="helper-note">{{cropMetaText}}</view>
+
+          <view class="button-row">
+            <t-button
+              class="generate-button"
+              block
+              shape="round"
+              size="large"
+              theme="primary"
+              loading="{{isGenerating}}"
+              bind:tap="onGenerate"
+            >
+              {{isGenerating ? '生成中' : (hasResult ? '重新生成 9 张' : '生成 9 张切图')}}
+            </t-button>
+          </view>
+
+          <view wx:if="{{isGenerating}}" class="generate-status">
+            <t-icon class="generate-status-icon spinning-icon" name="loading" size="28rpx" color="#c4622d" />
+            <text>正在切成 9 张方图，请稍等</text>
+          </view>
+        </view>
+
+        <view wx:else class="empty-state">
+          先选一张图片，这里会显示方形裁切范围和九宫格分割线。
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">切图结果</view>
+            <view class="result-value">{{hasResult ? '9 张已生成' : '等待生成'}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{generatedTileSize}}</view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="tile-grid">
+          <view
+            wx:for="{{tiles}}"
+            wx:key="id"
+            class="tile-item"
+            data-path="{{item.path}}"
+            bindtap="onPreviewTile"
+          >
+            <view class="tile-thumb">
+              <image class="tile-image" src="{{item.path}}" mode="aspectFill"></image>
+            </view>
+            <view class="tile-badge">{{item.label}}</view>
+          </view>
+        </view>
+
+        <view wx:else class="result-empty">
+          生成后会按从左到右、从上到下的顺序显示 1 到 9，可点击单张预览。
+        </view>
+
+        <view class="save-panel">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '保存全部 9 张' : '生成后可保存'}}</view>
+            <view class="save-desc">{{hasResult ? '发朋友圈时按 1-9 顺序选择即可' : '切图过程只在本地完成'}}</view>
+          </view>
+          <view
+            class="save-cta {{hasResult && !isSaving ? 'is-enabled' : 'is-disabled'}} {{isSaving ? 'is-saving' : ''}}"
+            bindtap="onSaveAll"
+            aria-role="button"
+          >
+            <t-icon
+              wx:if="{{!isSaving}}"
+              name="download"
+              size="28rpx"
+              color="{{hasResult ? '#ffffff' : '#c4b5ae'}}"
+            />
+            <t-icon
+              wx:else
+              class="spinning-icon"
+              name="loading"
+              size="28rpx"
+              color="#ffffff"
+            />
+            <text class="save-cta-text">{{isSaving ? saveProgressText : '保存全部'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="splitCanvas" class="split-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>

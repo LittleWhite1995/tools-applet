@@ -208,25 +208,28 @@ page {
   padding: 0 18rpx;
   border-radius: 999rpx;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #8b5a4a;
   font-size: 22rpx;
   font-weight: 700;
-  line-height: 54rpx;
   background: #ffffff;
 }
 
 .path-segment {
   flex: none;
   align-items: center;
-  margin-top: 10rpx;
-}
-
-.path-segment:first-child {
-  margin-top: 0;
+  margin-right: 12rpx;
+  margin-bottom: 10rpx;
 }
 
 .path-arrow {
-  margin: 0 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54rpx;
+  margin-right: 10rpx;
   color: #b19084;
   font-size: 24rpx;
   font-weight: 700;

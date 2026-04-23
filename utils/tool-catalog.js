@@ -25,17 +25,6 @@ const hotTools = [
     keywords: ['二维码', '生成', '扫码', '美化码', '链接'],
   },
   {
-    id: 'bmi',
-    title: 'BMI 计算',
-    desc: '科学评估身体健康指标',
-    icon: 'heart',
-    iconColor: '#2d6895',
-    tone: 'sky',
-    category: '生活健康',
-    path: '/pages/bmi/bmi',
-    keywords: ['bmi', '体重', '身高', '健康', '指数'],
-  },
-  {
     id: 'mortgage',
     title: '房贷计算器',
     desc: '最新利率组合贷算力',
@@ -79,6 +68,17 @@ const hotTools = [
     path: '/pages/image-compress/image-compress',
     keywords: ['图片', '压缩', '证件照', '素材', '体积'],
   },
+  {
+    id: 'nine-grid',
+    title: '九宫格切图',
+    desc: '一键切朋友圈九宫格',
+    icon: 'image',
+    iconColor: '#c4622d',
+    tone: 'coral',
+    category: '图片处理',
+    path: '/pages/nine-grid/nine-grid',
+    keywords: ['九宫格', '切图', '朋友圈', '方图', '3x3', '九格图', '图片分割'],
+  },
 ]
 
 // 更多工具 - 可搜索，不在首页展示
@@ -93,6 +93,17 @@ const moreTools = [
     category: '生活计算',
     path: '/pages/converter/converter',
     keywords: ['单位', '换算', '长度', '面积', '重量', '体积', '温度'],
+  },
+  {
+    id: 'bmi',
+    title: 'BMI 计算',
+    desc: '科学评估身体健康指标',
+    icon: 'heart',
+    iconColor: '#2d6895',
+    tone: 'sky',
+    category: '生活健康',
+    path: '/pages/bmi/bmi',
+    keywords: ['bmi', '体重', '身高', '健康', '指数'],
   },
   {
     id: 'bmr',

@@ -13,6 +13,7 @@
     "pages/poker-ledger/poker-ledger",
     "pages/converter/converter",
     "pages/image-compress/image-compress",
+    "pages/nine-grid/nine-grid",
     "pages/guide/guide",
     "pages/restaurant/restaurant"
   ],

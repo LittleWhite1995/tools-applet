@@ -58,7 +58,7 @@
             </view>
           </view>
           <view wx:if="{{relationSteps.length && !canAppendMore}}" class="path-limit">
-            这层关系先算到这儿，再往下就有点绕了。
+            {{appendStopText}}
           </view>
 
           <view class="result-card inline-result-card">
