@@ -139,6 +139,17 @@ const moreTools = [
     keywords: ['复利', '定投', '理财', '投资', '基金', '本金', '收益率', '年化', '长期投资'],
   },
   {
+    id: 'zodiac',
+    title: '星座计算器',
+    desc: '输入生日快速查询十二星座',
+    icon: 'star-filled',
+    iconColor: '#f0c36b',
+    tone: 'indigo',
+    category: '生活娱乐',
+    path: '/pages/zodiac/zodiac',
+    keywords: ['星座', '生日', '十二星座', '白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
+  },
+  {
     id: 'sky-stardust',
     title: 'Sky星尘',
     desc: '光遇游戏攻略工具',

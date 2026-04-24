@@ -1,0 +1,119 @@
+<view class="shell">
+  <navigation-bar title="星座计算器" back="{{true}}" color="#f6efe6" background="#111a2f"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-stars star-a"></view>
+        <view class="hero-stars star-b"></view>
+        <view class="hero-copy">
+          <view class="hero-kicker">ZODIAC LOOKUP</view>
+          <view class="hero-title">按阳历生日判断星座</view>
+          <view class="hero-desc">只看出生月日，不看出生年份；农历生日需要先换成公历再查。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="star-filled" size="82rpx" color="#f0c36b" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">查询条件</view>
+        <view class="card-subtitle">输入公历生日</view>
+
+        <view class="rule-panel">
+          <view class="rule-chip">只按月日判断</view>
+          <view class="rule-chip">年份不影响结果</view>
+          <view class="rule-chip">农历需先换公历</view>
+        </view>
+
+        <view class="field-row">
+          <view class="field-icon">
+            <t-icon name="calendar" size="38rpx" color="#d6a44d" />
+          </view>
+          <view class="field-main">
+            <view class="field-label">公历生日</view>
+            <picker
+              class="field-picker"
+              mode="date"
+              value="{{birthday}}"
+              end="{{maxDate}}"
+              bindchange="onDateChange"
+            >
+              <view class="picker-value {{birthday ? 'has-value' : ''}}">
+                {{birthday || '请选择生日'}}
+              </view>
+            </picker>
+          </view>
+        </view>
+
+        <view class="helper-note">选择生日后直接查询，结果按公历日期范围判断。</view>
+      </view>
+
+      <view class="result-card {{hasResult ? 'is-active' : ''}}">
+        <block wx:if="{{hasResult}}">
+          <view class="result-head">
+            <view class="result-copy">
+              <view class="result-label">查询结果</view>
+              <view class="result-name">{{zodiac.name}}</view>
+              <view class="result-meta">{{birthdayText}} · {{zodiac.enName}}</view>
+              <view class="result-range">{{zodiac.range}}</view>
+            </view>
+            <view class="zodiac-symbol">{{zodiac.icon}}</view>
+          </view>
+
+          <view class="basis-panel">
+            <view class="basis-chip">按公历月日判断</view>
+            <view class="basis-chip">不区分出生年份</view>
+          </view>
+
+          <view class="info-grid">
+            <view class="info-item">
+              <view class="info-label">属性</view>
+              <view class="info-value">{{zodiac.element}}</view>
+            </view>
+            <view class="info-item">
+              <view class="info-label">守护星</view>
+              <view class="info-value">{{zodiac.ruler}}</view>
+            </view>
+            <view class="info-item">
+              <view class="info-label">幸运色</view>
+              <view class="info-value">{{zodiac.luckyColor}}</view>
+            </view>
+          </view>
+
+          <view class="section-title">关键词</view>
+          <view class="keyword-list">
+            <view wx:for="{{zodiac.keywords}}" wx:key="*this" class="keyword-chip">{{item}}</view>
+          </view>
+
+          <view class="section-title">性格印象</view>
+          <view class="desc-card">{{zodiac.desc}}</view>
+          <view class="reset-link" bindtap="onReset">重新选择生日</view>
+        </block>
+
+        <view wx:else class="result-empty">
+          <view class="empty-title">等待查询结果</view>
+          <view class="empty-desc">选择一个公历生日后，这里会显示对应星座、日期范围和基础信息。</view>
+          <view class="empty-tip">如果生日是农历，请先换算成公历日期。</view>
+        </view>
+      </view>
+
+      <view class="zodiac-card">
+        <view class="card-title">十二星座日期表</view>
+        <view class="card-subtitle">按公历日期划分</view>
+
+        <view class="zodiac-list">
+          <view wx:for="{{zodiacList}}" wx:key="id" class="zodiac-item">
+            <view class="zodiac-item-head">
+              <text class="zodiac-mini-symbol">{{item.icon}}</text>
+              <view class="zodiac-mini-copy">
+                <view class="zodiac-mini-name">{{item.name}}</view>
+              </view>
+            </view>
+            <view class="zodiac-mini-range">{{item.range}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
