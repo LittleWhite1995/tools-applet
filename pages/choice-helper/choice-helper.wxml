@@ -1,0 +1,118 @@
+<view class="shell">
+  <navigation-bar title="选择困难助手" back="{{true}}" color="#1e231d" background="#fff6ea"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">DECIDE FOR ME</view>
+          <view class="hero-title">先定范围，再抽一个</view>
+          <view class="hero-desc">先点一个模板，再删减或补充选项。点击中间抽选台，直接开始。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="app" size="84rpx" color="#c4662d" />
+        </view>
+      </view>
+
+      <view class="template-card">
+        <view class="template-head">
+          <view class="card-title">选择场景</view>
+          <view class="card-subtitle">模板只负责缩小范围</view>
+        </view>
+
+        <scroll-view class="template-strip" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="template-strip-inner">
+            <view
+              wx:for="{{templates}}"
+              wx:key="id"
+              class="template-item {{activeTemplateId === item.id ? 'is-active' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onTemplateTap"
+            >
+              <view class="template-name">{{item.title}}</view>
+            </view>
+          </view>
+        </scroll-view>
+
+        <view class="template-note">当前场景：{{activeTemplateTitle}}，{{activeTemplateDesc}}</view>
+      </view>
+
+      <view class="option-card">
+        <view class="card-head">
+          <view>
+            <view class="card-title">{{activeTemplateTitle}}</view>
+            <view class="card-subtitle">{{activeTemplateDesc}}</view>
+          </view>
+          <view class="option-count">{{options.length}} 个选项</view>
+        </view>
+
+        <view class="input-row">
+          <input
+            class="option-input"
+            type="text"
+            value="{{optionInput}}"
+            maxlength="18"
+            placeholder="补充一个自己的选项"
+            placeholder-class="input-placeholder"
+            bindinput="onOptionInput"
+          />
+          <view class="add-action" bindtap="onAddOption">添加</view>
+        </view>
+
+        <view wx:if="{{options.length}}" class="option-list">
+          <view
+            wx:for="{{options}}"
+            wx:key="id"
+            class="option-chip"
+          >
+            <text class="option-chip-text">{{item.label}}</text>
+            <view class="option-chip-remove" data-id="{{item.id}}" bindtap="onRemoveOption">
+              <t-icon
+                name="close"
+                size="18rpx"
+                color="#9b7a69"
+              />
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="option-empty">当前没有可选项，先添加几个再抽。</view>
+
+        <view class="action-links">
+          <view class="action-link" bindtap="onRestoreTemplate">恢复模板</view>
+        </view>
+      </view>
+
+      <view class="result-card {{hasResult ? 'is-ready' : ''}} {{isPicking ? 'is-picking' : ''}}">
+        <view class="result-topline">
+          <view class="result-label">抽选结果</view>
+          <view class="result-status">{{isPicking ? '抽选中' : (hasResult ? '已决定' : '点击开始')}}</view>
+        </view>
+
+        <view class="reel-shell" bindtap="onPick">
+          <view class="reel-glow"></view>
+          <view class="reel-window {{isPicking ? 'is-picking' : ''}} {{hasResult ? 'is-ready' : ''}}">
+            <view wx:if="{{reelItems.length}}" class="reel-mask top"></view>
+            <view wx:if="{{reelItems.length}}" class="reel-mask bottom"></view>
+            <view wx:if="{{reelItems.length}}" class="reel-highlight"></view>
+
+            <view
+              wx:if="{{reelItems.length}}"
+              class="reel-track"
+              style="transform: translateY({{reelOffset}}rpx); transition-duration: {{reelDuration}}ms;"
+            >
+              <view wx:for="{{reelItems}}" wx:key="id" class="reel-item">{{item.label}}</view>
+            </view>
+
+            <view wx:if="{{!reelItems.length && hasResult}}" class="result-value">{{resultText}}</view>
+            <view wx:elif="{{!reelItems.length}}" class="result-empty">点击这里开始抽取</view>
+          </view>
+          <view class="reel-pointer left"></view>
+          <view class="reel-pointer right"></view>
+        </view>
+
+        <view class="result-desc">{{hasResult ? '这次先听它的。要是不服，再点一次中间抽选窗口。' : (isPicking ? '正在上下滚动抽选，马上停下来。' : '点击中间抽选窗口直接开始。')}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

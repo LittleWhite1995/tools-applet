@@ -150,6 +150,17 @@ const moreTools = [
     keywords: ['星座', '生日', '十二星座', '白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
   },
   {
+    id: 'choice-helper',
+    title: '选择困难助手',
+    desc: '模板优先帮你做决定',
+    icon: 'app',
+    iconColor: '#c4662d',
+    tone: 'coral',
+    category: '生活娱乐',
+    path: '/pages/choice-helper/choice-helper',
+    keywords: ['选择困难', '随机决定', '今天吃什么', '喝什么', '周末做什么', '谁来做', '随机选择'],
+  },
+  {
     id: 'sky-stardust',
     title: 'Sky星尘',
     desc: '光遇游戏攻略工具',

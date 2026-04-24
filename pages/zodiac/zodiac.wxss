@@ -97,9 +97,9 @@ page {
 .hero-title {
   margin-top: 14rpx;
   color: #f7f1e8;
-  font-size: 40rpx;
-  font-weight: 800;
-  line-height: 1.24;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .hero-desc {
@@ -179,8 +179,8 @@ page {
 
 .card-title {
   color: #f4ede3;
-  font-size: 31rpx;
-  font-weight: 800;
+  font-size: 30rpx;
+  font-weight: 700;
 }
 
 .card-subtitle {
@@ -244,7 +244,7 @@ page {
 .picker-value {
   color: rgba(215, 223, 238, 0.48);
   font-size: 34rpx;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .picker-value.has-value {
@@ -289,8 +289,8 @@ page {
 .result-name {
   margin-top: 8rpx;
   color: #f4ede3;
-  font-size: 52rpx;
-  font-weight: 900;
+  font-size: 48rpx;
+  font-weight: 700;
   line-height: 1.15;
 }
 
@@ -298,7 +298,7 @@ page {
   margin-top: 10rpx;
   color: #f0c36b;
   font-size: 24rpx;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .result-range {
@@ -354,7 +354,7 @@ page {
   margin-top: 10rpx;
   color: #f4ede3;
   font-size: 26rpx;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.35;
 }
 
@@ -397,8 +397,8 @@ page {
 
 .empty-title {
   color: #f4ede3;
-  font-size: 34rpx;
-  font-weight: 800;
+  font-size: 32rpx;
+  font-weight: 700;
 }
 
 .empty-desc {
@@ -419,7 +419,7 @@ page {
   margin-top: 24rpx;
   color: #f0c36b;
   font-size: 26rpx;
-  font-weight: 800;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -455,7 +455,7 @@ page {
   width: 52rpx;
   color: #f0c36b;
   font-size: 34rpx;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .zodiac-mini-copy {
@@ -467,7 +467,7 @@ page {
 .zodiac-mini-name {
   color: #f4ede3;
   font-size: 27rpx;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .zodiac-mini-range {
@@ -485,7 +485,7 @@ page {
   }
 
   .hero-title {
-    font-size: 36rpx;
+    font-size: 34rpx;
   }
 
   .hero-copy {
@@ -493,7 +493,7 @@ page {
   }
 
   .result-name {
-    font-size: 46rpx;
+    font-size: 44rpx;
   }
 
 }
