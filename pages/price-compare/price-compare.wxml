@@ -1,0 +1,135 @@
+<view class="shell">
+  <navigation-bar title="比价计算器" back="{{true}}" color="#241b12" background="#fff7e8"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">PRICE CHECK</view>
+          <view class="hero-title">哪个更划算</view>
+          <view class="hero-desc">输入价格和规格，自动换成统一单价比较。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="discount" size="84rpx" color="#b66f18" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-head">
+          <view>
+            <view class="card-title">比较类型</view>
+            <view class="card-subtitle">同一类型内比较才准确</view>
+          </view>
+          <view class="unit-pill">{{unitTargetText}}</view>
+        </view>
+
+        <view class="mode-tabs">
+          <view
+            wx:for="{{modeTabs}}"
+            wx:key="value"
+            class="mode-tab {{activeMode === item.value ? 'is-active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onModeTap"
+          >{{item.label}}</view>
+        </view>
+
+        <view class="item-list">
+          <view
+            wx:for="{{items}}"
+            wx:key="id"
+            class="compare-item {{item.isBest ? 'is-best' : ''}}"
+          >
+            <view class="item-top">
+              <view class="item-rank">{{index + 1}}</view>
+              <input
+                class="item-name"
+                type="text"
+                value="{{item.name}}"
+                maxlength="16"
+                placeholder="请输入商品名"
+                placeholder-class="input-placeholder"
+                data-id="{{item.id}}"
+                bindinput="onNameInput"
+              />
+              <view wx:if="{{item.savingText}}" class="item-badge {{item.isBest ? 'best' : ''}}">{{item.savingText}}</view>
+              <view
+                wx:if="{{items.length > 2}}"
+                class="remove-button"
+                data-id="{{item.id}}"
+                bindtap="onRemoveItem"
+              >
+                <t-icon name="close" size="22rpx" color="#7d8b84" />
+              </view>
+            </view>
+
+            <view class="field-grid">
+              <view class="field-box">
+                <view class="field-label">价格</view>
+                <view class="input-line">
+                  <input
+                    class="field-input"
+                    type="digit"
+                    value="{{item.price}}"
+                    placeholder="0.00"
+                    placeholder-class="input-placeholder"
+                    data-id="{{item.id}}"
+                    bindinput="onPriceInput"
+                  />
+                  <view class="field-unit">元</view>
+                </view>
+              </view>
+
+              <view class="field-box">
+                <view class="field-label">规格</view>
+                <view class="input-line">
+                  <input
+                    class="field-input"
+                    type="digit"
+                    value="{{item.amount}}"
+                    placeholder="数量"
+                    placeholder-class="input-placeholder"
+                    data-id="{{item.id}}"
+                    bindinput="onAmountInput"
+                  />
+                  <picker mode="selector" range="{{unitOptions}}" range-key="label" value="{{item.unitIndex}}" data-id="{{item.id}}" bindchange="onUnitChange">
+                    <view class="unit-picker">
+                      <text>{{item.unitSymbol}}</text>
+                      <t-icon name="chevron-down" size="24rpx" color="#b66f18" />
+                    </view>
+                  </picker>
+                </view>
+              </view>
+            </view>
+
+            <view class="unit-result">
+              <view>
+                <view class="unit-label">折算单价</view>
+                <view class="amount-note">{{item.amountText}}</view>
+              </view>
+              <view class="unit-price">{{item.unitPriceText}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="add-button" block shape="round" size="large" theme="primary" bind:tap="onAddItem">
+            添加商品
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card {{hasResult ? 'is-ready' : ''}}">
+        <view class="result-head">
+          <view>
+            <view class="result-label">比较结果</view>
+            <view class="result-name">{{bestName}}</view>
+          </view>
+          <view class="result-count">{{comparedCount}} 个有效</view>
+        </view>
+        <view class="result-price">{{bestPriceText}}</view>
+        <view class="result-desc">{{resultDesc}}</view>
+        <view class="reset-link" bindtap="onReset">清空重填</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

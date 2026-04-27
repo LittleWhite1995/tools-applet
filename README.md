@@ -29,6 +29,7 @@
 │   ├── compound/           # 复利/定投计算
 │   ├── zodiac/             # 星座计算
 │   ├── converter/          # 单位换算
+│   ├── price-compare/      # 比价计算
 │   ├── qrcode/             # 二维码生成
 │   ├── image-compress/     # 图片压缩
 │   ├── nine-grid/          # 九宫格切图

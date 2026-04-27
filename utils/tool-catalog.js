@@ -95,6 +95,17 @@ const moreTools = [
     keywords: ['单位', '换算', '长度', '面积', '重量', '体积', '温度'],
   },
   {
+    id: 'price-compare',
+    title: '比价计算器',
+    desc: '按规格算单价，快速看哪个更划算',
+    icon: 'discount',
+    iconColor: '#b66f18',
+    tone: 'amber',
+    category: '生活计算',
+    path: '/pages/price-compare/price-compare',
+    keywords: ['比价', '单价', '哪个便宜', '哪个划算', '购物', '克价', '斤价', '毫升价', '价格比较'],
+  },
+  {
     id: 'bmi',
     title: 'BMI 计算',
     desc: '科学评估身体健康指标',

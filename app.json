@@ -14,6 +14,7 @@
     "pages/shelf-life/shelf-life",
     "pages/poker-ledger/poker-ledger",
     "pages/converter/converter",
+    "pages/price-compare/price-compare",
     "pages/image-compress/image-compress",
     "pages/nine-grid/nine-grid",
     "pages/guide/guide",
