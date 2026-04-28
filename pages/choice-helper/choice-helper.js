@@ -193,9 +193,51 @@ Page({
 
     return {
       reelItems,
-      startOffset: -startSlotIndex * REEL_ITEM_HEIGHT,
-      targetOffset: -finalSlotIndex * REEL_ITEM_HEIGHT,
+      finalSlotIndex,
+      startSlotIndex,
     }
+  },
+
+  getReelMetrics() {
+    return new Promise((resolve, reject) => {
+      this.createSelectorQuery()
+        .select('.reel-window')
+        .boundingClientRect()
+        .select('.reel-highlight')
+        .boundingClientRect()
+        .select('.reel-item')
+        .boundingClientRect()
+        .exec((res) => {
+          const windowRect = res && res[0]
+          const highlightRect = res && res[1]
+          const itemRect = res && res[2]
+
+          if (!windowRect || !highlightRect || !itemRect || !itemRect.height) {
+            reject(new Error('reel metrics unavailable'))
+            return
+          }
+
+          resolve({
+            itemHeight: itemRect.height,
+            highlightTop: highlightRect.top - windowRect.top,
+          })
+        })
+    })
+  },
+
+  getFallbackReelMetrics() {
+    const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {}
+    const rpxRatio = (systemInfo.windowWidth || 375) / 750
+    const itemHeight = REEL_ITEM_HEIGHT * rpxRatio
+
+    return {
+      itemHeight,
+      highlightTop: itemHeight,
+    }
+  },
+
+  getReelOffset(slotIndex, metrics) {
+    return Math.round(metrics.highlightTop - slotIndex * metrics.itemHeight)
   },
 
   finishPick(selected, targetOffset) {
@@ -224,7 +266,7 @@ Page({
 
     const finalIndex = Math.floor(Math.random() * this.data.options.length)
     const finalOption = this.data.options[finalIndex]
-    const { reelItems, startOffset, targetOffset } = this.buildReelData(this.data.options, finalIndex)
+    const { reelItems, startSlotIndex, finalSlotIndex } = this.buildReelData(this.data.options, finalIndex)
 
     this.clearPickTimer()
 
@@ -233,20 +275,34 @@ Page({
       hasResult: false,
       resultText: '',
       reelItems,
-      reelOffset: startOffset,
+      reelOffset: 0,
       reelDuration: 0,
       selectedOptionId: '',
+    }, () => {
+      this.getReelMetrics()
+        .catch(() => this.getFallbackReelMetrics())
+        .then((metrics) => {
+          if (!this.data.isPicking) return
+
+          const startOffset = this.getReelOffset(startSlotIndex, metrics)
+          const targetOffset = this.getReelOffset(finalSlotIndex, metrics)
+
+          this.setData({
+            reelOffset: startOffset,
+            reelDuration: 0,
+          })
+
+          this.pickTimer = setTimeout(() => {
+            this.setData({
+              reelOffset: targetOffset,
+              reelDuration: REEL_TRANSITION_MS,
+            })
+
+            this.pickTimer = setTimeout(() => {
+              this.finishPick(finalOption, targetOffset)
+            }, REEL_TRANSITION_MS)
+          }, 60)
+        })
     })
-
-    this.pickTimer = setTimeout(() => {
-      this.setData({
-        reelOffset: targetOffset,
-        reelDuration: REEL_TRANSITION_MS,
-      })
-
-      this.pickTimer = setTimeout(() => {
-        this.finishPick(finalOption, targetOffset)
-      }, REEL_TRANSITION_MS)
-    }, 60)
   },
 })

@@ -1,0 +1,170 @@
+<view class="shell">
+  <navigation-bar title="图片尺寸调整" back="{{true}}" color="#16242a" background="#eef6fa"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">IMAGE RESIZE</view>
+          <view class="hero-title">裁成指定尺寸</view>
+          <view class="hero-desc">报名照、头像、上传材料图，本地处理后保存。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="frame" size="84rpx" color="#2d6895" />
+        </view>
+      </view>
+
+      <view class="upload-card">
+        <view class="card-head">
+          <view class="card-title">选择图片</view>
+          <view class="card-subtitle">本地处理</view>
+        </view>
+
+        <view wx:if="{{hasImage}}" class="image-preview {{isProcessing ? 'is-disabled' : ''}}">
+          <image class="preview-thumb" src="{{originalPath}}" mode="aspectFill"></image>
+          <view class="image-info">
+            <view class="image-title">原图已就绪</view>
+            <view class="image-desc">{{originalSize}} / {{originalDimensions}}</view>
+          </view>
+          <view class="change-button {{isProcessing ? 'is-disabled' : ''}}" bindtap="onChooseImage">更换</view>
+        </view>
+
+        <view wx:else class="uploader" bindtap="onChooseImage">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="46rpx" color="#2d6895" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一张图片</view>
+            <view class="upload-desc">支持 JPG、PNG 等常见图片</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-card">
+        <view class="card-head">
+          <view class="card-title">输出尺寸</view>
+          <view class="card-subtitle">{{targetText}}</view>
+        </view>
+
+        <view class="template-grid">
+          <view
+            wx:for="{{sizeTemplates}}"
+            wx:key="id"
+            class="template-item {{activeTemplateId === item.id ? 'is-active' : ''}} {{isProcessing ? 'is-disabled' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="onTemplateTap"
+          >
+            <view class="template-title">{{item.title}}</view>
+            <view class="template-desc">{{item.desc}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{activeTemplateId === 'custom'}}" class="custom-row">
+          <view class="custom-field">
+            <view class="field-label">宽度</view>
+            <view class="field-line">
+              <input
+                class="field-input"
+                type="number"
+                value="{{customWidth}}"
+                placeholder="宽"
+                placeholder-class="input-placeholder"
+                bindinput="onCustomWidthInput"
+              />
+              <view class="field-unit">px</view>
+            </view>
+          </view>
+          <view class="custom-field">
+            <view class="field-label">高度</view>
+            <view class="field-line">
+              <input
+                class="field-input"
+                type="number"
+                value="{{customHeight}}"
+                placeholder="高"
+                placeholder-class="input-placeholder"
+                bindinput="onCustomHeightInput"
+              />
+              <view class="field-unit">px</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="setting-block">
+          <view class="setting-label">适配方式</view>
+          <view class="option-row">
+            <view
+              wx:for="{{fitModes}}"
+              wx:key="id"
+              class="mode-option {{fitMode === item.id ? 'is-active' : ''}} {{isProcessing ? 'is-disabled' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onFitModeTap"
+            >
+              <view class="option-title">{{item.title}}</view>
+              <view class="option-desc">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button
+            class="process-button"
+            block
+            shape="round"
+            size="large"
+            theme="primary"
+            loading="{{isProcessing}}"
+            bind:tap="onProcess"
+          >
+            {{isProcessing ? '处理中' : (hasResult ? '重新生成' : '生成图片')}}
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="card-head">
+          <view>
+            <view class="card-title">处理结果</view>
+            <view class="card-subtitle">{{hasResult ? outputDimensions : '生成后显示尺寸和体积'}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{hasResult ? outputSize : '待生成'}}</view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="result-preview" bindtap="onPreviewResult">
+          <image class="result-image" src="{{outputPath}}" mode="aspectFit"></image>
+        </view>
+
+        <view wx:else class="result-empty">
+          选好图片、尺寸和适配方式后，这里会显示生成预览。
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">输出尺寸</view>
+            <view class="summary-value">{{hasResult ? outputDimensions : targetText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">导出格式</view>
+            <view class="summary-value">{{qualityText}}</view>
+          </view>
+        </view>
+
+        <view class="save-row">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '图片已生成' : '生成后可保存'}}</view>
+            <view class="save-desc">{{hasResult ? '点击预览图可放大查看' : '图片只在本地处理'}}</view>
+          </view>
+          <view
+            class="save-action {{hasResult && !isSaving ? 'is-enabled' : ''}}"
+            bindtap="onSave"
+          >
+            <t-icon wx:if="{{!isSaving}}" name="download" size="34rpx" color="{{hasResult ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else class="spinning-icon" name="loading" size="34rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="resizeCanvas" class="resize-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>

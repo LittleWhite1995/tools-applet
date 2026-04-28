@@ -1,3 +1,5 @@
+const { ensureAlbumPermission, isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
+
 const MAX_EXPORT_SIZE = 3072
 
 const createCropOptions = (imageInfo) => {
@@ -373,7 +375,8 @@ Page({
       saveProgressText: `1/${this.data.tiles.length}`,
     })
 
-    this.saveTilesSequentially(0)
+    ensureAlbumPermission('打开权限后，就能把 9 张切图一次保存到相册。')
+      .then(() => this.saveTilesSequentially(0))
       .then(() => {
         this.setData({
           isSaving: false,
@@ -391,25 +394,12 @@ Page({
           saveProgressText: '',
         })
 
+        if (payload && payload.handled) return
+
         const error = payload && payload.error ? payload.error : payload
         const failedIndex = payload && typeof payload.index === 'number' ? payload.index + 1 : 0
-        const errMsg = String(error && error.errMsg || '')
 
-        if (errMsg.includes('auth deny')) {
-          wx.showModal({
-            title: '需要相册权限',
-            content: '打开权限后，就能把 9 张切图一次保存到相册。',
-            confirmText: '去设置',
-            success: (res) => {
-              if (res.confirm) {
-                wx.openSetting()
-              }
-            },
-          })
-          return
-        }
-
-        if (errMsg.includes('cancel')) return
+        if (isSaveCancel(error)) return
 
         wx.showToast({
           title: failedIndex ? `第 ${failedIndex} 张保存失败` : '保存失败',
@@ -427,13 +417,12 @@ Page({
       saveProgressText: `${index + 1}/${this.data.tiles.length}`,
     })
 
-    return new Promise((resolve, reject) => {
-      wx.saveImageToPhotosAlbum({
-        filePath: this.data.tiles[index].path,
-        success: resolve,
-        fail: (error) => reject({ error, index }),
-      })
-    }).then(() => this.saveTilesSequentially(index + 1))
+    return saveImageToAlbum({
+      filePath: this.data.tiles[index].path,
+      permissionText: '打开权限后，就能把 9 张切图一次保存到相册。',
+    })
+      .catch((error) => Promise.reject({ error, index, handled: error && error.handled }))
+      .then(() => this.saveTilesSequentially(index + 1))
   },
 
   getFileSize(filePath, fallbackSize) {

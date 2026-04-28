@@ -1,3 +1,5 @@
+const { isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
+
 Page({
   data: {
     inputValue: '',
@@ -204,9 +206,11 @@ Page({
   },
 
   saveImage(filePath) {
-    wx.saveImageToPhotosAlbum({
+    saveImageToAlbum({
       filePath,
-      success: () => {
+      permissionText: '打开权限后就能保存二维码图片。',
+    })
+      .then(() => {
         this.setData({
           isSaving: false,
         })
@@ -214,23 +218,13 @@ Page({
           title: '已保存到相册',
           icon: 'success',
         })
-      },
-      fail: (error) => {
+      })
+      .catch((error) => {
         this.setData({
           isSaving: false,
         })
 
-        if (String(error.errMsg || '').includes('auth deny')) {
-          wx.showModal({
-            title: '需要相册权限',
-            content: '打开权限后就能保存二维码图片。',
-            confirmText: '去设置',
-            success: (res) => {
-              if (res.confirm) {
-                wx.openSetting()
-              }
-            },
-          })
+        if ((error && error.handled) || isSaveCancel(error)) {
           return
         }
 
@@ -238,7 +232,6 @@ Page({
           title: '保存失败',
           icon: 'none',
         })
-      },
-    })
+      })
   },
 })

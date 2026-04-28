@@ -16,6 +16,7 @@
     "pages/converter/converter",
     "pages/price-compare/price-compare",
     "pages/image-compress/image-compress",
+    "pages/image-resize/image-resize",
     "pages/nine-grid/nine-grid",
     "pages/guide/guide",
     "pages/restaurant/restaurant"
@@ -23,6 +24,11 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
+  },
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存生成或处理后的图片到相册"
+    }
   },
   "renderer": "skyline",
   "rendererOptions": {

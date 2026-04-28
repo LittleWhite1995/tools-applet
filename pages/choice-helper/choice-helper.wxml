@@ -99,7 +99,7 @@
             <view
               wx:if="{{reelItems.length}}"
               class="reel-track"
-              style="transform: translateY({{reelOffset}}rpx); transition-duration: {{reelDuration}}ms;"
+              style="transform: translateY({{reelOffset}}px); transition-duration: {{reelDuration}}ms;"
             >
               <view wx:for="{{reelItems}}" wx:key="id" class="reel-item">{{item.label}}</view>
             </view>
