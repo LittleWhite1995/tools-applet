@@ -1,0 +1,124 @@
+<view class="shell">
+  <navigation-bar title="视频压缩" back="{{true}}" color="#1b2230" background="#f1f4fb"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">VIDEO COMPRESS</view>
+          <view class="hero-title">本地压缩视频体积</view>
+          <view class="hero-desc">适合发聊天、传资料前，把视频变小一些。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="video" size="84rpx" color="#5d67d8" />
+        </view>
+      </view>
+
+      <view class="upload-card">
+        <view class="card-head">
+          <view class="card-title">选择视频</view>
+          <view class="card-subtitle">本地处理</view>
+        </view>
+
+        <view wx:if="{{hasVideo}}" class="video-preview {{isCompressing ? 'is-disabled' : ''}}">
+          <video class="preview-video" src="{{originalPath}}" controls="{{false}}" show-center-play-btn="{{true}}" object-fit="cover"></video>
+          <view class="video-info">
+            <view class="video-title">原视频</view>
+            <view class="video-desc">{{originalSize}} / {{originalDimensions}} / {{durationText}}</view>
+          </view>
+          <view class="change-button {{isCompressing ? 'is-disabled' : ''}}" bindtap="onChooseVideo">更换</view>
+        </view>
+
+        <view wx:else class="uploader" bindtap="onChooseVideo">
+          <view class="upload-icon">
+            <t-icon name="video" size="46rpx" color="#5d67d8" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一个视频</view>
+            <view class="upload-desc">压缩效果会因系统和视频内容不同而变化</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasVideo}}" class="source-note">如果这里的大小和相册里不一样，说明手机没有传入原视频。</view>
+      </view>
+
+      <view class="setting-card">
+        <view class="card-title">压缩设置</view>
+        <view class="setting-block">
+          <view class="setting-label">压缩质量</view>
+          <view class="option-row">
+            <view
+              wx:for="{{qualityOptions}}"
+              wx:key="value"
+              class="quality-option {{qualityMode === item.value ? 'is-active' : ''}} {{isCompressing ? 'is-disabled' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onQualityTap"
+            >
+              <view class="option-title">{{item.label}}</view>
+              <view class="option-desc">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button
+            class="compress-button"
+            block
+            shape="round"
+            size="large"
+            theme="primary"
+            loading="{{isCompressing}}"
+            bind:tap="onCompress"
+          >
+            {{isCompressing ? '压缩中' : (hasResult ? '重新压缩' : '开始压缩')}}
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">压缩结果</view>
+            <view class="result-value">{{compressedSize}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{hasResult ? compressionRatio : '待压缩'}}</view>
+        </view>
+
+        <view class="compare-grid">
+          <view class="compare-item">
+            <view class="compare-label">原视频</view>
+            <view class="compare-value">{{originalSize}}</view>
+            <view class="compare-sub">{{originalDimensions}}</view>
+          </view>
+          <view class="compare-item">
+            <view class="compare-label">压缩后</view>
+            <view class="compare-value">{{compressedSize}}</view>
+            <view class="compare-sub">{{compressedDimensions}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="compressed-preview">
+          <video class="compressed-video" src="{{compressedPath}}" controls object-fit="contain"></video>
+        </view>
+
+        <view wx:else class="result-empty">
+          选择视频并点击压缩后，这里会显示新文件体积和预览。
+        </view>
+
+        <view class="save-row">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '压缩视频已生成' : '生成后可保存'}}</view>
+            <view class="save-desc">{{hasResult ? '如果满意，就保存到相册' : '视频只在本地处理'}}</view>
+          </view>
+          <view
+            class="save-action {{hasResult && !isSaving ? 'is-enabled' : ''}}"
+            bindtap="onSave"
+          >
+            <t-icon wx:if="{{!isSaving}}" name="download" size="34rpx" color="{{hasResult ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else class="spinning-icon" name="loading" size="34rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

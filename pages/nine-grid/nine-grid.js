@@ -421,7 +421,11 @@ Page({
       filePath: this.data.tiles[index].path,
       permissionText: '打开权限后，就能把 9 张切图一次保存到相册。',
     })
-      .catch((error) => Promise.reject({ error, index, handled: error && error.handled }))
+      .catch((error) => Promise.reject({
+        error,
+        index,
+        handled: error && error.handled,
+      }))
       .then(() => this.saveTilesSequentially(index + 1))
   },
 
