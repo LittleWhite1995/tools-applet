@@ -42,6 +42,8 @@ const modeTabs = Object.keys(compareModes).map((value) => ({
   label: compareModes[value].label,
 }))
 
+const PRICE_EPSILON = 0.000001
+
 const formatNumber = (value, digits = 2) => {
   if (!Number.isFinite(value)) return '--'
 
@@ -93,9 +95,12 @@ Page({
     items: getInitialItems(),
     comparedCount: 0,
     hasResult: false,
-    bestName: '--',
-    bestPriceText: '--',
-    resultDesc: '至少填写 2 个商品的价格和规格，就能看出哪个更划算。',
+    resultTitle: '至少填写 2 个商品的价格和规格',
+    resultSummary: '',
+    resultRows: [
+      { label: '最低单价', value: '--' },
+      { label: '相比第二名', value: '--' },
+    ],
   },
 
   onModeTap(event) {
@@ -190,20 +195,35 @@ Page({
 
   getCompareState(activeMode, sourceItems) {
     const mode = compareModes[activeMode]
-    const itemsWithPrice = sourceItems.map((item) => this.normalizeItem(item, mode))
-    const validItems = itemsWithPrice.filter((item) => item.hasValid)
-    const bestPrice = validItems.reduce((min, item) => (
-      !min || item.unitPrice < min ? item.unitPrice : min
-    ), 0)
-    const bestItem = validItems.find((item) => item.unitPrice === bestPrice)
+    const itemsWithName = sourceItems
+      .map((item) => this.normalizeItem(item, mode))
+      .map((item, index) => ({
+        ...item,
+        itemNumber: index + 1,
+        displayName: item.name || `第 ${index + 1} 个商品`,
+      }))
+    const validItems = itemsWithName.filter((item) => item.hasValid)
+    const rankedItems = [...validItems].sort((a, b) => a.unitPrice - b.unitPrice)
+    const bestItem = rankedItems[0]
+    const secondItem = rankedItems[1]
     const hasResult = validItems.length >= 2
-    const items = itemsWithPrice.map((item, index) => {
-      const displayName = item.name || `第 ${index + 1} 个商品`
-      const isBest = hasResult && item.hasValid && item.id === bestItem.id
+    const bestPrice = bestItem ? bestItem.unitPrice : 0
+    const tiedBestCount = hasResult
+      ? validItems.filter((item) => Math.abs(item.unitPrice - bestPrice) < PRICE_EPSILON).length
+      : 0
+    const secondDiff = hasResult && secondItem
+      ? secondItem.unitPrice - bestPrice
+      : 0
+    const secondDiffPercent = hasResult && bestPrice > 0
+      ? secondDiff / bestPrice * 100
+      : 0
+    const advantageText = this.getAdvantageText(secondDiff, secondDiffPercent, mode.unitTargetText)
+    const items = itemsWithName.map((item) => {
+      const isBest = hasResult && item.hasValid && Math.abs(item.unitPrice - bestPrice) < PRICE_EPSILON
       let savingText = ''
 
       if (isBest) {
-        savingText = '最划算'
+        savingText = tiedBestCount > 1 ? '并列最低' : '最划算'
       } else if (hasResult && item.hasValid) {
         const percent = (item.unitPrice / bestPrice - 1) * 100
         savingText = `贵 ${formatNumber(percent, percent >= 10 ? 0 : 1)}%`
@@ -211,14 +231,10 @@ Page({
 
       return {
         ...item,
-        displayName,
         isBest,
         savingText,
       }
     })
-    const bestDisplayName = hasResult
-      ? items.find((item) => item.id === bestItem.id).displayName
-      : '--'
 
     return {
       activeMode,
@@ -227,12 +243,36 @@ Page({
       items,
       comparedCount: validItems.length,
       hasResult,
-      bestName: bestDisplayName,
-      bestPriceText: hasResult ? `${formatPrice(bestItem.unitPrice)} ${mode.unitTargetText}` : '--',
-      resultDesc: hasResult
-        ? `已比较 ${validItems.length} 个商品，单价最低的是 ${bestDisplayName}。`
-        : '至少填写 2 个商品的价格和规格，就能看出哪个更划算。',
+      resultTitle: this.getResultTitle(hasResult, bestItem, tiedBestCount),
+      resultSummary: hasResult ? advantageText : '',
+      resultRows: [
+        {
+          label: '最低单价',
+          value: hasResult ? `${formatPrice(bestItem.unitPrice)} ${mode.unitTargetText}` : '--',
+        },
+        {
+          label: '相比第二名',
+          value: hasResult ? advantageText : '--',
+        },
+      ],
     }
+  },
+
+  getAdvantageText(diffPrice, diffPercent, unitTargetText) {
+    if (Math.abs(diffPrice) < PRICE_EPSILON) {
+      return '和第二名单价相同'
+    }
+
+    const percentText = formatNumber(diffPercent, diffPercent >= 10 ? 0 : 1)
+
+    return `便宜 ${formatPrice(diffPrice)} ${unitTargetText}，约 ${percentText}%`
+  },
+
+  getResultTitle(hasResult, bestItem, tiedBestCount) {
+    if (!hasResult) return '至少填写 2 个商品的价格和规格'
+    if (tiedBestCount > 1) return `${tiedBestCount} 个商品单价持平`
+
+    return `建议选第 ${bestItem.itemNumber} 个商品`
   },
 
   normalizeItem(item, mode) {

@@ -119,15 +119,24 @@
       </view>
 
       <view class="result-card {{hasResult ? 'is-ready' : ''}}">
-        <view class="result-head">
+        <view class="card-head">
           <view>
-            <view class="result-label">比较结果</view>
-            <view class="result-name">{{bestName}}</view>
+            <view class="card-title">比较结果</view>
+            <view class="card-subtitle">{{resultTitle}}</view>
           </view>
           <view class="result-count">{{comparedCount}} 个有效</view>
         </view>
-        <view class="result-price">{{bestPriceText}}</view>
-        <view class="result-desc">{{resultDesc}}</view>
+        <view wx:if="{{hasResult}}" class="result-summary">{{resultSummary}}</view>
+        <view wx:if="{{hasResult}}" class="result-metrics">
+          <view
+            wx:for="{{resultRows}}"
+            wx:key="label"
+            class="result-metric"
+          >
+            <view class="metric-label">{{item.label}}</view>
+            <view class="metric-value">{{item.value}}</view>
+          </view>
+        </view>
         <view class="reset-link" bindtap="onReset">清空重填</view>
       </view>
     </view>

@@ -39,7 +39,7 @@ page {
 .unit-picker,
 .unit-result,
 .button-row,
-.result-head {
+.result-metrics {
   display: flex;
 }
 
@@ -127,7 +127,7 @@ page {
 
 .card-title {
   color: #241b12;
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 700;
 }
 
@@ -220,7 +220,7 @@ page {
   height: 54rpx;
   margin-left: 16rpx;
   color: #241b12;
-  font-size: 28rpx;
+  font-size: 25rpx;
   font-weight: 700;
 }
 
@@ -286,7 +286,7 @@ page {
   min-width: 0;
   height: 58rpx;
   color: #241b12;
-  font-size: 34rpx;
+  font-size: 28rpx;
   font-weight: 700;
 }
 
@@ -335,7 +335,7 @@ page {
   flex: none;
   max-width: 230rpx;
   color: #241b12;
-  font-size: 36rpx;
+  font-size: 28rpx;
   font-weight: 700;
   line-height: 1.1;
   text-align: right;
@@ -354,60 +354,65 @@ page {
 }
 
 .result-card {
-  background:
-    radial-gradient(circle at 92% 8%, rgba(245, 210, 139, 0.14), transparent 24%),
-    linear-gradient(180deg, #3f2d18, #24180d);
+  background: #ffffff;
+  box-shadow: 0 14rpx 32rpx rgba(96, 62, 20, 0.05);
 }
 
 .result-card.is-ready {
-  background:
-    radial-gradient(circle at 92% 8%, rgba(245, 210, 139, 0.2), transparent 24%),
-    linear-gradient(180deg, #4a351b, #24180d);
-}
-
-.result-head {
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.result-label {
-  color: rgba(237, 249, 244, 0.68);
-  font-size: 23rpx;
-}
-
-.result-name {
-  margin-top: 6rpx;
-  color: #ffffff;
-  font-size: 36rpx;
-  font-weight: 700;
-  line-height: 1.2;
+  background: #ffffff;
 }
 
 .result-count {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffe9c3;
+  background: #fff0d4;
+  color: #b66f18;
 }
 
-.result-price {
-  margin-top: 26rpx;
-  color: #ffe2bd;
-  font-size: 52rpx;
+.result-summary {
+  margin-top: 22rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 24rpx;
+  background: #fff7e8;
+  color: #8a5412;
+  font-size: 23rpx;
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.45;
+}
+
+.result-metrics {
+  margin-top: 18rpx;
+}
+
+.result-metric {
+  flex: 1;
+  min-width: 0;
+  padding: 18rpx 20rpx;
+  border-radius: 22rpx;
+  box-sizing: border-box;
+  background: #fffaf2;
+}
+
+.result-metric + .result-metric {
+  margin-left: 16rpx;
+}
+
+.metric-label {
+  color: #9a8a76;
+  font-size: 21rpx;
+}
+
+.metric-value {
+  margin-top: 8rpx;
+  color: #241b12;
+  font-size: 21rpx;
+  font-weight: 700;
+  line-height: 1.35;
   word-break: break-all;
 }
 
-.result-desc {
-  margin-top: 18rpx;
-  color: rgba(237, 249, 244, 0.72);
-  font-size: 24rpx;
-  line-height: 1.5;
-}
-
 .reset-link {
-  margin-top: 24rpx;
-  color: #ffe9c3;
-  font-size: 25rpx;
+  margin-top: 22rpx;
+  color: #b66f18;
+  font-size: 24rpx;
   font-weight: 700;
   text-align: center;
 }
@@ -436,6 +441,6 @@ page {
   }
 
   .field-input {
-    font-size: 30rpx;
+    font-size: 28rpx;
   }
 }
