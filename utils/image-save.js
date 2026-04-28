@@ -85,8 +85,32 @@ const saveImageToAlbum = ({ filePath, permissionText }) => (
     })
 )
 
+const saveVideoToAlbum = ({ filePath, permissionText }) => (
+  ensureAlbumPermission(permissionText)
+    .then(() => new Promise((resolve, reject) => {
+      wx.saveVideoToPhotosAlbum({
+        filePath,
+        success: resolve,
+        fail: reject,
+      })
+    }))
+    .catch((error) => {
+      if (error && error.handled) {
+        return Promise.reject(error)
+      }
+
+      if (isAlbumPermissionError(error)) {
+        return showAlbumPermissionModal(permissionText)
+          .then(() => Promise.reject({ handled: true }))
+      }
+
+      return Promise.reject(error)
+    })
+)
+
 module.exports = {
   ensureAlbumPermission,
   isSaveCancel,
   saveImageToAlbum,
+  saveVideoToAlbum,
 }

@@ -33,6 +33,7 @@
 │   ├── qrcode/             # 二维码生成
 │   ├── image-compress/     # 图片压缩
 │   ├── image-resize/       # 图片尺寸调整
+│   ├── video-compress/     # 视频压缩
 │   ├── nine-grid/          # 九宫格切图
 │   ├── relationship/       # 亲戚关系计算
 │   ├── shelf-life/         # 保质期计算

@@ -69,17 +69,6 @@ const hotTools = [
     keywords: ['图片', '压缩', '证件照', '素材', '体积'],
   },
   {
-    id: 'image-resize',
-    title: '图片尺寸调整',
-    desc: '裁成指定尺寸，PNG 无损导出',
-    icon: 'frame',
-    iconColor: '#2d6895',
-    tone: 'sky',
-    category: '图片处理',
-    path: '/pages/image-resize/image-resize',
-    keywords: ['图片尺寸', '证件照', '裁切', '改尺寸', '报名照', '头像', '像素', '一寸照', '二寸照'],
-  },
-  {
     id: 'nine-grid',
     title: '九宫格切图',
     desc: '一键切朋友圈九宫格',
@@ -94,6 +83,28 @@ const hotTools = [
 
 // 更多工具 - 可搜索，不在首页展示
 const moreTools = [
+  {
+    id: 'image-resize',
+    title: '图片尺寸调整',
+    desc: '裁成指定尺寸，PNG 无损导出',
+    icon: 'frame',
+    iconColor: '#2d6895',
+    tone: 'sky',
+    category: '图片处理',
+    path: '/pages/image-resize/image-resize',
+    keywords: ['图片尺寸', '证件照', '裁切', '改尺寸', '报名照', '头像', '像素', '一寸照', '二寸照'],
+  },
+  {
+    id: 'video-compress',
+    title: '视频压缩',
+    desc: '本地压缩视频，减小发送体积',
+    icon: 'video',
+    iconColor: '#5d67d8',
+    tone: 'indigo',
+    category: '视频处理',
+    path: '/pages/video-compress/video-compress',
+    keywords: ['视频', '压缩', '视频压缩', '体积', '发送', '相册', '本地处理'],
+  },
   {
     id: 'converter',
     title: '单位换算',
