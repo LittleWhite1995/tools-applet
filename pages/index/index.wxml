@@ -112,7 +112,17 @@
             <view class="topic-label">{{item.label}}</view>
             <view class="topic-title">{{item.title}}</view>
             <view class="topic-desc">{{item.desc}}</view>
-            <t-button class="topic-button" shape="round" size="medium" theme="primary" variant="base">
+            <t-button
+              class="topic-button"
+              shape="round"
+              size="medium"
+              theme="primary"
+              variant="base"
+              bind:tap="onToolTap"
+              data-name="{{item.title}}"
+              data-path="{{item.path}}"
+              data-press-key="{{item.pressKey}}"
+            >
               {{item.button}}
             </t-button>
           </view>
