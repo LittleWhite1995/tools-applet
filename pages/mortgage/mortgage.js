@@ -10,14 +10,19 @@ const repayTypes = [
 ]
 
 const quickYears = ['10', '20', '30']
+const downPaymentOptions = ['20', '30', '40', '50']
 
 Page({
   data: {
     loanTypes,
     repayTypes,
     quickYears,
+    downPaymentOptions,
     loanType: 'commercial',
     repayType: 'interest',
+    houseTotalPrice: '',
+    downPaymentRate: '30',
+    helperLoanAmount: '',
     commercialAmount: '',
     fundAmount: '',
     years: '',
@@ -46,26 +51,140 @@ Page({
       data.commercialAmount = ''
     }
 
-    this.setData(data)
+    this.setData(data, () => {
+      if (this.data.helperLoanAmount) {
+        this.syncHelperLoanAmount()
+      }
+      this.clearResult()
+    })
   },
 
   onRepayTypeTap(event) {
     this.setData({
       repayType: event.currentTarget.dataset.value,
+    }, () => {
+      this.clearResult()
     })
   },
 
   onInput(event) {
     const { field } = event.currentTarget.dataset
+    const value = event.detail.value
+
+    if (field === 'commercialAmount' || field === 'fundAmount') {
+      this.setData({
+        [field]: value,
+      }, () => {
+        this.updateHouseTotalFromLoan(field)
+        this.clearResult()
+      })
+      return
+    }
 
     this.setData({
-      [field]: event.detail.value,
+      [field]: value,
+    }, () => {
+      this.clearResult()
     })
   },
 
   onQuickYearTap(event) {
     this.setData({
       years: event.currentTarget.dataset.year,
+    }, () => {
+      this.clearResult()
+    })
+  },
+
+  onDownPaymentTap(event) {
+    const rate = event.currentTarget.dataset.rate
+
+    this.setData({
+      downPaymentRate: rate,
+    }, () => {
+      this.updateHelperLoanAmount()
+      this.clearResult()
+    })
+  },
+
+  onDownPaymentInput(event) {
+    this.setData({
+      downPaymentRate: event.detail.value,
+    }, () => {
+      this.updateHelperLoanAmount()
+      this.clearResult()
+    })
+  },
+
+  onHouseTotalInput(event) {
+    this.setData({
+      houseTotalPrice: event.detail.value,
+    }, () => {
+      this.updateHelperLoanAmount()
+      this.clearResult()
+    })
+  },
+
+  updateHelperLoanAmount() {
+    const totalPrice = Number(this.data.houseTotalPrice)
+    const downPaymentRate = Number(this.data.downPaymentRate)
+
+    if (!totalPrice || totalPrice <= 0 || downPaymentRate < 0 || downPaymentRate >= 100) {
+      this.setData({
+        helperLoanAmount: '',
+      })
+      return
+    }
+
+    const loanAmount = totalPrice * (100 - downPaymentRate) / 100
+    const helperLoanAmount = this.trimNumber(loanAmount)
+    this.setData({
+      helperLoanAmount,
+    }, () => {
+      this.syncHelperLoanAmount()
+    })
+  },
+
+  syncHelperLoanAmount() {
+    const { helperLoanAmount } = this.data
+
+    if (!helperLoanAmount) {
+      return
+    }
+
+    const patch = {}
+
+    if (this.data.loanType === 'fund') {
+      patch.fundAmount = helperLoanAmount
+    } else {
+      patch.commercialAmount = helperLoanAmount
+    }
+
+    this.setData(patch)
+  },
+
+  updateHouseTotalFromLoan(field) {
+    const downPaymentRate = Number(this.data.downPaymentRate)
+
+    if (downPaymentRate < 0 || downPaymentRate >= 100) {
+      return
+    }
+
+    const commercialAmount = Number(this.data.commercialAmount || 0)
+    const fundAmount = Number(this.data.fundAmount || 0)
+    const loanAmount = this.data.loanType === 'combined'
+      ? commercialAmount + fundAmount
+      : Number(this.data[field] || 0)
+
+    if (!loanAmount || loanAmount <= 0) {
+      return
+    }
+
+    const totalPrice = loanAmount / ((100 - downPaymentRate) / 100)
+
+    this.setData({
+      houseTotalPrice: this.trimNumber(totalPrice),
+      helperLoanAmount: this.trimNumber(loanAmount),
     })
   },
 
@@ -273,7 +392,11 @@ Page({
     return `${value.toFixed(2)} 元`
   },
 
-  onReset() {
+  trimNumber(value) {
+    return Number(value.toFixed(2)).toString()
+  },
+
+  clearResult() {
     this.setData({
       hasResult: false,
       result: {
@@ -285,5 +408,9 @@ Page({
       },
       schedule: [],
     })
+  },
+
+  onReset() {
+    this.clearResult()
   },
 })

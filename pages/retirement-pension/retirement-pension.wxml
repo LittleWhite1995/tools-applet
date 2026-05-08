@@ -1,0 +1,275 @@
+<view class="shell">
+  <navigation-bar title="养老金估算器" back="{{true}}" color="#15231f" background="#f6fbf7"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">PENSION</view>
+          <view class="hero-title">估算退休后每月养老金</view>
+          <view class="hero-desc">先按普通信息粗算，不知道计发基数也可以看一个大概区间。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="wallet" size="84rpx" color="#3f7a4b" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">普通估算</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-base">
+              <t-icon name="calendar" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">当前年龄</view>
+              <input
+                class="field-input"
+                type="number"
+                value="{{currentAge}}"
+                placeholder="例如 35"
+                placeholder-class="input-placeholder"
+                data-field="currentAge"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">岁</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-years">
+              <t-icon name="calendar" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">已缴养老保险年限</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{payYears}}"
+                placeholder="例如 5、15、25"
+                placeholder-class="input-placeholder"
+                data-field="payYears"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">年</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-account">
+              <t-icon name="wallet" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">个人养老账户余额</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{accountBalance}}"
+                placeholder="社保查询里的养老账户余额"
+                placeholder-class="input-placeholder"
+                data-field="accountBalance"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-index">
+              <t-icon name="activity" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">养老按多少工资交</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{monthlyPayBase}}"
+                placeholder="例如 10000，不知道可不填"
+                placeholder-class="input-placeholder"
+                data-field="monthlyPayBase"
+                bindinput="onInput"
+              />
+              <view class="field-tip">工资条里养老个人扣款 ÷ 8% 可粗略反推；不填时按下面的缴费水平估算。</view>
+            </view>
+            <view class="field-unit">元/月</view>
+          </view>
+        </view>
+
+        <view class="quick-panel">
+          <view class="quick-label">预计退休年龄</view>
+          <view class="retire-age-input-row">
+            <input
+              class="retire-age-input"
+              type="digit"
+              value="{{retireAge}}"
+              placeholder="可手动填写"
+              placeholder-class="input-placeholder"
+              data-field="retireAge"
+              bindinput="onInput"
+            />
+            <view class="retire-age-unit">岁</view>
+          </view>
+          <view class="age-row">
+            <view
+              wx:for="{{retireAgeOptions}}"
+              wx:key="age"
+              class="age-chip {{retireAge === item.age ? 'active' : ''}}"
+              data-age="{{item.age}}"
+              bindtap="onAgeTap"
+            >
+              <view class="age-main">{{item.age}} 岁</view>
+              <view class="age-sub">{{item.months}} 月</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="quick-panel">
+          <view class="quick-label">未来缴费水平</view>
+          <view class="level-row">
+            <view
+              wx:for="{{contributionLevelOptions}}"
+              wx:key="id"
+              class="level-chip {{contributionLevel === item.id ? 'active' : ''}}"
+              data-level="{{item.id}}"
+              bindtap="onLevelTap"
+            >
+              <view class="level-main">{{item.label}}</view>
+              <view class="level-sub">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="advanced-toggle" bindtap="onToggleAdvanced">
+          <view>高级设置</view>
+          <view class="advanced-state">{{showAdvanced ? '收起' : '展开'}}</view>
+        </view>
+
+        <view wx:if="{{showAdvanced}}" class="advanced-panel">
+          <view class="field-row">
+            <view class="field-icon tone-extra">
+              <t-icon name="money" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">估算基准</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{estimateBase}}"
+                placeholder="默认 8000"
+                placeholder-class="input-placeholder"
+                data-field="estimateBase"
+                bindinput="onInput"
+              />
+              <view class="field-tip">近似替代退休时当地养老金计发基数；不知道不用改。</view>
+              <view class="quick-base-row">
+                <view
+                  wx:for="{{baseQuickOptions}}"
+                  wx:key="*this"
+                  class="quick-base-chip {{estimateBase === item ? 'active' : ''}}"
+                  data-value="{{item}}"
+                  bindtap="onQuickBaseTap"
+                >{{item}}</view>
+              </view>
+            </view>
+            <view class="field-unit">元/月</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-extra">
+              <t-icon name="calendar" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">个人账户计发月数</view>
+              <input
+                class="field-input"
+                type="number"
+                value="{{accountMonths}}"
+                data-field="accountMonths"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">月</view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-extra">
+              <t-icon name="coupon" size="38rpx" color="#3f7a4b" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">其他月待遇</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{extraMonthly}}"
+                placeholder="没有可不填"
+                placeholder-class="input-placeholder"
+                data-field="extraMonthly"
+                bindinput="onInput"
+              />
+            </view>
+            <view class="field-unit">元/月</view>
+          </view>
+        </view>
+
+        <view class="helper-note">
+          退休年龄支持手动填写，快捷年龄只是方便录入。普通估算会用“估算基准 8000 元/月”替代未来当地计发基数；如果你查到了当地口径，可以在高级设置里改得更接近。
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculate">
+            开始估算
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">预计每月养老金</view>
+            <view class="result-value">{{result.monthlyTotal}}</view>
+          </view>
+          <view class="result-badge">{{hasResult ? result.accountMonths : '待计算'}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">基础养老金</view>
+            <view class="summary-value">{{result.basePension}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">个人账户养老金</view>
+            <view class="summary-value">{{result.accountPension}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">退休时缴费年限</view>
+            <view class="summary-value">{{result.totalYears}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">退休时账户余额</view>
+            <view class="summary-value">{{result.futureAccount}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">距退休继续缴</view>
+            <view class="summary-value">{{result.futureYears}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">预计全年</view>
+            <view class="summary-value">{{result.yearlyTotal}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="detail-card">
+          <view class="detail-note">{{result.summary}}</view>
+          <view class="detail-note">这是按当前输入做的粗略估算，不等同于社保部门最终核定金额。</view>
+        </view>
+
+        <view wx:else class="result-empty">
+          填好年龄、已缴年限和个人账户余额后，这里会显示预估退休月待遇。
+        </view>
+
+        <view wx:if="{{hasResult}}" class="reset-link" bindtap="onReset">重新填写</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

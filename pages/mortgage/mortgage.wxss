@@ -32,6 +32,8 @@ page {
 .hero-mark,
 .segment-control,
 .field-row,
+.down-input-row,
+.quick-down-row,
 .year-input-row,
 .quick-year-row,
 .button-row,
@@ -150,6 +152,56 @@ page {
   color: #9a6a19;
   background: #ffffff;
   box-shadow: 0 10rpx 24rpx rgba(94, 70, 29, 0.08);
+}
+
+.down-input-row {
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.down-input {
+  flex: 1;
+  min-width: 106rpx;
+  margin-top: 0;
+}
+
+.quick-down-row {
+  flex: none;
+  align-items: center;
+}
+
+.quick-down-item {
+  flex: none;
+  min-width: 70rpx;
+  height: 46rpx;
+  padding: 0 14rpx;
+  border: 1rpx solid #e6eee9;
+  border-radius: 999rpx;
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #71817c;
+  font-size: 21rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+  text-align: center;
+}
+
+.quick-down-item + .quick-down-item {
+  margin-left: 8rpx;
+}
+
+.quick-down-item.is-active {
+  border-color: rgba(154, 106, 25, 0.32);
+  color: #9a6a19;
+  background: #f7efd9;
+}
+
+.helper-inline {
+  margin-top: 14rpx;
+  color: #9a6a19;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .field-list {

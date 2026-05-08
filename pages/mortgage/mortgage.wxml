@@ -38,6 +38,50 @@
         </view>
 
         <view class="field-list">
+          <view class="field-row">
+            <view class="field-main">
+              <view class="field-label">房屋总价</view>
+              <input
+                class="field-input"
+                type="digit"
+                value="{{houseTotalPrice}}"
+                placeholder="可选，用于辅助计算贷款"
+                placeholder-class="input-placeholder"
+                bindinput="onHouseTotalInput"
+              />
+            </view>
+            <view class="field-unit">万元</view>
+          </view>
+
+          <view class="field-row down-field">
+            <view class="field-main">
+              <view class="field-label">首付比例</view>
+              <view class="down-input-row">
+                <input
+                  class="field-input down-input"
+                  type="digit"
+                  value="{{downPaymentRate}}"
+                  placeholder="可手动填写"
+                  placeholder-class="input-placeholder"
+                  bindinput="onDownPaymentInput"
+                />
+                <view class="quick-down-row">
+                  <view
+                    wx:for="{{downPaymentOptions}}"
+                    wx:key="*this"
+                    class="quick-down-item {{downPaymentRate === item ? 'is-active' : ''}}"
+                    data-rate="{{item}}"
+                    bindtap="onDownPaymentTap"
+                  >{{item}}%</view>
+                </view>
+              </view>
+              <view wx:if="{{helperLoanAmount}}" class="helper-inline">
+                已按总价和首付自动填入贷款 {{helperLoanAmount}} 万
+              </view>
+            </view>
+            <view class="field-unit">%</view>
+          </view>
+
           <view wx:if="{{loanType !== 'fund'}}" class="field-row">
             <view class="field-main">
               <view class="field-label">商业贷金额</view>

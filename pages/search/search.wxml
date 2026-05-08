@@ -24,41 +24,49 @@
         </view>
       </view>
 
-      <view wx:if="{{results.length}}" class="result-list">
-        <view
-          wx:for="{{results}}"
-          wx:key="id"
-          class="result-card {{pressedKey === item.id ? 'is-pressing' : ''}}"
-          bindtap="onResultTap"
-          data-name="{{item.title}}"
-          data-path="{{item.path}}"
-          data-short-link="{{item.shortLink}}"
-          data-press-key="{{item.id}}"
-          bindtouchstart="onPressStart"
-          bindtouchend="onPressEnd"
-          bindtouchcancel="onPressEnd"
-        >
-          <view class="tool-icon tone-{{item.tone}}">
-            <image
-              wx:if="{{item.iconImage}}"
-              class="tool-icon-image"
-              src="{{item.iconImage}}"
-              mode="aspectFit"
-            />
-            <t-icon wx:else name="{{item.icon}}" size="42rpx" color="{{item.iconColor}}" />
+      <view wx:if="{{results.length}}" class="group-list">
+        <view wx:for="{{groupedResults}}" wx:key="category" class="result-group">
+          <view class="group-head">
+            <view class="group-title">{{item.category}}</view>
+            <view class="group-count">{{item.count}} 个</view>
           </view>
 
-          <view class="result-main">
-            <view class="result-topline">
-              <view class="result-title">{{item.title}}</view>
-              <t-tag class="result-tag" shape="round" theme="primary" variant="light">{{item.category}}</t-tag>
+          <view
+            wx:for="{{item.items}}"
+            wx:for-item="tool"
+            wx:for-index="toolIndex"
+            wx:key="id"
+            class="result-card {{pressedKey === tool.id ? 'is-pressing' : ''}}"
+            bindtap="onResultTap"
+            data-name="{{tool.title}}"
+            data-path="{{tool.path}}"
+            data-short-link="{{tool.shortLink}}"
+            data-press-key="{{tool.id}}"
+            bindtouchstart="onPressStart"
+            bindtouchend="onPressEnd"
+            bindtouchcancel="onPressEnd"
+          >
+            <view class="tool-icon tone-{{tool.tone}} {{tool.iconBg === 'white' ? 'has-white-icon-bg' : ''}}">
+              <image
+                wx:if="{{tool.iconImage}}"
+                class="tool-icon-image"
+                src="{{tool.iconImage}}"
+                mode="aspectFit"
+              />
+              <t-icon wx:else name="{{tool.icon}}" size="42rpx" color="{{tool.iconColor}}" />
             </view>
-            <view class="result-desc">{{item.desc}}</view>
-          </view>
 
-          <view class="result-action">
-            <text>{{item.actionText}}</text>
-            <t-icon name="chevron-right" size="26rpx" color="#6f7f7a" />
+            <view class="result-main">
+              <view class="result-topline">
+                <view class="result-title">{{tool.title}}</view>
+              </view>
+              <view class="result-desc">{{tool.desc}}</view>
+            </view>
+
+            <view class="result-action">
+              <text>{{tool.actionText}}</text>
+              <t-icon name="chevron-right" size="26rpx" color="#6f7f7a" />
+            </view>
           </view>
         </view>
       </view>

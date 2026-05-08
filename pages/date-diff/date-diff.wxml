@@ -1,0 +1,164 @@
+<view class="shell">
+  <navigation-bar title="日期间隔计算器" back="{{true}}" color="#14242a" background="#f7fbff"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">DATE COUNT</view>
+          <view class="hero-title">快速算两个日期相差几天</view>
+          <view class="hero-desc">适合查纪念日、倒计时、合同周期，也能反推前后 N 天是哪天。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="calendar" size="84rpx" color="#2d6895" />
+        </view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">日期间隔</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-start">
+              <t-icon name="calendar" size="38rpx" color="#2d6895" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">开始日期</view>
+              <picker class="field-picker" mode="date" value="{{startDate}}" data-field="startDate" bindchange="onDateChange">
+                <view class="picker-value {{startDate ? 'has-value' : ''}}">{{startDate || '请选择开始日期'}}</view>
+              </picker>
+            </view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-end">
+              <t-icon name="calendar" size="38rpx" color="#2d6895" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">结束日期</view>
+              <picker class="field-picker" mode="date" value="{{endDate}}" data-field="endDate" bindchange="onDateChange">
+                <view class="picker-value {{endDate ? 'has-value' : ''}}">{{endDate || '请选择结束日期'}}</view>
+              </picker>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculateInterval">
+            计算间隔
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">相差天数</view>
+            <view class="result-value">{{intervalResult.daysText}}</view>
+          </view>
+          <view class="result-badge">{{intervalResult.directionText}}</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">含首尾日期</view>
+            <view class="summary-value">{{intervalResult.inclusiveText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">周数换算</view>
+            <view class="summary-value">{{intervalResult.weekText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">工作日估算</view>
+            <view class="summary-value">{{intervalResult.weekdayText}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasIntervalResult}}" class="detail-card">
+          <view class="detail-note">“相差天数”不包含开始当天；“含首尾日期”会把开始和结束日期都算进去。工作日只按周一到周五估算，不扣除法定节假日。</view>
+        </view>
+
+        <view wx:else class="result-empty">选择两个日期后，这里会显示相差天数、含首尾天数和工作日估算。</view>
+
+        <view wx:if="{{hasIntervalResult}}" class="reset-link" bindtap="onResetInterval">重新选择</view>
+      </view>
+
+      <view class="form-card">
+        <view class="card-title">日期推算</view>
+
+        <view class="field-list">
+          <view class="field-row">
+            <view class="field-icon tone-start">
+              <t-icon name="calendar" size="38rpx" color="#2d6895" />
+            </view>
+            <view class="field-main">
+              <view class="field-label">基准日期</view>
+              <picker class="field-picker" mode="date" value="{{baseDate}}" data-field="baseDate" data-scope="offset" bindchange="onDateChange">
+                <view class="picker-value {{baseDate ? 'has-value' : ''}}">{{baseDate || '请选择基准日期'}}</view>
+              </picker>
+            </view>
+          </view>
+
+          <view class="field-row">
+            <view class="field-icon tone-days">
+              <t-icon name="calendar" size="38rpx" color="#2d6895" />
+            </view>
+            <view class="field-main offset-main">
+              <view class="field-label">间隔天数</view>
+              <view class="offset-control">
+                <input
+                  class="field-input offset-input"
+                  type="number"
+                  value="{{offsetDays}}"
+                  placeholder="请输入天数"
+                  placeholder-class="input-placeholder"
+                  data-field="offsetDays"
+                  bindinput="onInput"
+                />
+                <view class="direction-selector">
+                  <view class="direction-chip {{offsetDirection === 'after' ? 'active' : ''}}" data-direction="after" bindtap="onDirectionTap">之后</view>
+                  <view class="direction-chip {{offsetDirection === 'before' ? 'active' : ''}}" data-direction="before" bindtap="onDirectionTap">之前</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button class="calculate-button" block shape="round" size="large" theme="primary" bind:tap="onCalculateOffset">
+            推算日期
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="result-head">
+          <view>
+            <view class="result-label">目标日期</view>
+            <view class="result-value">{{offsetResult.targetDate}}</view>
+          </view>
+          <view class="result-badge">日期推算</view>
+        </view>
+
+        <view class="summary-grid">
+          <view class="summary-item">
+            <view class="summary-label">基准日期</view>
+            <view class="summary-value">{{offsetResult.baseDate}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">推算方向</view>
+            <view class="summary-value">{{offsetResult.directionText}}</view>
+          </view>
+          <view class="summary-item">
+            <view class="summary-label">间隔天数</view>
+            <view class="summary-value">{{offsetResult.offsetText}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{!hasOffsetResult}}" class="result-empty">填写基准日期和天数后，可以快速得到之前或之后的具体日期。</view>
+
+        <view wx:if="{{hasOffsetResult}}" class="reset-link" bindtap="onResetOffset">重新推算</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
