@@ -105,6 +105,8 @@
           选择视频并点击压缩后，这里会显示新文件体积和预览。
         </view>
 
+        <view wx:if="{{compressionNote}}" class="source-note">{{compressionNote}}</view>
+
         <view class="save-row">
           <view class="save-copy">
             <view class="save-title">{{hasResult ? '压缩视频已生成' : '生成后可保存'}}</view>

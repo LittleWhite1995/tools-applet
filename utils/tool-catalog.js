@@ -86,7 +86,7 @@ const moreTools = [
   {
     id: 'image-resize',
     title: '图片尺寸调整',
-    desc: '裁成指定尺寸，PNG 无损导出',
+    desc: '裁成指定尺寸，可选 JPG 或 PNG',
     icon: 'frame',
     iconColor: '#2d6895',
     tone: 'sky',

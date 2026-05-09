@@ -106,6 +106,22 @@
           </view>
         </view>
 
+        <view class="setting-block">
+          <view class="setting-label">导出格式</view>
+          <view class="option-row">
+            <view
+              wx:for="{{exportFormats}}"
+              wx:key="id"
+              class="mode-option {{exportFormat === item.id ? 'is-active' : ''}} {{isProcessing ? 'is-disabled' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onFormatTap"
+            >
+              <view class="option-title">{{item.title}}</view>
+              <view class="option-desc">{{item.desc}}</view>
+            </view>
+          </view>
+        </view>
+
         <view class="button-row">
           <t-button
             class="process-button"

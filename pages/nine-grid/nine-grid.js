@@ -402,7 +402,7 @@ Page({
         if (isSaveCancel(error)) return
 
         wx.showToast({
-          title: failedIndex ? `第 ${failedIndex} 张保存失败` : '保存失败',
+          title: error && error.userMessage || (failedIndex ? `第 ${failedIndex} 张保存失败` : '保存失败'),
           icon: 'none',
         })
       })

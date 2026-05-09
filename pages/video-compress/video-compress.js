@@ -7,6 +7,8 @@ const qualityOptions = [
   { label: '更小', value: 'low', desc: '体积优先' },
 ]
 
+const qualityOrder = ['high', 'medium', 'low']
+
 const formatFileSize = (size) => {
   if (!size) return '--'
 
@@ -51,6 +53,7 @@ Page({
     compressedDimensions: '--',
     durationText: '--',
     compressionRatio: '--',
+    compressionNote: '',
     hasVideo: false,
     hasResult: false,
     isCompressing: false,
@@ -136,6 +139,7 @@ Page({
           compressedDimensions: '--',
           durationText: formatDuration(info.duration || file.duration),
           compressionRatio: '--',
+          compressionNote: '',
           hasVideo: true,
           hasResult: false,
           videoInfo: {
@@ -169,6 +173,7 @@ Page({
       compressedSize: '--',
       compressedDimensions: '--',
       compressionRatio: '--',
+      compressionNote: '',
     })
   },
 
@@ -187,34 +192,19 @@ Page({
       isCompressing: true,
     })
 
-    wx.compressVideo({
-      src: this.data.originalPath,
-      quality: this.data.qualityMode,
-      success: (res) => {
-        const videoPath = res.tempFilePath
-
-        this.getCompressedVideoResult(videoPath, kbToBytes(res.size))
-          .then((result) => {
-            this.setData({
-              compressedPath: videoPath,
-              compressedSize: formatFileSize(result.size),
-              compressedDimensions: formatDimensions(result.width, result.height),
-              compressionRatio: this.getCompressionRatio(result.size),
-              hasResult: true,
-              isCompressing: false,
-            })
-          })
-          .catch(() => {
-            this.setData({
-              isCompressing: false,
-            })
-            wx.showToast({
-              title: '读取结果失败',
-              icon: 'none',
-            })
-          })
-      },
-      fail: () => {
+    this.compressBestResult()
+      .then((result) => {
+        this.setData({
+          compressedPath: result.path,
+          compressedSize: formatFileSize(result.size),
+          compressedDimensions: formatDimensions(result.width, result.height),
+          compressionRatio: this.getCompressionRatio(result.size),
+          compressionNote: result.note || '',
+          hasResult: true,
+          isCompressing: false,
+        })
+      })
+      .catch(() => {
         this.setData({
           isCompressing: false,
         })
@@ -222,7 +212,70 @@ Page({
           title: '压缩失败',
           icon: 'none',
         })
-      },
+      })
+  },
+
+  compressBestResult() {
+    const originalSize = this.data.videoInfo && this.data.videoInfo.size
+    const qualities = this.getQualityAttempts(this.data.qualityMode)
+    let smallestResult = null
+
+    return qualities.reduce((promise, quality, index) => (
+      promise.then((found) => {
+        if (found) return found
+
+        return this.compressVideoByQuality(quality).then((result) => {
+          if (!smallestResult || result.size < smallestResult.size) {
+            smallestResult = result
+          }
+
+          if (!originalSize || result.size < originalSize) {
+            return {
+              ...result,
+              note: index > 0 ? '所选质量会让体积变大，已自动改用更低质量。' : '',
+            }
+          }
+
+          return null
+        })
+      })
+    ), Promise.resolve(null)).then((result) => {
+      if (result) return result
+
+      if (smallestResult) {
+        return {
+          ...smallestResult,
+          note: '原视频已经足够小，已保留最小的压缩结果，体积可能略有增加。',
+        }
+      }
+
+      return Promise.reject(new Error('compress failed'))
+    })
+  },
+
+  getQualityAttempts(selectedQuality) {
+    const startIndex = Math.max(qualityOrder.indexOf(selectedQuality), 0)
+
+    return qualityOrder.slice(startIndex)
+  },
+
+  compressVideoByQuality(quality) {
+    return new Promise((resolve, reject) => {
+      wx.compressVideo({
+        src: this.data.originalPath,
+        quality,
+        success: (res) => {
+          const videoPath = res.tempFilePath
+
+          this.getCompressedVideoResult(videoPath, kbToBytes(res.size))
+            .then((result) => resolve({
+              ...result,
+              path: videoPath,
+            }))
+            .catch(reject)
+        },
+        fail: reject,
+      })
     })
   },
 
@@ -263,6 +316,29 @@ Page({
     })
   },
 
+  getSavableVideoPath(filePath) {
+    if (!wx.getFileSystemManager || !wx.env || !wx.env.USER_DATA_PATH) {
+      return Promise.resolve(filePath)
+    }
+
+    const fs = wx.getFileSystemManager()
+    const targetPath = `${wx.env.USER_DATA_PATH}/video-compress-output.mp4`
+
+    return new Promise((resolve, reject) => {
+      fs.unlink({
+        filePath: targetPath,
+        complete: () => {
+          fs.copyFile({
+            srcPath: filePath,
+            destPath: targetPath,
+            success: () => resolve(targetPath),
+            fail: reject,
+          })
+        },
+      })
+    })
+  },
+
   getCompressionRatio(compressedSize) {
     const originalSize = this.data.videoInfo && this.data.videoInfo.size
 
@@ -295,10 +371,11 @@ Page({
       isSaving: true,
     })
 
-    saveVideoToAlbum({
-      filePath: this.data.compressedPath,
-      permissionText: '打开权限后就能保存压缩后的视频。',
-    })
+    this.getSavableVideoPath(this.data.compressedPath)
+      .then((filePath) => saveVideoToAlbum({
+        filePath,
+        permissionText: '打开权限后就能保存压缩后的视频。',
+      }))
       .then(() => {
         this.setData({
           isSaving: false,
@@ -316,7 +393,7 @@ Page({
         if ((error && error.handled) || isSaveCancel(error)) return
 
         wx.showToast({
-          title: '保存失败',
+          title: error && error.userMessage || '保存失败',
           icon: 'none',
         })
       })

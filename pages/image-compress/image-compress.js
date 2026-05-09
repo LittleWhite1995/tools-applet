@@ -26,6 +26,7 @@ Page({
     originalDimensions: '--',
     compressedDimensions: '--',
     compressionRatio: '--',
+    compressionNote: '',
     hasImage: false,
     hasResult: false,
     isCompressing: false,
@@ -71,6 +72,7 @@ Page({
             originalDimensions: `${info.width} × ${info.height}`,
             compressedDimensions: '--',
             compressionRatio: '--',
+            compressionNote: '',
             hasImage: true,
             hasResult: false,
             imageInfo: {
@@ -100,6 +102,7 @@ Page({
       compressedSize: '--',
       compressedDimensions: '--',
       compressionRatio: '--',
+      compressionNote: '',
     })
   },
 
@@ -113,6 +116,7 @@ Page({
       compressedSize: '--',
       compressedDimensions: '--',
       compressionRatio: '--',
+      compressionNote: '',
     })
   },
 
@@ -139,6 +143,7 @@ Page({
           compressedSize: this.formatFileSize(result.size),
           compressedDimensions: `${result.width} × ${result.height}`,
           compressionRatio: result.ratio,
+          compressionNote: result.note || '',
           hasResult: true,
           isCompressing: false,
         })
@@ -190,30 +195,97 @@ Page({
         ctx.fillRect(0, 0, target.width, target.height)
         ctx.drawImage(image, 0, 0, target.width, target.height)
 
-        wx.canvasToTempFilePath({
-          canvas,
-          destWidth: target.width,
-          destHeight: target.height,
-          fileType: 'jpg',
-          quality,
-          success: (res) => {
-            this.getFileSize(res.tempFilePath).then((size) => {
-              resolve({
-                path: res.tempFilePath,
-                size,
-                width: target.width,
-                height: target.height,
-                ratio: this.getCompressionRatio(size),
-              })
-            }).catch(reject)
-          },
-          fail: reject,
-        }, this)
+        this.exportBestResult(canvas, target, quality).then(resolve).catch(reject)
       }
 
       image.onerror = reject
       image.src = this.data.originalPath
     })
+  },
+
+  exportBestResult(canvas, target, selectedQuality) {
+    const originalSize = this.data.imageInfo && this.data.imageInfo.size
+    const qualities = this.getQualityAttempts(selectedQuality)
+    let smallestResult = null
+
+    return qualities.reduce((promise, quality, index) => (
+      promise.then((found) => {
+        if (found) return found
+
+        return this.exportCanvasToFile(canvas, target, quality).then((result) => {
+          if (!smallestResult || result.size < smallestResult.size) {
+            smallestResult = result
+          }
+
+          if (!originalSize || result.size < originalSize) {
+            return {
+              ...result,
+              ratio: this.getCompressionRatio(result.size),
+              note: index > 0 ? '所选质量会让体积变大，已自动改用更低质量。' : '',
+            }
+          }
+
+          return null
+        })
+      })
+    ), Promise.resolve(null)).then((result) => {
+      if (result) return result
+
+      if (smallestResult) {
+        return {
+          ...smallestResult,
+          ratio: '已是较小',
+          note: '原图已经足够小，已导出为兼容 JPG，保存时体积可能略有增加。',
+        }
+      }
+
+      return this.getOriginalResult()
+    })
+  },
+
+  exportCanvasToFile(canvas, target, quality) {
+    return new Promise((resolve, reject) => {
+      wx.canvasToTempFilePath({
+        canvas,
+        destWidth: target.width,
+        destHeight: target.height,
+        fileType: 'jpg',
+        quality,
+        success: (res) => {
+          this.getFileSize(res.tempFilePath).then((size) => {
+            resolve({
+              path: res.tempFilePath,
+              size,
+              width: target.width,
+              height: target.height,
+            })
+          }).catch(reject)
+        },
+        fail: reject,
+      }, this)
+    })
+  },
+
+  getQualityAttempts(selectedQuality) {
+    const qualities = this.data.qualityOptions
+      .map((item) => item.quality)
+      .filter((quality) => quality <= selectedQuality)
+      .sort((left, right) => right - left)
+
+    return Array.from(new Set([selectedQuality, ...qualities]))
+  },
+
+  getOriginalResult() {
+    const { width, height, size } = this.data.imageInfo
+
+    return {
+      path: this.data.originalPath,
+      size,
+      width,
+      height,
+      ratio: '已是较小',
+      note: '原图已经足够小，未生成更大的压缩图，保存时会保存原图。',
+    }
   },
 
   getTargetSize() {
@@ -248,7 +320,11 @@ Page({
 
     if (!originalSize || !compressedSize) return '--'
 
-    const percent = Math.max(0, Math.round((1 - compressedSize / originalSize) * 100))
+    if (compressedSize >= originalSize) {
+      return '已是较小'
+    }
+
+    const percent = Math.round((1 - compressedSize / originalSize) * 100)
     return `节省 ${percent}%`
   },
 
@@ -312,7 +388,7 @@ Page({
         }
 
         wx.showToast({
-          title: '保存失败',
+          title: error && error.userMessage || '保存失败',
           icon: 'none',
         })
       })

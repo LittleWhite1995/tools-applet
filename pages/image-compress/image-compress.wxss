@@ -374,6 +374,16 @@ page {
   background: #e8eee6;
 }
 
+.result-note {
+  margin-top: 18rpx;
+  padding: 18rpx 22rpx;
+  border-radius: 24rpx;
+  background: #eef3ec;
+  color: #61735d;
+  font-size: 23rpx;
+  line-height: 1.45;
+}
+
 .result-empty {
   margin-top: 26rpx;
   color: #7b8b78;

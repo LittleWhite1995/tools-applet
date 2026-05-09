@@ -113,7 +113,11 @@
           <image class="compressed-image" src="{{compressedPath}}" mode="aspectFit"></image>
         </view>
 
-        <view wx:else class="result-empty">
+        <view wx:if="{{hasResult && compressionNote}}" class="result-note">
+          {{compressionNote}}
+        </view>
+
+        <view wx:if="{{!hasResult}}" class="result-empty">
           选择图片并点击压缩后，这里会显示新文件体积和预览。
         </view>
 

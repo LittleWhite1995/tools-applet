@@ -229,7 +229,7 @@ Page({
         }
 
         wx.showToast({
-          title: '保存失败',
+          title: error && error.userMessage || '保存失败',
           icon: 'none',
         })
       })

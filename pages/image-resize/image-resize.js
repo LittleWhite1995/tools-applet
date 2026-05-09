@@ -21,6 +21,11 @@ const fitModes = [
   { id: 'stretch', title: '拉伸填充', desc: '强制变形' },
 ]
 
+const exportFormats = [
+  { id: 'jpg', title: 'JPG 高清', desc: '体积更稳' },
+  { id: 'png', title: 'PNG 无损', desc: '可能更大' },
+]
+
 const formatFileSize = (size) => {
   if (!size) return '--'
 
@@ -37,8 +42,10 @@ Page({
   data: {
     sizeTemplates,
     fitModes,
+    exportFormats,
     activeTemplateId: 'one-inch',
     fitMode: 'cover',
+    exportFormat: 'jpg',
     customWidth: DEFAULT_CUSTOM_SIZE.width,
     customHeight: DEFAULT_CUSTOM_SIZE.height,
     targetWidth: 295,
@@ -193,6 +200,19 @@ Page({
     })
   },
 
+  onFormatTap(event) {
+    if (this.data.isProcessing) return
+
+    this.setData({
+      exportFormat: event.currentTarget.dataset.id,
+      hasResult: false,
+      outputPath: '',
+      outputSize: '--',
+      outputDimensions: '--',
+      qualityText: '--',
+    })
+  },
+
   onProcess() {
     if (!this.data.originalPath || !this.data.imageInfo) {
       wx.showToast({
@@ -326,11 +346,12 @@ Page({
 
   exportImage(canvas, target) {
     return new Promise((resolve, reject) => {
-      wx.canvasToTempFilePath({
+      const fileType = this.data.exportFormat === 'png' ? 'png' : 'jpg'
+      const exportOptions = {
         canvas,
         destWidth: target.width,
         destHeight: target.height,
-        fileType: 'png',
+        fileType,
         success: (res) => {
           this.getFileSize(res.tempFilePath)
             .then((size) => {
@@ -339,13 +360,19 @@ Page({
                 size,
                 width: target.width,
                 height: target.height,
-                qualityText: 'PNG 无损',
+                qualityText: fileType === 'png' ? 'PNG 无损' : 'JPG 高清',
               })
             })
             .catch(reject)
         },
         fail: reject,
-      }, this)
+      }
+
+      if (fileType === 'jpg') {
+        exportOptions.quality = 1
+      }
+
+      wx.canvasToTempFilePath(exportOptions, this)
     })
   },
 
@@ -429,7 +456,7 @@ Page({
         if ((error && error.handled) || isSaveCancel(error)) return
 
         wx.showToast({
-          title: '保存失败',
+          title: error && error.userMessage || '保存失败',
           icon: 'none',
         })
       })
