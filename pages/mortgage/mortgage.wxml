@@ -55,7 +55,10 @@
 
           <view class="field-row down-field">
             <view class="field-main">
-              <view class="field-label">首付比例</view>
+              <view class="field-label-row">
+                <view class="field-label">首付比例</view>
+                <view wx:if="{{helperDownPaymentAmount}}" class="down-payment-inline">首付 {{helperDownPaymentAmount}} 万</view>
+              </view>
               <view class="down-input-row">
                 <input
                   class="field-input down-input"
@@ -75,25 +78,22 @@
                   >{{item}}%</view>
                 </view>
               </view>
-              <view wx:if="{{helperLoanAmount}}" class="helper-inline">
-                已按总价和首付自动填入贷款 {{helperLoanAmount}} 万
-              </view>
             </view>
             <view class="field-unit">%</view>
           </view>
 
           <view wx:if="{{loanType !== 'fund'}}" class="field-row">
             <view class="field-main">
-              <view class="field-label">商业贷金额</view>
-              <input class="field-input" type="digit" value="{{commercialAmount}}" placeholder="请输入商业贷金额" placeholder-class="input-placeholder" data-field="commercialAmount" bindinput="onInput" />
+              <view class="field-label">商业贷款金额</view>
+              <input class="field-input" type="digit" value="{{commercialAmount}}" placeholder="请输入商业贷款金额" placeholder-class="input-placeholder" data-field="commercialAmount" bindinput="onInput" />
             </view>
             <view class="field-unit">万元</view>
           </view>
 
           <view wx:if="{{loanType !== 'commercial'}}" class="field-row">
             <view class="field-main">
-              <view class="field-label">公积金金额</view>
-              <input class="field-input" type="digit" value="{{fundAmount}}" placeholder="请输入公积金金额" placeholder-class="input-placeholder" data-field="fundAmount" bindinput="onInput" />
+              <view class="field-label">公积金贷款金额</view>
+              <input class="field-input" type="digit" value="{{fundAmount}}" placeholder="请输入公积金贷款金额" placeholder-class="input-placeholder" data-field="fundAmount" bindinput="onInput" />
             </view>
             <view class="field-unit">万元</view>
           </view>

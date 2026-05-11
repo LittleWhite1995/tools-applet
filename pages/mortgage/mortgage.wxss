@@ -196,12 +196,18 @@ page {
   background: #f7efd9;
 }
 
-.helper-inline {
-  margin-top: 14rpx;
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16rpx;
+}
+
+.down-payment-inline {
+  flex: none;
   color: #9a6a19;
   font-size: 22rpx;
   font-weight: 700;
-  line-height: 1.4;
 }
 
 .field-list {

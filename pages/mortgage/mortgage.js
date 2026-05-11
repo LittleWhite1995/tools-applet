@@ -22,6 +22,7 @@ Page({
     repayType: 'interest',
     houseTotalPrice: '',
     downPaymentRate: '30',
+    helperDownPaymentAmount: '',
     helperLoanAmount: '',
     commercialAmount: '',
     fundAmount: '',
@@ -131,14 +132,18 @@ Page({
 
     if (!totalPrice || totalPrice <= 0 || downPaymentRate < 0 || downPaymentRate >= 100) {
       this.setData({
+        helperDownPaymentAmount: '',
         helperLoanAmount: '',
       })
       return
     }
 
+    const downPaymentAmount = totalPrice * downPaymentRate / 100
     const loanAmount = totalPrice * (100 - downPaymentRate) / 100
+    const helperDownPaymentAmount = this.trimNumber(downPaymentAmount)
     const helperLoanAmount = this.trimNumber(loanAmount)
     this.setData({
+      helperDownPaymentAmount,
       helperLoanAmount,
     }, () => {
       this.syncHelperLoanAmount()
@@ -184,6 +189,7 @@ Page({
 
     this.setData({
       houseTotalPrice: this.trimNumber(totalPrice),
+      helperDownPaymentAmount: this.trimNumber(totalPrice * downPaymentRate / 100),
       helperLoanAmount: this.trimNumber(loanAmount),
     })
   },
