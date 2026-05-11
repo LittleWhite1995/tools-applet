@@ -45,6 +45,7 @@
     }
   },
   "componentFramework": "glass-easel",
+  "__usePrivacyCheck__": true,
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }

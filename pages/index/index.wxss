@@ -121,8 +121,17 @@ page {
   font-weight: 700;
 }
 
+.hero-badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(-1rpx);
+}
+
 .hero-badge text {
   margin-left: 8rpx;
+  line-height: 42rpx;
 }
 
 .hero-title {

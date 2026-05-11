@@ -40,7 +40,7 @@
       >
         <view class="hero-copy">
           <view class="hero-badge">
-            <t-icon name="star-filled" size="22rpx" color="#24584d" />
+            <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="#24584d" />
             <text>开店测算</text>
           </view>
           <view class="hero-title">餐饮投资计算器</view>

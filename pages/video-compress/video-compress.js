@@ -339,6 +339,15 @@ Page({
     })
   },
 
+  prepareSavableVideo(filePath) {
+    return this.getSavableVideoPath(filePath)
+      .then((savablePath) => this.getCompressedVideoResult(savablePath)
+        .then((info) => ({
+          path: savablePath,
+          info,
+        })))
+  },
+
   getCompressionRatio(compressedSize) {
     const originalSize = this.data.videoInfo && this.data.videoInfo.size
 
@@ -371,9 +380,9 @@ Page({
       isSaving: true,
     })
 
-    this.getSavableVideoPath(this.data.compressedPath)
-      .then((filePath) => saveVideoToAlbum({
-        filePath,
+    this.prepareSavableVideo(this.data.compressedPath)
+      .then(({ path }) => saveVideoToAlbum({
+        filePath: path,
         permissionText: '打开权限后就能保存压缩后的视频。',
       }))
       .then(() => {
