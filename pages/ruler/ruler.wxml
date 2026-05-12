@@ -1,0 +1,123 @@
+<view class="shell">
+  <navigation-bar title="校准尺子" back="{{true}}" color="#17231f" background="#eef7f4"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">SCREEN RULER</view>
+          <view class="hero-title">左边校准，右边测量</view>
+          <view class="hero-desc">竖向比较更适合手机屏幕，银行卡长边也能放下。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="measurement" size="84rpx" color="#2d7467" />
+        </view>
+      </view>
+
+      <view class="tool-card">
+        <view class="tool-head">
+          <view>
+            <view class="panel-title">测量面板</view>
+            <view class="panel-desc">拖动左侧校准线，对齐实体卡片边长。</view>
+          </view>
+          <view class="status-badge {{hasCalibration ? 'is-ready' : ''}}">{{statusText}}</view>
+        </view>
+
+        <view class="tool-meta">
+          <view class="meta-item">1 mm = {{pxPerMmText}} px</view>
+          <view class="meta-item">{{rulerLengthCm}} cm 可滑动</view>
+        </view>
+
+        <view wx:if="{{dimensionWarning}}" class="warning-row">{{dimensionWarning}}</view>
+
+        <view class="measure-board" style="{{panelHeightStyle}}">
+          <view class="calibration-pane">
+            <view class="pane-label">校准</view>
+            <view class="calibration-stage">
+              <view class="calibration-line" style="{{calibrationLineStyle}}">
+                <view class="line-end top"></view>
+                <view class="line-body"></view>
+                <view class="line-guide"></view>
+                <view class="line-end bottom"></view>
+              </view>
+              <view
+                class="drag-rail"
+                catchtouchstart="onCalibrationTouchStart"
+                catchtouchmove="onCalibrationTouchMove"
+              >
+                <view class="drag-rail-line"></view>
+                <view class="drag-handle" style="{{calibrationHandleStyle}}">
+                  <view class="drag-handle-grip"></view>
+                </view>
+              </view>
+            </view>
+            <view class="calibration-value">{{standardLengthText}} mm</view>
+          </view>
+
+          <view class="ruler-pane">
+            <view class="pane-label ruler-label">尺子</view>
+            <scroll-view class="ruler-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+              <view class="ruler-track" style="{{rulerHeightStyle}}">
+                <view
+                  wx:for="{{rulerTicks}}"
+                  wx:key="mm"
+                  class="tick tick-{{item.type}}"
+                  style="height: {{tickSize}}px;"
+                >
+                  <view class="tick-line"></view>
+                  <view wx:if="{{item.label}}" class="tick-label">
+                    <text class="tick-number">{{item.label}}</text>
+                    <text class="tick-unit">cm</text>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+        </view>
+
+        <view class="standard-row">
+          <picker mode="selector" range="{{standardOptions}}" range-key="name" value="{{standardIndex}}" bindchange="onStandardChange">
+            <view class="standard-picker">
+              <text>{{standardName}}</text>
+              <t-icon name="chevron-down" size="26rpx" color="#2d7467" />
+            </view>
+          </picker>
+          <view class="standard-desc">{{standardDesc}}</view>
+        </view>
+
+        <view wx:if="{{isCustomStandard}}" class="custom-row">
+          <input
+            class="custom-input"
+            type="digit"
+            value="{{customLengthInput}}"
+            placeholder="输入真实长度"
+            placeholder-class="input-placeholder"
+            bindinput="onCustomLengthInput"
+          />
+          <view class="custom-unit">mm</view>
+        </view>
+
+        <view class="nudge-row">
+          <view class="nudge-button" data-delta="-5" bindtap="onNudgeTap">-5</view>
+          <view class="nudge-button" data-delta="-1" bindtap="onNudgeTap">-1</view>
+          <view class="nudge-value">{{calibrationPx}} px</view>
+          <view class="nudge-button" data-delta="1" bindtap="onNudgeTap">+1</view>
+          <view class="nudge-button" data-delta="5" bindtap="onNudgeTap">+5</view>
+        </view>
+
+        <view class="action-row">
+          <t-button class="save-button" block shape="round" size="large" theme="primary" bind:tap="onSaveCalibration">
+            保存校准
+          </t-button>
+          <t-button class="reset-button" block shape="round" size="large" theme="default" bind:tap="onResetCalibration">
+            恢复估算
+          </t-button>
+        </view>
+
+        <view class="tool-note">{{statusDesc}}</view>
+        <view wx:if="{{calibrationTimeText}}" class="tool-note">{{calibrationTimeText}}</view>
+        <view class="tool-note">小程序无法读取真实 PPI，换手机、横竖屏或系统显示缩放变化后建议重新校准。</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

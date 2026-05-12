@@ -17,6 +17,7 @@
     "pages/date-diff/date-diff",
     "pages/poker-ledger/poker-ledger",
     "pages/converter/converter",
+    "pages/ruler/ruler",
     "pages/price-compare/price-compare",
     "pages/image-compress/image-compress",
     "pages/image-resize/image-resize",
