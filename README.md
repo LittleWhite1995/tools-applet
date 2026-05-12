@@ -1,4 +1,4 @@
-<h1 align="center">日常工具箱小程序</h1>
+<h1 align="center">全能工具箱</h1>
 
 <p align="center">
   一个基于原生微信小程序开发的轻量工具合集，覆盖日常计算、图片/视频处理、生活查询、本地记账和便民服务入口。
@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/readme/applet-qrcode.jpg" alt="日常工具箱小程序二维码" width="220">
+  <img src="assets/readme/applet-qrcode.jpg" alt="全能工具箱小程序二维码" width="220">
 </p>
 
 > [!IMPORTANT]
