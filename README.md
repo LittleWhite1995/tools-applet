@@ -189,6 +189,12 @@ npm install
 
 ---
 
+## 🔗 友链与致谢
+
+感谢 [Linux Do](https://linux.do/) 社区佬们的支持。
+
+---
+
 <p align="center">
   Made with care for daily tools.
 </p>
