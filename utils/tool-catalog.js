@@ -95,6 +95,17 @@ const moreTools = [
     keywords: ['图片尺寸', '证件照', '裁切', '改尺寸', '报名照', '头像', '像素', '一寸照', '二寸照'],
   },
   {
+    id: 'image-watermark',
+    title: '图片加水印',
+    desc: '给证件和材料图加用途水印',
+    icon: 'secured',
+    iconColor: '#2f7567',
+    tone: 'mint',
+    category: '图片处理',
+    path: '/pages/image-watermark/image-watermark',
+    keywords: ['图片水印', '加水印', '证件水印', '办理银行卡', '银行卡专用', '幼儿园入园', '入园专用', '租房专用', '他用无效', '身份证水印', '材料水印'],
+  },
+  {
     id: 'video-compress',
     title: '视频压缩',
     desc: '本地压缩视频，减小发送体积',

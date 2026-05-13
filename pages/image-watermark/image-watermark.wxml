@@ -1,0 +1,126 @@
+<view class="shell">
+  <navigation-bar title="图片加水印" back="{{true}}" color="#17231f" background="#eef7f2"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">WATERMARK</view>
+          <view class="hero-title">给证件照加用途水印</view>
+          <view class="hero-desc">办理银行卡、入园登记、租房登记等场景，本地处理不上传。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="secured" size="84rpx" color="#2f7567" />
+        </view>
+      </view>
+
+      <view class="upload-card">
+        <view class="card-head">
+          <view class="card-title">选择图片</view>
+          <view class="card-subtitle">本地处理</view>
+        </view>
+
+        <view wx:if="{{hasImage}}" class="image-preview {{isProcessing ? 'is-disabled' : ''}}">
+          <image class="preview-thumb" src="{{originalPath}}" mode="aspectFill"></image>
+          <view class="image-info">
+            <view class="image-title">原图已就绪</view>
+            <view class="image-desc">{{originalSize}} / {{originalDimensions}}</view>
+          </view>
+          <view class="change-button {{isProcessing ? 'is-disabled' : ''}}" bindtap="onChooseImage">更换</view>
+        </view>
+
+        <view wx:else class="uploader" bindtap="onChooseImage">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="46rpx" color="#2f7567" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一张证件或材料图片</view>
+            <view class="upload-desc">会导出为 JPG，方便直接保存和发送。</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-card">
+        <view class="card-head">
+          <view class="card-title">水印文字</view>
+          <view class="card-subtitle">斜向重复覆盖</view>
+        </view>
+
+        <view class="text-card">
+          <view class="field-label">水印文字</view>
+          <textarea
+            class="watermark-input"
+            value="{{watermarkText}}"
+            maxlength="48"
+            auto-height
+            placeholder="请输入水印文字"
+            placeholder-class="input-placeholder"
+            bindinput="onWatermarkInput"
+          />
+          <view class="field-tip">最多 3 行，例如“仅用于办理银行卡”“他用无效”。</view>
+        </view>
+
+        <view class="setting-block">
+          <view class="setting-label">水印深浅</view>
+          <view class="option-row">
+            <view
+              wx:for="{{opacityOptions}}"
+              wx:key="id"
+              class="mode-option {{opacityId === item.id ? 'is-active' : ''}} {{isProcessing ? 'is-disabled' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="onOpacityTap"
+            >{{item.title}}</view>
+          </view>
+        </view>
+
+        <view class="button-row">
+          <t-button
+            class="process-button"
+            block
+            shape="round"
+            size="large"
+            theme="primary"
+            loading="{{isProcessing}}"
+            bind:tap="onGenerate"
+          >
+            {{isProcessing ? '生成中' : (hasResult ? '重新生成' : '生成水印图片')}}
+          </t-button>
+        </view>
+      </view>
+
+      <view class="result-card">
+        <view class="card-head">
+          <view>
+            <view class="card-title">处理结果</view>
+            <view class="card-subtitle">{{hasResult ? outputDimensions : '生成后可预览和保存'}}</view>
+          </view>
+          <view class="result-badge {{hasResult ? 'is-ready' : ''}}">{{hasResult ? outputSize : '待生成'}}</view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="result-preview" bindtap="onPreviewResult">
+          <image class="result-image" src="{{outputPath}}" mode="aspectFit"></image>
+        </view>
+
+        <view wx:else class="result-empty">
+          选择图片并设置用途后，这里会显示带水印的预览图。
+        </view>
+
+        <view class="save-row">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '水印图片已生成' : '生成后可保存'}}</view>
+            <view class="save-desc">{{hasResult ? '点击预览可放大检查水印效果' : '图片只在本地处理，不会上传'}}</view>
+          </view>
+          <view
+            class="save-action {{hasResult && !isSaving ? 'is-enabled' : ''}}"
+            bindtap="onSave"
+          >
+            <t-icon wx:if="{{!isSaving}}" name="download" size="34rpx" color="{{hasResult ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else class="spinning-icon" name="loading" size="34rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="watermarkCanvas" class="watermark-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>
