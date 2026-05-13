@@ -3,9 +3,9 @@ const { isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
 const MAX_EXPORT_SIDE = 4096
 
 const opacityOptions = [
-  { id: 'light', title: '浅', value: 0.16 },
-  { id: 'medium', title: '中', value: 0.24 },
-  { id: 'strong', title: '深', value: 0.34 },
+  { id: 'light', title: '浅', value: 0.12 },
+  { id: 'medium', title: '中', value: 0.18 },
+  { id: 'strong', title: '深', value: 0.26 },
 ]
 
 const formatFileSize = (size) => {
@@ -235,7 +235,7 @@ Page({
     ctx.fillStyle = '#1f2d35'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.font = `700 ${fontSize}px sans-serif`
+    ctx.font = `500 ${fontSize}px sans-serif`
     ctx.rotate(-Math.PI / 6)
 
     const diagonal = Math.ceil(Math.sqrt(target.width * target.width + target.height * target.height))
