@@ -132,6 +132,7 @@ npm install
 │   ├── poker-ledger/              # 打牌记账
 │   ├── image-compress/            # 图片压缩
 │   ├── image-resize/              # 图片尺寸调整
+│   ├── image-watermark/           # 图片水印
 │   ├── video-compress/            # 视频压缩
 │   └── nine-grid/                 # 九宫格切图
 ├── utils/
@@ -139,11 +140,14 @@ npm install
 │   ├── image-save.js              # 图片保存相关封装
 │   └── device.js                  # 设备信息相关封装
 ├── assets/
-│   └── icons/                     # 外部入口和工具图标资源
+│   ├── icons/                     # 外部入口和工具图标资源
+│   └── readme/                    # README 展示图片资源
 ├── miniprogram_npm/               # 小程序 npm 构建产物
 ├── package.json                   # npm 依赖声明
+├── package-lock.json              # npm 依赖锁定文件
 ├── project.config.json            # 微信开发者工具项目配置
 ├── project.private.config.json    # 本地开发者私有配置
+├── LICENSE                        # 开源许可证
 └── sitemap.json                   # 小程序页面收录配置
 ```
 
