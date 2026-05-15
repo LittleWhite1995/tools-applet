@@ -297,4 +297,18 @@ Page({
       savingText: '',
     }
   },
+
+  onShareAppMessage() {
+    return {
+      title: '同类商品哪个更划算？填价格和规格算单价',
+      path: '/pages/price-compare/price-compare',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '比价计算器：快速比较哪个规格更便宜',
+      query: '',
+    }
+  },
 })

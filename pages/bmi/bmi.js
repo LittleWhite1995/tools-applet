@@ -122,4 +122,18 @@ Page({
       resultTone: 'normal',
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '输入身高体重，快速算一下自己的 BMI',
+      path: '/pages/bmi/bmi',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: 'BMI 计算器：看看体重状态是否在健康区间',
+      query: '',
+    }
+  },
 })

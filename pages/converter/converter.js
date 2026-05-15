@@ -242,4 +242,18 @@ Page({
       toValue: formatNumber(result),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '长度、面积、重量、温度，常用单位快速换算',
+      path: '/pages/converter/converter',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '单位换算工具：常用数据一键换算',
+      query: '',
+    }
+  },
 })

@@ -407,4 +407,18 @@ Page({
         })
       })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '视频太大不好发？试试本地视频压缩工具',
+      path: '/pages/video-compress/video-compress',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '视频压缩工具：把相册视频压小一点再发送',
+      query: '',
+    }
+  },
 })

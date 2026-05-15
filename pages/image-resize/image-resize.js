@@ -461,4 +461,18 @@ Page({
         })
       })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '报名照、头像、材料图，快速调整成指定尺寸',
+      path: '/pages/image-resize/image-resize',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '图片尺寸调整工具：裁成指定像素和格式',
+      query: '',
+    }
+  },
 })

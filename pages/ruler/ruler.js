@@ -425,4 +425,18 @@ Page({
       })
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '手机临时当尺子用，先校准再测量更靠谱',
+      path: '/pages/ruler/ruler',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '校准尺子：用手机屏幕临时测量长度',
+      query: '',
+    }
+  },
 })

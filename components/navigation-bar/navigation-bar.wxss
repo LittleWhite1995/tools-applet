@@ -46,6 +46,15 @@
   opacity: 0.5;
 }
 
+.weui-navigation-bar__btn_home_wrapper {
+  padding: 10px 18px 10px 14px;
+  margin: -10px -18px -10px -14px;
+}
+
+.weui-navigation-bar__btn_home_wrapper.weui-active {
+  opacity: 0.5;
+}
+
 .weui-navigation-bar__btn_goback {
   font-size: 12px;
   width: 11px;

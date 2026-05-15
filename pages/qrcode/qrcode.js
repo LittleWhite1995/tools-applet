@@ -234,4 +234,18 @@ Page({
         })
       })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '文字或链接快速生成二维码，还能加 logo',
+      path: '/pages/qrcode/qrcode',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '二维码生成工具：文字、链接一键转二维码',
+      query: '',
+    }
+  },
 })

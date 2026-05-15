@@ -169,4 +169,18 @@ Page({
       result: getDefaultResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '长期复利和每月定投，算一下未来能有多少',
+      path: '/pages/compound/compound',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '复利 / 定投计算器：估算长期收益结果',
+      query: '',
+    }
+  },
 })

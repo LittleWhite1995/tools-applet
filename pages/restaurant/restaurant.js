@@ -304,4 +304,18 @@ Page({
       icon: 'none',
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '想开餐饮店？先算算启动成本和保本营业额',
+      path: '/pages/restaurant/restaurant',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '餐饮投资计算器：开店成本、保本线和经营分析',
+      query: '',
+    }
+  },
 })

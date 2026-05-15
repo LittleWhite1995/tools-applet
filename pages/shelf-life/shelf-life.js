@@ -228,4 +228,18 @@ Page({
       result: getDefaultResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '商品什么时候过期？输入生产日期和保质期就能算',
+      path: '/pages/shelf-life/shelf-life',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '保质期计算器：快速判断到期日和剩余天数',
+      query: '',
+    }
+  },
 })

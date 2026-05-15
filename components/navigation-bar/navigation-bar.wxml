@@ -3,9 +3,9 @@
 
     <!-- 左侧按钮 -->
     <view class='weui-navigation-bar__left' style="{{leftWidth}};">
-      <block wx:if="{{back || homeButton}}">
+      <block wx:if="{{showBack || showHomeButton}}">
         <!-- 返回上一页 -->
-        <block wx:if="{{back}}">
+        <block wx:if="{{showBack}}">
           <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_goback">
             <view
               bindtap="back"
@@ -20,7 +20,7 @@
           </view>
         </block>
         <!-- 返回首页 -->
-        <block wx:if="{{homeButton}}">
+        <block wx:if="{{showHomeButton}}">
           <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_home">
             <view
               bindtap="home"
@@ -29,7 +29,7 @@
               aria-role="button"
               aria-label="首页"
             >
-              <view class="weui-navigation-bar__button weui-navigation-bar__btn_home"></view>
+              <t-icon name="home" size="22px" color="{{color || 'currentColor'}}" />
             </view>
           </view>
         </block>

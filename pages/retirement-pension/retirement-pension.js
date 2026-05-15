@@ -282,4 +282,18 @@ Page({
       result: getDefaultResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '退休后每月养老金大概多少？先做个粗略估算',
+      path: '/pages/retirement-pension/retirement-pension',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '养老金估算器：粗略估算退休后每月金额',
+      query: '',
+    }
+  },
 })

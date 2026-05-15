@@ -161,4 +161,18 @@ Page({
       result: getDefaultResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '算一下每天基础代谢和热量消耗',
+      path: '/pages/bmr/bmr',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '基础代谢率计算器：估算每日热量消耗',
+      query: '',
+    }
+  },
 })

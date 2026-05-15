@@ -305,4 +305,18 @@ Page({
         })
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '选择困难时，让这个小工具帮你随机决定',
+      path: '/pages/choice-helper/choice-helper',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '选择困难助手：今天吃什么、喝什么、做什么',
+      query: '',
+    }
+  },
 })

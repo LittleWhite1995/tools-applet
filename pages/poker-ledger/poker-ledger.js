@@ -711,4 +711,18 @@ Page({
       },
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '打牌记账不用算半天，输赢结算自动汇总',
+      path: '/pages/poker-ledger/poker-ledger',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '打牌记账工具：记录输赢，自动算谁付谁',
+      query: '',
+    }
+  },
 })

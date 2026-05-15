@@ -360,4 +360,18 @@ Page({
         })
       })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '证件照和材料图加用途水印，降低被挪用风险',
+      path: '/pages/image-watermark/image-watermark',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '图片加水印工具：给证件和材料图标注用途',
+      query: '',
+    }
+  },
 })

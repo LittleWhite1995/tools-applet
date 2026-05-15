@@ -55,7 +55,9 @@ Component({
    * 组件的初始数据
    */
   data: {
-    displayStyle: ''
+    displayStyle: '',
+    showBack: false,
+    showHomeButton: false,
   },
   lifetimes: {
     attached() {
@@ -70,6 +72,12 @@ Component({
         leftWidth: `width: ${windowWidth - rect.left}px`,
         safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${top}px); padding-top: ${top}px` : ``
       })
+      this.updateNavigationButtons()
+    },
+  },
+  pageLifetimes: {
+    show() {
+      this.updateNavigationButtons()
     },
   },
   /**
@@ -89,14 +97,33 @@ Component({
         displayStyle
       })
     },
+    updateNavigationButtons() {
+      const data = this.data
+      const pages = getCurrentPages()
+      const canGoBack = Boolean(data.back && data.delta && pages.length > data.delta)
+
+      this.setData({
+        showBack: canGoBack,
+        showHomeButton: Boolean(data.homeButton || (data.back && !canGoBack)),
+      })
+    },
     back() {
       const data = this.data
-      if (data.delta) {
+      const pages = getCurrentPages()
+
+      if (data.delta && pages.length > data.delta) {
         wx.navigateBack({
           delta: data.delta
         })
+      } else {
+        this.home()
       }
       this.triggerEvent('back', { delta: data.delta }, {})
+    },
+    home() {
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
     }
   },
 })

@@ -419,4 +419,18 @@ Page({
   onReset() {
     this.clearResult()
   },
+
+  onShareAppMessage() {
+    return {
+      title: '房贷月供怎么算？等额本息和等额本金对比一下',
+      path: '/pages/mortgage/mortgage',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '房贷计算器：快速估算月供和总利息',
+      query: '',
+    }
+  },
 })

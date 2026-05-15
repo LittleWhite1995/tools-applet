@@ -506,4 +506,18 @@ Page({
       },
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '亲戚关系怎么称呼？点一点就能算出来',
+      path: '/pages/relationship/relationship',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '亲戚关系计算器：不再被称呼绕晕',
+      query: '',
+    }
+  },
 })

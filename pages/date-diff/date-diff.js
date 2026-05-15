@@ -248,4 +248,18 @@ Page({
       offsetResult: getDefaultOffsetResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '两个日期相差几天？也能反推前后日期',
+      path: '/pages/date-diff/date-diff',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '日期间隔计算器：算天数、推日期',
+      query: '',
+    }
+  },
 })

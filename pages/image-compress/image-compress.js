@@ -393,4 +393,18 @@ Page({
         })
       })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '图片太大不好发？试试本地图片压缩工具',
+      path: '/pages/image-compress/image-compress',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '图片压缩工具：本地处理，发图更省事',
+      query: '',
+    }
+  },
 })

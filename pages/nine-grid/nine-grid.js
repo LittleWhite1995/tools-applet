@@ -440,4 +440,18 @@ Page({
       })
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '把一张图切成朋友圈九宫格，发图更方便',
+      path: '/pages/nine-grid/nine-grid',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '九宫格切图工具：一键生成朋友圈 9 张图',
+      query: '',
+    }
+  },
 })

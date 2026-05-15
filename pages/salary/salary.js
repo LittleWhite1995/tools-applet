@@ -168,4 +168,18 @@ Page({
       },
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '税后工资到手多少？五险一金和个税一起算',
+      path: '/pages/salary/salary',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '工资计算器：估算税后到手收入',
+      query: '',
+    }
+  },
 })

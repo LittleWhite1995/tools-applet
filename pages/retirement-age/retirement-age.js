@@ -188,4 +188,18 @@ Page({
       result: getDefaultResult(),
     })
   },
+
+  onShareAppMessage() {
+    return {
+      title: '输入出生日期，估算自己的退休时间',
+      path: '/pages/retirement-age/retirement-age',
+    }
+  },
+
+  onShareTimeline() {
+    return {
+      title: '退休年龄计算器：估算法定退休年月',
+      query: '',
+    }
+  },
 })
