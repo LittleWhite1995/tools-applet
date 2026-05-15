@@ -108,6 +108,10 @@
           bindtouchend="onPressEnd"
           bindtouchcancel="onPressEnd"
         >
+          <button class="topic-feedback-link" open-type="contact" session-from="topic_guide" catchtap="onFeedbackTap">
+            <t-icon class="topic-feedback-icon" name="chat-bubble-help" size="24rpx" color="#ffffff" />
+            <text>问题反馈</text>
+          </button>
           <view class="topic-copy">
             <view class="topic-label">{{item.label}}</view>
             <view class="topic-title">{{item.title}}</view>

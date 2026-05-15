@@ -104,6 +104,8 @@ Page({
     })
   },
 
+  onFeedbackTap() {},
+
   onShareAppMessage() {
     return {
       title: '日常要用的小工具，这里基本齐了',

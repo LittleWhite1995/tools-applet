@@ -363,6 +363,44 @@ page {
   --td-button-primary-active-border-color: #dceee7;
 }
 
+.topic-feedback-link {
+  position: absolute;
+  right: 46rpx;
+  bottom: 34rpx;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.38);
+  border-radius: 999rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 21rpx;
+  font-weight: 700;
+  line-height: 48rpx;
+}
+
+.topic-feedback-link::after {
+  border: 0;
+}
+
+.topic-feedback-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.topic-feedback-link text {
+  display: flex;
+  align-items: center;
+  margin-left: 6rpx;
+  line-height: 1;
+}
+
 .topic-icon {
   position: absolute;
   right: 30rpx;
