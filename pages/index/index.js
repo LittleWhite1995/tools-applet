@@ -1,10 +1,11 @@
 // index.js
-const { hotTools, topicCards } = require('../../utils/tool-catalog')
+const { featuredTools, hotTools, topicCards } = require('../../utils/tool-catalog')
 
 Page({
   data: {
     pressedKey: '',
     quickTags: ['图片', '计算', '生活健康', '比价', '记账', '房贷', '星座'],
+    featuredTool: featuredTools[0],
     hotTools,
     topicCards,
   },

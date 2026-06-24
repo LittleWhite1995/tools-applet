@@ -175,6 +175,11 @@ page {
   background: rgba(255, 255, 255, 0.46);
 }
 
+.hero-icon-image {
+  width: 104rpx;
+  height: 104rpx;
+}
+
 .section-head {
   align-items: center;
   justify-content: space-between;

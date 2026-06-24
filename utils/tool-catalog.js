@@ -1,14 +1,14 @@
 const featuredTools = [
   {
-    id: 'restaurant',
-    title: '餐饮投资计算器',
-    desc: '开店成本、保本和经营分析',
-    icon: 'shop',
-    iconColor: '#24584d',
-    tone: 'deep',
-    category: '经营计算',
-    path: '/pages/restaurant/restaurant',
-    keywords: ['餐饮', '餐饮开店', '开店', '投资', '建店成本', '盈亏平衡', '经营分析', '保本'],
+    id: 'long-image',
+    title: '长图拼接',
+    desc: '多张截图合成一张长图',
+    icon: 'image',
+    iconColor: '#2f7567',
+    tone: 'mint',
+    category: '图片处理',
+    path: '/pages/long-image/long-image',
+    keywords: ['长图', '拼接', '截图', '聊天记录', '订单截图', '图片拼接', '长截图'],
   },
 ]
 
@@ -83,6 +83,17 @@ const hotTools = [
 
 // 更多工具 - 可搜索，不在首页展示
 const moreTools = [
+  {
+    id: 'restaurant',
+    title: '餐饮投资计算器',
+    desc: '开店成本、保本和经营分析',
+    icon: 'shop',
+    iconColor: '#24584d',
+    tone: 'deep',
+    category: '经营计算',
+    path: '/pages/restaurant/restaurant',
+    keywords: ['餐饮', '餐饮开店', '开店', '投资', '建店成本', '盈亏平衡', '经营分析', '保本'],
+  },
   {
     id: 'image-resize',
     title: '图片尺寸调整',

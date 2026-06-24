@@ -31,8 +31,9 @@
       <view
         class="hero-card {{pressedKey === 'hero' ? 'is-pressing' : ''}}"
         bindtap="onToolTap"
-        data-name="餐饮投资计算器"
-        data-path="/pages/restaurant/restaurant"
+        data-name="{{featuredTool.title}}"
+        data-path="{{featuredTool.path}}"
+        data-short-link="{{featuredTool.shortLink}}"
         data-press-key="hero"
         bindtouchstart="onPressStart"
         bindtouchend="onPressEnd"
@@ -40,18 +41,24 @@
       >
         <view class="hero-copy">
           <view class="hero-badge">
-            <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="#24584d" />
-            <text>开店测算</text>
+            <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="{{featuredTool.iconColor}}" />
+            <text>截图拼接</text>
           </view>
-          <view class="hero-title">餐饮投资计算器</view>
-          <view class="hero-desc">开店成本、保本线和经营分析</view>
+          <view class="hero-title">{{featuredTool.title}}</view>
+          <view class="hero-desc">{{featuredTool.desc}}</view>
           <view class="hero-action">
             <text>立即体验</text>
-            <t-icon name="arrow-right" size="28rpx" color="#24584d" />
+            <t-icon name="arrow-right" size="28rpx" color="{{featuredTool.iconColor}}" />
           </view>
         </view>
         <view class="hero-visual">
-          <t-icon name="shop" size="116rpx" color="#9fb4ae" />
+          <image
+            wx:if="{{featuredTool.iconImage}}"
+            class="hero-icon-image"
+            src="{{featuredTool.iconImage}}"
+            mode="aspectFit"
+          />
+          <t-icon wx:else name="{{featuredTool.icon}}" size="116rpx" color="#9fb4ae" />
         </view>
       </view>
 

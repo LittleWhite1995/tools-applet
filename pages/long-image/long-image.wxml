@@ -1,0 +1,124 @@
+<view class="shell">
+  <navigation-bar title="长图拼接" back="{{true}}" color="#16251f" background="#eef8f3"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">LONG IMAGE</view>
+          <view class="hero-title">多张截图合成一张长图</view>
+          <view class="hero-desc">适合手动分段截图，本地拼接，不上传图片。</view>
+        </view>
+        <view class="hero-mark">
+          <t-icon name="image" size="82rpx" color="#2f7567" />
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">选择截图</view>
+            <view class="card-subtitle">{{images.length}} / 9 张</view>
+          </view>
+          <view wx:if="{{hasImages}}" class="text-action" bindtap="onClearImages">清空</view>
+        </view>
+
+        <view class="uploader" bindtap="onChooseImages">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="44rpx" color="#2f7567" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">{{hasImages ? '继续添加图片' : '选择多张截图'}}</view>
+            <view class="upload-desc">按选择顺序向下拼接，最多 9 张</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasImages}}" class="image-list">
+          <view wx:for="{{images}}" wx:key="id" class="image-item">
+            <image
+              class="image-thumb"
+              src="{{item.path}}"
+              mode="aspectFill"
+            ></image>
+            <view class="image-main">
+              <view class="image-title">第 {{index + 1}} 张</view>
+              <view class="image-desc">{{item.dimensionText}} / {{item.sizeText}}</view>
+            </view>
+            <view class="image-actions">
+              <view class="icon-action {{index === 0 ? 'is-disabled' : ''}}" data-index="{{index}}" bindtap="onMoveImageUp">
+                <t-icon name="chevron-up" size="26rpx" color="{{index === 0 ? '#b9c5c0' : '#2f7567'}}" />
+              </view>
+              <view class="icon-action {{index === images.length - 1 ? 'is-disabled' : ''}}" data-index="{{index}}" bindtap="onMoveImageDown">
+                <t-icon name="chevron-down" size="26rpx" color="{{index === images.length - 1 ? '#b9c5c0' : '#2f7567'}}" />
+              </view>
+              <view class="icon-action" data-index="{{index}}" bindtap="onRemoveImage">
+                <t-icon name="delete" size="26rpx" color="#a85b52" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <t-button
+          class="generate-button"
+          block
+          shape="round"
+          size="large"
+          theme="primary"
+          loading="{{isGenerating}}"
+          bind:tap="onGenerate"
+        >
+          {{isGenerating ? '正在生成' : (hasResult ? '重新生成长图' : '生成长图')}}
+        </t-button>
+      </view>
+
+      <view class="panel">
+        <view class="result-head">
+          <view>
+            <view class="result-label">拼接结果</view>
+            <view class="result-value">{{resultNote}}</view>
+          </view>
+          <view class="result-badge">{{outputDimensions}}</view>
+        </view>
+
+        <view wx:if="{{hasResult}}" class="result-preview" bindtap="onPreviewResult">
+          <image class="result-image" src="{{outputPath}}" mode="aspectFit"></image>
+        </view>
+
+        <view wx:else class="result-empty">
+          生成后会在这里显示长图预览，点击预览可以查看完整图片。
+        </view>
+
+        <view class="save-panel">
+          <view class="save-copy">
+            <view class="save-title">{{hasResult ? '保存长图' : '等待生成'}}</view>
+            <view class="save-desc">{{hasResult ? outputSize : '所有处理都在本地完成'}}</view>
+          </view>
+          <view
+            class="save-cta {{hasResult && !isSaving ? 'is-enabled' : 'is-disabled'}} {{isSaving ? 'is-saving' : ''}}"
+            bindtap="onSave"
+            aria-role="button"
+          >
+            <t-icon
+              wx:if="{{!isSaving}}"
+              name="download"
+              size="28rpx"
+              color="{{hasResult ? '#ffffff' : '#b9c5c0'}}"
+            />
+            <t-icon
+              wx:else
+              class="spinning-icon"
+              name="loading"
+              size="28rpx"
+              color="#ffffff"
+            />
+            <text class="save-cta-text">{{isSaving ? '保存中' : '保存'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <canvas type="2d" id="stitchCanvas" class="stitch-canvas"></canvas>
+    </view>
+  </scroll-view>
+</view>
