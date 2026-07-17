@@ -1,0 +1,289 @@
+<view class="shell">
+  <navigation-bar title="拼豆" back="{{true}}" color="#35231f" background="#fff1e4"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">PIXEL BEADS</view>
+          <view class="hero-title">图片变成拼豆图纸</view>
+          <view class="hero-desc">照片一放，221 种 MARD 颜色马上集合，帮你拼出专属图纸。</view>
+        </view>
+        <view class="hero-mark">
+          <pindou-icon size="92rpx" />
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">选择图片</view>
+            <view class="card-subtitle">JPG、PNG 等常见格式</view>
+          </view>
+        </view>
+
+        <view wx:if="{{hasImage}}" class="image-preview">
+          <image class="preview-thumb" src="{{originalPath}}" mode="aspectFill"></image>
+          <view class="image-info">
+            <view class="image-title">原图已就绪</view>
+            <view class="image-desc">{{originalSize}} / {{originalDimensions}}</view>
+          </view>
+          <view class="change-button" bindtap="onChooseImage">更换</view>
+        </view>
+
+        <view wx:else class="uploader" bindtap="onChooseImage">
+          <view class="upload-icon">
+            <t-icon name="image-add" size="46rpx" color="#c85f3f" />
+          </view>
+          <view class="upload-copy">
+            <view class="upload-title">选择一张图片</view>
+            <view class="upload-desc">清晰、主体突出的图片效果更好</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">图纸参数</view>
+            <view class="card-subtitle">高度会按原图比例自动计算</view>
+          </view>
+          <view class="setting-value">{{selectedGridWidth || '--'}} 格宽</view>
+        </view>
+
+        <view class="setting-block">
+          <view class="setting-label">宽度格数</view>
+          <view class="chip-grid">
+            <view
+              wx:for="{{gridPresets}}"
+              wx:key="value"
+              class="option-chip {{!isCustomGrid && selectedGridWidth === item.value ? 'is-active' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onGridPresetTap"
+            >{{item.label}}</view>
+          </view>
+        </view>
+
+        <view class="setting-block">
+          <view class="setting-label">限制用色</view>
+          <view class="chip-grid">
+            <view
+              wx:for="{{colorOptions}}"
+              wx:key="value"
+              class="option-chip {{colorLimit === item.value ? 'is-active' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onColorLimitTap"
+            >{{item.label}}</view>
+          </view>
+          <view class="helper-note">颜色越少越容易备料；不限色会使用完整 MARD 色板匹配。</view>
+        </view>
+
+        <view class="switch-row" bindtap="onToggleRemoveWhite" aria-role="switch" aria-checked="{{removeWhite}}">
+          <view class="switch-copy">
+            <view class="switch-title">去除纯白背景并自动裁边</view>
+            <view class="switch-desc">只从图片边缘移除接近纯白的连续区域</view>
+          </view>
+          <view class="switch-control {{removeWhite ? 'is-on' : ''}}">
+            <view class="switch-dot"></view>
+          </view>
+        </view>
+
+        <t-button
+          class="generate-button"
+          block
+          shape="round"
+          size="large"
+          theme="primary"
+          loading="{{isGenerating}}"
+          bind:tap="onGenerate"
+        >{{isGenerating ? '正在生成' : (hasPattern ? '重新生成图纸' : '生成拼豆图纸')}}</t-button>
+      </view>
+
+      <view class="panel editor-panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">图纸预览与编辑</view>
+            <view class="card-subtitle">{{hasPattern ? patternDimensions : '生成后可手动微调每一颗豆'}}</view>
+          </view>
+          <view class="result-badge {{hasPattern ? 'is-ready' : ''}}">{{hasPattern ? totalBeads + ' 颗' : '待生成'}}</view>
+        </view>
+
+        <block wx:if="{{hasPattern}}">
+          <view class="editor-toolbar">
+            <view class="tool-group tool-group-primary">
+              <view class="tool-button {{activeTool === 'pan' ? 'is-active' : ''}}" data-tool="pan" bindtap="onToolTap">
+                <t-icon name="drag-move" size="30rpx" color="{{activeTool === 'pan' ? '#ffffff' : '#7a6760'}}" />
+                <text>移动</text>
+              </view>
+              <view class="tool-button {{activeTool === 'pen' ? 'is-active' : ''}}" data-tool="pen" bindtap="onToolTap">
+                <t-icon name="pen-brush" size="30rpx" color="{{activeTool === 'pen' ? '#ffffff' : '#7a6760'}}" />
+                <text>画笔</text>
+              </view>
+              <view class="tool-button {{activeTool === 'eraser' ? 'is-active' : ''}}" data-tool="eraser" bindtap="onToolTap">
+                <t-icon name="clear-formatting-1" size="30rpx" color="{{activeTool === 'eraser' ? '#ffffff' : '#7a6760'}}" />
+                <text>橡皮</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="color-picker-card" bindtap="onOpenPalette">
+            <view class="color-preview-shell">
+              <view class="color-preview" style="background: {{selectedColorHex}};"></view>
+            </view>
+            <view class="color-picker-copy">
+              <view class="color-picker-label">当前拼豆颜色</view>
+              <view class="color-picker-value">{{selectedColorCode}}</view>
+            </view>
+            <view class="color-picker-action">
+              <text>点击更换</text>
+              <t-icon name="chevron-right" size="28rpx" color="#c85f3f" />
+            </view>
+          </view>
+
+          <view class="editor-toolbar toolbar-secondary">
+            <view class="tool-group">
+              <view class="square-button {{canUndo ? '' : 'is-disabled'}}" bindtap="onUndo">
+                <t-icon name="rollback" size="28rpx" color="{{canUndo ? '#7a6760' : '#b9aaa3'}}" />
+                <text>撤销</text>
+              </view>
+              <view class="square-button {{canRedo ? '' : 'is-disabled'}}" bindtap="onRedo">
+                <t-icon name="rollfront" size="28rpx" color="{{canRedo ? '#7a6760' : '#b9aaa3'}}" />
+                <text>重做</text>
+              </view>
+            </view>
+            <view class="zoom-group">
+              <view class="zoom-button" bindtap="onZoomOut">－</view>
+              <view class="zoom-value">{{editorZoom}}×</view>
+              <view class="zoom-button" bindtap="onZoomIn">＋</view>
+            </view>
+          </view>
+
+          <view class="editor-scroll">
+            <view class="editor-stage">
+              <canvas
+                type="2d"
+                id="editorCanvas"
+                class="editor-canvas"
+                style="width: {{editorWidth}}px; height: {{editorHeight}}px; left: {{editorCanvasLeft}}px; top: {{editorCanvasTop}}px;"
+                catchtouchstart="onEditorTouchStart"
+                catchtouchmove="onEditorTouchMove"
+                catchtouchend="onEditorTouchEnd"
+                catchtouchcancel="onEditorTouchEnd"
+              ></canvas>
+            </view>
+          </view>
+          <view class="editor-tip">移动模式可拖动画布；画笔或橡皮支持连续滑动操作。</view>
+        </block>
+
+        <view wx:else class="result-empty">
+          选择图片并设置格数后，拼豆网格会显示在这里。所有转换都在当前设备完成。
+        </view>
+      </view>
+
+      <view wx:if="{{hasPattern}}" class="panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">MARD 色号用量</view>
+            <view class="card-subtitle">{{colorStats.length}} 种颜色，共 {{totalBeads}} 颗</view>
+          </view>
+          <view class="replace-hint">点色号可整版替换</view>
+        </view>
+
+        <view class="stats-list">
+          <view
+            wx:for="{{colorStats}}"
+            wx:key="paletteIndex"
+            class="stat-item"
+            data-index="{{item.paletteIndex}}"
+            bindtap="onStatTap"
+          >
+            <view class="stat-swatch" style="background: {{item.hex}}; color: {{item.textColor}};">{{item.code}}</view>
+            <view class="stat-main">
+              <view class="stat-code">MARD {{item.code}}</view>
+              <view class="stat-hex">{{item.hex}}</view>
+            </view>
+            <view class="stat-count">
+              <view class="stat-number">{{item.count}} 颗</view>
+              <view class="stat-percent">{{item.percent}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel export-panel">
+        <view class="card-head">
+          <view>
+            <view class="card-title">导出图纸</view>
+            <view class="card-subtitle">PNG 包含坐标、网格、色号和用量统计</view>
+          </view>
+          <view class="result-badge {{hasExport ? 'is-ready' : ''}}">{{hasExport ? outputSize : '待导出'}}</view>
+        </view>
+
+        <view wx:if="{{hasExport}}" class="export-preview" bindtap="onPreviewExport">
+          <image class="export-image" src="{{outputPath}}" mode="aspectFit"></image>
+          <view class="preview-mask">点击查看完整图纸</view>
+        </view>
+
+        <t-button
+          class="export-button"
+          block
+          shape="round"
+          size="large"
+          theme="primary"
+          loading="{{isExporting}}"
+          bind:tap="onExport"
+        >{{isExporting ? '正在导出' : (hasExport ? '重新导出 PNG' : '导出高清 PNG')}}</t-button>
+
+        <view
+          class="save-row {{hasExport ? 'is-ready' : ''}}"
+          bindtap="onSave"
+          aria-role="button"
+        >
+          <view class="save-copy">
+            <view class="save-title">{{hasExport ? '保存到手机相册' : '导出后可保存'}}</view>
+            <view class="save-desc">{{hasExport ? '屏幕色仅供参考，实体豆可能存在色差' : '图纸会以 PNG 格式生成'}}</view>
+          </view>
+          <view class="save-action">
+            <t-icon wx:if="{{!isSaving}}" name="download" size="32rpx" color="{{hasExport ? '#ffffff' : '#9aa6a2'}}" />
+            <t-icon wx:else name="loading" size="32rpx" color="#ffffff" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{showPalette}}" class="palette-overlay" bindtap="onPaletteBackdropTap">
+    <view class="palette-sheet" catchtap="onPaletteSheetTap">
+      <view class="palette-head">
+        <view>
+          <view class="palette-title">{{paletteTitle}}</view>
+          <view class="palette-desc">MARD 221 标准色 · 屏幕近似值</view>
+        </view>
+        <view class="palette-close" bindtap="onClosePalette">关闭</view>
+      </view>
+      <scroll-view class="palette-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+        <view class="palette-grid">
+          <view
+            wx:for="{{fullPalette}}"
+            wx:key="index"
+            class="palette-color {{selectedPaletteIndex === item.index && replaceFromPaletteIndex < 0 ? 'is-selected' : ''}}"
+            data-index="{{item.index}}"
+            bindtap="onPaletteColorTap"
+          >
+            <view
+              wx:if="{{selectedPaletteIndex === item.index && replaceFromPaletteIndex < 0}}"
+              class="palette-selected-mark"
+            >
+              <t-icon name="check" size="22rpx" color="#ffffff" />
+            </view>
+            <view class="palette-swatch" style="background: {{item.hex}}; color: {{item.textColor}};">{{item.code}}</view>
+            <view class="palette-hex">{{item.hex}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <canvas type="2d" id="sourceCanvas" class="hidden-canvas"></canvas>
+  <canvas type="2d" id="exportCanvas" class="hidden-canvas"></canvas>
+</view>

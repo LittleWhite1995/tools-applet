@@ -1,4 +1,5 @@
 const { ensureAlbumPermission, isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
+const { chooseImages } = require('../../utils/image-picker')
 
 const MAX_EXPORT_SIZE = 3072
 
@@ -127,25 +128,12 @@ Page({
   onChooseImage() {
     if (this.data.isGenerating || this.data.isSaving) return
 
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image'],
-      sizeType: ['original'],
-      success: (res) => {
-        const file = res.tempFiles && res.tempFiles[0]
+    chooseImages().then((files) => {
+      const file = files[0]
 
-        if (!file || !file.tempFilePath) return
+      if (!file || !file.tempFilePath) return
 
-        this.loadImage(file.tempFilePath, file.size)
-      },
-      fail: (error) => {
-        if (String(error.errMsg || '').includes('cancel')) return
-
-        wx.showToast({
-          title: '选择图片失败',
-          icon: 'none',
-        })
-      },
+      this.loadImage(file.tempFilePath, file.size)
     })
   },
 

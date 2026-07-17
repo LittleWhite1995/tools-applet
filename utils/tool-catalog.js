@@ -1,18 +1,29 @@
 const featuredTools = [
   {
-    id: 'long-image',
-    title: '长图拼接',
-    desc: '多张截图合成一张长图',
+    id: 'pindou',
+    title: '拼豆',
+    desc: '图片转 MARD 色号拼豆图纸',
     icon: 'image',
-    iconColor: '#2f7567',
-    tone: 'mint',
+    iconColor: '#a85b52',
+    tone: 'coral',
     category: '图片处理',
-    path: '/pages/long-image/long-image',
-    keywords: ['长图', '拼接', '截图', '聊天记录', '订单截图', '图片拼接', '长截图'],
+    path: '/pages/pindou/pindou',
+    keywords: ['拼豆', '拼豆图纸', '像素画', '像素图', 'MARD', '迈阿德', '色号', '豆豆图纸', '照片转拼豆'],
   },
 ]
 
 const hotTools = [
+  {
+    id: 'long-image',
+    title: '长图拼接',
+    desc: '多张截图合成一张长图',
+    icon: 'image',
+    iconColor: '#4f5fa8',
+    tone: 'indigo',
+    category: '图片处理',
+    path: '/pages/long-image/long-image',
+    keywords: ['长图', '拼接', '截图', '聊天记录', '订单截图', '图片拼接', '长截图'],
+  },
   {
     id: 'qrcode',
     title: '二维码生成',
@@ -58,17 +69,6 @@ const hotTools = [
     keywords: ['电子社保卡', '社保', '医保', '医保码', '社保卡', '民生服务'],
   },
   {
-    id: 'image-compress',
-    title: '图片压缩',
-    desc: '清晰压缩证件照素材',
-    icon: 'file-zip',
-    iconColor: '#4d7b35',
-    tone: 'green',
-    category: '图片处理',
-    path: '/pages/image-compress/image-compress',
-    keywords: ['图片', '压缩', '证件照', '素材', '体积'],
-  },
-  {
     id: 'nine-grid',
     title: '九宫格切图',
     desc: '一键切朋友圈九宫格',
@@ -93,6 +93,17 @@ const moreTools = [
     category: '经营计算',
     path: '/pages/restaurant/restaurant',
     keywords: ['餐饮', '餐饮开店', '开店', '投资', '建店成本', '盈亏平衡', '经营分析', '保本'],
+  },
+  {
+    id: 'image-compress',
+    title: '图片压缩',
+    desc: '清晰压缩证件照素材',
+    icon: 'file-zip',
+    iconColor: '#4d7b35',
+    tone: 'green',
+    category: '图片处理',
+    path: '/pages/image-compress/image-compress',
+    keywords: ['图片', '压缩', '证件照', '素材', '体积'],
   },
   {
     id: 'image-resize',

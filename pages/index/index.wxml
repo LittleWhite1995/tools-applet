@@ -41,19 +41,23 @@
       >
         <view class="hero-copy">
           <view class="hero-badge">
-            <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="{{featuredTool.iconColor}}" />
+            <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="#2f7567" />
             <text>截图拼接</text>
           </view>
           <view class="hero-title">{{featuredTool.title}}</view>
           <view class="hero-desc">{{featuredTool.desc}}</view>
           <view class="hero-action">
             <text>立即体验</text>
-            <t-icon name="arrow-right" size="28rpx" color="{{featuredTool.iconColor}}" />
+            <t-icon name="arrow-right" size="28rpx" color="#2f7567" />
           </view>
         </view>
         <view class="hero-visual">
+          <pindou-icon
+            wx:if="{{featuredTool.id === 'pindou'}}"
+            size="112rpx"
+          />
           <image
-            wx:if="{{featuredTool.iconImage}}"
+            wx:elif="{{featuredTool.iconImage}}"
             class="hero-icon-image"
             src="{{featuredTool.iconImage}}"
             mode="aspectFit"

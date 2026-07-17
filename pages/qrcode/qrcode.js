@@ -1,4 +1,5 @@
 const { isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
+const { chooseImages } = require('../../utils/image-picker')
 
 Page({
   data: {
@@ -39,27 +40,16 @@ Page({
   },
 
   onChooseLogo() {
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image'],
+    chooseImages({
       sizeType: ['compressed'],
-      success: (res) => {
-        const file = res.tempFiles && res.tempFiles[0]
+    }).then((files) => {
+      const file = files[0]
 
-        if (!file || !file.tempFilePath) return
+      if (!file || !file.tempFilePath) return
 
-        this.setData({
-          logoPath: file.tempFilePath,
-        })
-      },
-      fail: (error) => {
-        if (String(error.errMsg || '').includes('cancel')) return
-
-        wx.showToast({
-          title: '选择图片失败',
-          icon: 'none',
-        })
-      },
+      this.setData({
+        logoPath: file.tempFilePath,
+      })
     })
   },
 

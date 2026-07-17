@@ -1,5 +1,5 @@
 <view class="shell">
-  <navigation-bar title="长图拼接" back="{{true}}" color="#16251f" background="#eef8f3"></navigation-bar>
+  <navigation-bar title="长图拼接" back="{{true}}" color="#202842" background="#eef0fa"></navigation-bar>
 
   <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="page">
@@ -10,7 +10,7 @@
           <view class="hero-desc">适合手动分段截图，本地拼接，不上传图片。</view>
         </view>
         <view class="hero-mark">
-          <t-icon name="image" size="82rpx" color="#2f7567" />
+          <t-icon name="image" size="82rpx" color="#4f5fa8" />
         </view>
       </view>
 
@@ -25,7 +25,7 @@
 
         <view class="uploader" bindtap="onChooseImages">
           <view class="upload-icon">
-            <t-icon name="image-add" size="44rpx" color="#2f7567" />
+            <t-icon name="image-add" size="44rpx" color="#4f5fa8" />
           </view>
           <view class="upload-copy">
             <view class="upload-title">{{hasImages ? '继续添加图片' : '选择多张截图'}}</view>
@@ -46,10 +46,10 @@
             </view>
             <view class="image-actions">
               <view class="icon-action {{index === 0 ? 'is-disabled' : ''}}" data-index="{{index}}" bindtap="onMoveImageUp">
-                <t-icon name="chevron-up" size="26rpx" color="{{index === 0 ? '#b9c5c0' : '#2f7567'}}" />
+                <t-icon name="chevron-up" size="26rpx" color="{{index === 0 ? '#b7bccd' : '#4f5fa8'}}" />
               </view>
               <view class="icon-action {{index === images.length - 1 ? 'is-disabled' : ''}}" data-index="{{index}}" bindtap="onMoveImageDown">
-                <t-icon name="chevron-down" size="26rpx" color="{{index === images.length - 1 ? '#b9c5c0' : '#2f7567'}}" />
+                <t-icon name="chevron-down" size="26rpx" color="{{index === images.length - 1 ? '#b7bccd' : '#4f5fa8'}}" />
               </view>
               <view class="icon-action" data-index="{{index}}" bindtap="onRemoveImage">
                 <t-icon name="delete" size="26rpx" color="#a85b52" />
@@ -104,7 +104,7 @@
               wx:if="{{!isSaving}}"
               name="download"
               size="28rpx"
-              color="{{hasResult ? '#ffffff' : '#b9c5c0'}}"
+              color="{{hasResult ? '#ffffff' : '#b7bccd'}}"
             />
             <t-icon
               wx:else

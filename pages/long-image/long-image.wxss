@@ -1,8 +1,8 @@
 page {
   height: 100vh;
   overflow: hidden;
-  background: #f6faf8;
-  color: #16251f;
+  background: #f5f6fc;
+  color: #202842;
 }
 
 .shell {
@@ -10,14 +10,14 @@ page {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #f6faf8;
+  background: #f5f6fc;
 }
 
 .page-scroll {
   flex: 1;
   height: 0;
   min-height: 0;
-  background: #f6faf8;
+  background: #f5f6fc;
 }
 
 .page {
@@ -25,7 +25,7 @@ page {
   padding: 24rpx 28rpx 56rpx;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, #eef8f3 0%, #fdfefd 36%, #f6faf8 100%);
+    linear-gradient(180deg, #eef0fa 0%, #fdfdff 36%, #f5f6fc 100%);
 }
 
 .hero-panel,
@@ -51,9 +51,9 @@ page {
   overflow: hidden;
   box-sizing: border-box;
   background:
-    linear-gradient(135deg, rgba(229, 243, 239, 0.96), rgba(255, 255, 255, 0.92)),
-    linear-gradient(90deg, rgba(47, 117, 103, 0.12), rgba(45, 104, 149, 0.08));
-  box-shadow: 0 18rpx 38rpx rgba(33, 73, 65, 0.08);
+    linear-gradient(135deg, rgba(235, 237, 249, 0.96), rgba(255, 255, 255, 0.92)),
+    linear-gradient(90deg, rgba(79, 95, 168, 0.14), rgba(95, 80, 170, 0.08));
+  box-shadow: 0 18rpx 38rpx rgba(51, 59, 107, 0.1);
 }
 
 .hero-panel::before {
@@ -65,7 +65,7 @@ page {
   border-radius: 88rpx;
   background:
     linear-gradient(120deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.52) 52%, rgba(255, 255, 255, 0) 86%),
-    linear-gradient(160deg, rgba(47, 117, 103, 0.14), rgba(47, 117, 103, 0));
+    linear-gradient(160deg, rgba(79, 95, 168, 0.16), rgba(79, 95, 168, 0));
   transform: rotate(-16deg);
   content: '';
 }
@@ -77,7 +77,7 @@ page {
 }
 
 .hero-kicker {
-  color: #2f7567;
+  color: #4f5fa8;
   font-size: 20rpx;
   font-weight: 700;
   letter-spacing: 2rpx;
@@ -85,7 +85,7 @@ page {
 
 .hero-title {
   margin-top: 12rpx;
-  color: #16251f;
+  color: #202842;
   font-size: 38rpx;
   font-weight: 700;
   line-height: 1.2;
@@ -93,7 +93,7 @@ page {
 
 .hero-desc {
   margin-top: 10rpx;
-  color: #5e716b;
+  color: #626b89;
   font-size: 25rpx;
   line-height: 1.45;
 }
@@ -115,7 +115,7 @@ page {
   border-radius: 34rpx;
   box-sizing: border-box;
   background: #ffffff;
-  box-shadow: 0 14rpx 32rpx rgba(34, 63, 57, 0.05);
+  box-shadow: 0 14rpx 32rpx rgba(52, 61, 104, 0.06);
 }
 
 .card-head {
@@ -124,7 +124,7 @@ page {
 }
 
 .card-title {
-  color: #16251f;
+  color: #202842;
   font-size: 30rpx;
   font-weight: 700;
 }
@@ -136,7 +136,7 @@ page {
 .save-desc,
 .result-empty {
   margin-top: 6rpx;
-  color: #75857f;
+  color: #707894;
   font-size: 23rpx;
   line-height: 1.5;
 }
@@ -153,7 +153,7 @@ page {
   padding: 24rpx;
   border-radius: 28rpx;
   box-sizing: border-box;
-  background: #f1f8f5;
+  background: #f1f2fa;
 }
 
 .upload-icon {
@@ -164,7 +164,7 @@ page {
   width: 82rpx;
   height: 82rpx;
   border-radius: 24rpx;
-  background: #dcefe9;
+  background: #e2e6f6;
 }
 
 .upload-copy,
@@ -178,7 +178,7 @@ page {
 .upload-title,
 .image-title,
 .save-title {
-  color: #16251f;
+  color: #202842;
   font-size: 27rpx;
   font-weight: 700;
 }
@@ -191,7 +191,7 @@ page {
   align-items: center;
   min-height: 120rpx;
   padding: 18rpx 0;
-  border-bottom: 1rpx solid #edf3f0;
+  border-bottom: 1rpx solid #eceef7;
 }
 
 .image-item:last-child {
@@ -203,7 +203,7 @@ page {
   width: 92rpx;
   height: 92rpx;
   border-radius: 20rpx;
-  background: #edf3f0;
+  background: #eceef7;
 }
 
 .image-actions {
@@ -218,7 +218,7 @@ page {
   width: 48rpx;
   height: 48rpx;
   border-radius: 16rpx;
-  background: #f4f8f6;
+  background: #f3f4fa;
 }
 
 .icon-action + .icon-action {
@@ -236,10 +236,10 @@ page {
 .generate-button {
   display: block;
   margin-top: 24rpx;
-  --td-button-primary-bg-color: #2f7567;
-  --td-button-primary-border-color: #2f7567;
-  --td-button-primary-active-bg-color: #24584d;
-  --td-button-primary-active-border-color: #24584d;
+  --td-button-primary-bg-color: #4f5fa8;
+  --td-button-primary-border-color: #4f5fa8;
+  --td-button-primary-active-bg-color: #3d4b88;
+  --td-button-primary-active-border-color: #3d4b88;
 }
 
 .result-head {
@@ -248,14 +248,14 @@ page {
 }
 
 .result-label {
-  color: #75857f;
+  color: #707894;
   font-size: 22rpx;
   font-weight: 600;
 }
 
 .result-value {
   margin-top: 6rpx;
-  color: #16251f;
+  color: #202842;
   font-size: 30rpx;
   font-weight: 700;
 }
@@ -265,10 +265,10 @@ page {
   max-width: 250rpx;
   padding: 12rpx 18rpx;
   border-radius: 999rpx;
-  color: #2f7567;
+  color: #4f5fa8;
   font-size: 22rpx;
   font-weight: 700;
-  background: #e5f3ef;
+  background: #e8ebf8;
 }
 
 .result-preview {
@@ -279,7 +279,7 @@ page {
   margin-top: 22rpx;
   border-radius: 26rpx;
   overflow: hidden;
-  background: #f6faf8;
+  background: #f5f6fc;
 }
 
 .result-image {
@@ -294,7 +294,7 @@ page {
   padding: 28rpx;
   border-radius: 26rpx;
   box-sizing: border-box;
-  background: #f6faf8;
+  background: #f5f6fc;
 }
 
 .save-panel {
@@ -303,7 +303,7 @@ page {
   padding: 22rpx;
   border-radius: 26rpx;
   box-sizing: border-box;
-  background: #f6faf8;
+  background: #f5f6fc;
 }
 
 .save-cta {
@@ -315,12 +315,12 @@ page {
   padding: 0 22rpx;
   border-radius: 999rpx;
   box-sizing: border-box;
-  background: #d8e2de;
+  background: #dce0ed;
 }
 
 .save-cta.is-enabled,
 .save-cta.is-saving {
-  background: #2f7567;
+  background: #4f5fa8;
 }
 
 .save-cta-text {
@@ -331,7 +331,7 @@ page {
 }
 
 .save-cta.is-disabled .save-cta-text {
-  color: #8b9994;
+  color: #8990a8;
 }
 
 .spinning-icon {

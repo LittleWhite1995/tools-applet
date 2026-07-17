@@ -1,0 +1,10 @@
+<view class="pindou-icon" style="width: {{size}}; height: {{size}};">
+  <view class="bead-row">
+    <view class="bead bead-one"></view>
+    <view class="bead bead-two"></view>
+  </view>
+  <view class="bead-row">
+    <view class="bead bead-three"></view>
+    <view class="bead bead-four"></view>
+  </view>
+</view>

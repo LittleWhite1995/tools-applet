@@ -1,4 +1,5 @@
 const { isSaveCancel, saveImageToAlbum } = require('../../utils/image-save')
+const { chooseImages } = require('../../utils/image-picker')
 
 const MAX_IMAGE_COUNT = 9
 const MAX_CHOOSE_COUNT = 9
@@ -43,44 +44,31 @@ Page({
       return
     }
 
-    wx.chooseMedia({
+    chooseImages({
       count: chooseCount,
-      mediaType: ['image'],
-      sizeType: ['original'],
-      success: (res) => {
-        const files = res.tempFiles || []
+    }).then((files) => {
+      if (!files.length) return
 
-        if (!files.length) return
+      Promise.all(files.map((file) => this.loadImage(file.tempFilePath, file.size)))
+        .then((items) => {
+          const images = this.data.images.concat(items)
 
-        Promise.all(files.map((file) => this.loadImage(file.tempFilePath, file.size)))
-          .then((items) => {
-            const images = this.data.images.concat(items)
-
-            this.setData({
-              images,
-              hasImages: images.length > 0,
-              hasResult: false,
-              outputPath: '',
-              outputSize: '--',
-              outputDimensions: '--',
-              resultNote: images.length >= 2 ? '可生成长图' : '至少需要 2 张图片',
-            })
+          this.setData({
+            images,
+            hasImages: images.length > 0,
+            hasResult: false,
+            outputPath: '',
+            outputSize: '--',
+            outputDimensions: '--',
+            resultNote: images.length >= 2 ? '可生成长图' : '至少需要 2 张图片',
           })
-          .catch(() => {
-            wx.showToast({
-              title: '读取图片失败',
-              icon: 'none',
-            })
-          })
-      },
-      fail: (error) => {
-        if (String(error.errMsg || '').includes('cancel')) return
-
-        wx.showToast({
-          title: '选择图片失败',
-          icon: 'none',
         })
-      },
+        .catch(() => {
+          wx.showToast({
+            title: '读取图片失败',
+            icon: 'none',
+          })
+        })
     })
   },
 

@@ -47,8 +47,12 @@
             bindtouchcancel="onPressEnd"
           >
             <view class="tool-icon tone-{{tool.tone}} {{tool.iconBg === 'white' ? 'has-white-icon-bg' : ''}}">
+              <pindou-icon
+                wx:if="{{tool.id === 'pindou'}}"
+                size="46rpx"
+              />
               <image
-                wx:if="{{tool.iconImage}}"
+                wx:elif="{{tool.iconImage}}"
                 class="tool-icon-image"
                 src="{{tool.iconImage}}"
                 mode="aspectFit"
