@@ -32,6 +32,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+config/api.js
 
 # VS Code
 .vscode/

@@ -1,3 +1,5 @@
+const { moderateImages } = require('./image-moderation')
+
 const DEFAULT_SIZE_TYPE = ['original']
 const DEFAULT_SOURCE_TYPE = ['album', 'camera']
 
@@ -64,6 +66,31 @@ const handleChooseFailure = (error, resolve) => {
   resolve([])
 }
 
+const moderateSelectedFiles = (files, resolve) => {
+  wx.showLoading({
+    title: '图片安全检测中',
+    mask: true,
+  })
+
+  moderateImages(files)
+    .then(() => {
+      wx.hideLoading()
+      resolve(files)
+    })
+    .catch((error) => {
+      wx.hideLoading()
+
+      if (!error || error.code !== 'unsafe_image') {
+        console.warn('[image-picker] moderation skipped', error)
+        resolve(files)
+        return
+      }
+
+      showError('图片未通过安全检测，请更换图片')
+      resolve([])
+    })
+}
+
 const chooseImages = (options = {}) => new Promise((resolve) => {
   const count = Number.isInteger(options.count) && options.count > 0 ? options.count : 1
   const sizeType = Array.isArray(options.sizeType) && options.sizeType.length
@@ -84,9 +111,11 @@ const chooseImages = (options = {}) => new Promise((resolve) => {
 
         if (!files.length) {
           showError('未获取到图片，请重试')
+          resolve([])
+          return
         }
 
-        resolve(files)
+        moderateSelectedFiles(files, resolve)
       },
       fail: (error) => handleChooseFailure(error, resolve),
     })
