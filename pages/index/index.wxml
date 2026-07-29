@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="shell">
-  <navigation-bar title="" back="{{false}}" color="white" background="transparent"></navigation-bar>
+  <navigation-bar title="" back="{{false}}" color="#15231f" background="transparent"></navigation-bar>
 
   <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="page">

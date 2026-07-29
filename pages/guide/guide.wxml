@@ -6,7 +6,7 @@
       <view class="hero-panel">
         <view class="hero-copy">
           <view class="hero-kicker">GET STARTED</view>
-          <view class="hero-title">全能工具箱使用指南</view>
+          <view class="hero-title">小白工具箱使用指南</view>
           <view class="hero-desc">把常用小工具收在一起，少翻菜单，少开网页，想到就能用。</view>
         </view>
         <view class="hero-mark">

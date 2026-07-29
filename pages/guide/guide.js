@@ -140,14 +140,14 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: '全能工具箱使用指南：这些小工具怎么用',
+      title: '小白工具箱使用指南：这些小工具怎么用',
       path: '/pages/guide/guide',
     }
   },
 
   onShareTimeline() {
     return {
-      title: '全能工具箱使用指南',
+      title: '小白工具箱使用指南',
       query: '',
     }
   },

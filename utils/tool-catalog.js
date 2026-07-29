@@ -330,7 +330,7 @@ const topicCards = [
   {
     id: 'guide',
     label: '新手必读',
-    title: '全能工具箱使用指南',
+    title: '小白工具箱使用指南',
     desc: '快速了解搜索、热门工具和高频能力的使用方式',
     icon: 'book-open',
     iconColor: '#24584d',
