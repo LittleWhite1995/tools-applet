@@ -21,7 +21,7 @@ const SEARCH_GROUP_ORDER = [
   '日常计算',
   '图片处理',
   '视频处理',
-  '生活健康',
+  '运动健康',
   '生活辅助',
   '理财计算',
   '经营测算',
@@ -87,7 +87,7 @@ Page({
     pressedKey: '',
     results: [],
     groupedResults: [],
-    suggestions: ['社保', '图片处理', '生活健康', '餐饮开店'],
+    suggestions: ['社保', '图片处理', '运动健康', '餐饮开店'],
   },
 
   onLoad(options) {

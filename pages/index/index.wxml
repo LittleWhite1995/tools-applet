@@ -88,7 +88,7 @@
           bindtouchend="onPressEnd"
           bindtouchcancel="onPressEnd"
         >
-          <view class="tool-icon tone-{{item.tone}} {{item.iconBg === 'white' ? 'has-white-icon-bg' : ''}}">
+          <view class="tool-icon tone-{{item.tone}} {{item.iconBg === 'white' ? 'has-white-icon-bg' : (item.iconBg === 'black' ? 'has-black-icon-bg' : '')}}">
             <image
               wx:if="{{item.iconImage}}"
               class="tool-icon-image"
