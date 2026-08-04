@@ -66,13 +66,25 @@ const handleChooseFailure = (error, resolve) => {
   resolve([])
 }
 
-const moderateSelectedFiles = (files, resolve) => {
+const moderateSelectedFiles = (files, resolve, options = {}) => {
+  const showProgress = Boolean(options.showProgress && files.length > 1)
+
   wx.showLoading({
-    title: '图片安全检测中',
+    title: showProgress ? `图片内容安全检测 0/${files.length}` : '图片内容安全检测',
     mask: true,
   })
 
-  moderateImages(files)
+  moderateImages(files, {
+    timeout: options.timeout,
+    onProgress: showProgress
+      ? (completed, total) => {
+        wx.showLoading({
+          title: `图片内容安全检测 ${completed}/${total}`,
+          mask: true,
+        })
+      }
+      : null,
+  })
     .then(() => {
       wx.hideLoading()
       resolve(files)
@@ -81,8 +93,9 @@ const moderateSelectedFiles = (files, resolve) => {
       wx.hideLoading()
 
       if (!error || error.code !== 'unsafe_image') {
-        console.warn('[image-picker] moderation skipped', error)
-        resolve(files)
+        console.error('[image-picker] image moderation failed', error)
+        showError('图片安全检测失败，请检查网络后重试')
+        resolve([])
         return
       }
 
@@ -115,7 +128,7 @@ const chooseImages = (options = {}) => new Promise((resolve) => {
           return
         }
 
-        moderateSelectedFiles(files, resolve)
+        moderateSelectedFiles(files, resolve, options.moderation)
       },
       fail: (error) => handleChooseFailure(error, resolve),
     })

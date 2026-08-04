@@ -46,6 +46,10 @@ Page({
 
     chooseImages({
       count: chooseCount,
+      moderation: {
+        showProgress: true,
+        timeout: 60000,
+      },
     }).then((files) => {
       if (!files.length) return
 

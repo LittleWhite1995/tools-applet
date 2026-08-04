@@ -3,7 +3,7 @@ const { getApiBaseUrl } = require('../config/api')
 const MODERATION_PATH = '/file/image/moderation'
 const UPLOAD_FIELD_NAME = 'multipartFile'
 const MAX_CONCURRENCY = 9
-const MODERATION_TIMEOUT = 5000
+const MODERATION_TIMEOUT = 15000
 const RISK_LEVELS = ['low', 'medium', 'high']
 
 const createModerationError = (code, message) => {
@@ -48,7 +48,7 @@ const parseResponse = (response) => {
   throw createServiceError('图片安全检测结果不完整')
 }
 
-const moderateImage = (file) => new Promise((resolve, reject) => {
+const moderateImage = (file, timeout) => new Promise((resolve, reject) => {
   if (!file || !file.tempFilePath) {
     reject(createServiceError('未获取到待检测图片'))
     return
@@ -79,7 +79,7 @@ const moderateImage = (file) => new Promise((resolve, reject) => {
     }
 
     reject(createServiceError('图片安全检测请求超时'))
-  }, MODERATION_TIMEOUT)
+  }, timeout)
 
   try {
     uploadTask = wx.uploadFile({
@@ -103,12 +103,19 @@ const moderateImage = (file) => new Promise((resolve, reject) => {
   }
 })
 
-const moderateImages = (files) => {
+const moderateImages = (files, options = {}) => {
   if (!Array.isArray(files) || !files.length) {
     return Promise.reject(createServiceError('未获取到待检测图片'))
   }
 
+  const timeout = Number.isInteger(options.timeout) && options.timeout > 0
+    ? options.timeout
+    : MODERATION_TIMEOUT
+  const onProgress = typeof options.onProgress === 'function'
+    ? options.onProgress
+    : null
   let nextIndex = 0
+  let completedCount = 0
   let riskError = null
   let serviceError = null
   const workerCount = Math.min(MAX_CONCURRENCY, files.length)
@@ -121,7 +128,7 @@ const moderateImages = (files) => {
     const currentIndex = nextIndex
     nextIndex += 1
 
-    return moderateImage(files[currentIndex])
+    return moderateImage(files[currentIndex], timeout)
       .catch((error) => {
         if (error && error.code === 'unsafe_image') {
           riskError = error
@@ -129,6 +136,13 @@ const moderateImages = (files) => {
         }
 
         serviceError = serviceError || error
+      })
+      .then(() => {
+        completedCount += 1
+
+        if (onProgress) {
+          onProgress(completedCount, files.length)
+        }
       })
       .then(worker)
   }
@@ -142,9 +156,7 @@ const moderateImages = (files) => {
   return Promise.all(workers).then(() => {
     if (riskError) throw riskError
 
-    if (serviceError) {
-      console.warn('[image-moderation] moderation skipped', serviceError)
-    }
+    if (serviceError) throw serviceError
 
     return files
   })
