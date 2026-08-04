@@ -42,7 +42,7 @@
         <view class="hero-copy">
           <view class="hero-badge">
             <t-icon class="hero-badge-icon" name="star-filled" size="22rpx" color="#2f7567" />
-            <text>截图拼接</text>
+            <text>热门推荐</text>
           </view>
           <view class="hero-title">{{featuredTool.title}}</view>
           <view class="hero-desc">{{featuredTool.desc}}</view>
