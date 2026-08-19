@@ -36,7 +36,7 @@
             wx:for-item="tool"
             wx:for-index="toolIndex"
             wx:key="id"
-            class="result-card {{pressedKey === tool.id ? 'is-pressing' : ''}}"
+            class="result-card {{tool.id === 'wooden-fish' ? 'is-wooden-fish-card' : ''}} {{pressedKey === tool.id ? 'is-pressing' : ''}}"
             bindtap="onResultTap"
             data-name="{{tool.title}}"
             data-path="{{tool.path}}"
@@ -46,11 +46,15 @@
             bindtouchend="onPressEnd"
             bindtouchcancel="onPressEnd"
           >
-            <view class="tool-icon tone-{{tool.tone}} {{tool.iconBg === 'white' ? 'has-white-icon-bg' : (tool.iconBg === 'black' ? 'has-black-icon-bg' : '')}}">
+            <view class="tool-icon tone-{{tool.tone}} {{tool.iconBg === 'white' ? 'has-white-icon-bg' : (tool.iconBg === 'black' ? 'has-black-icon-bg' : (tool.iconBg === 'wooden-fish' ? 'has-wooden-fish-icon-bg' : ''))}}">
               <pindou-icon
                 wx:if="{{tool.id === 'pindou'}}"
                 size="46rpx"
               />
+              <block wx:elif="{{tool.id === 'wooden-fish'}}">
+                <image class="wooden-fish-icon-mallet" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
+                <image class="wooden-fish-icon-body" src="/assets/icons/wooden-fish.png" mode="aspectFit" />
+              </block>
               <image
                 wx:elif="{{tool.iconImage}}"
                 class="tool-icon-image"
@@ -69,7 +73,7 @@
 
             <view class="result-action">
               <text>{{tool.actionText}}</text>
-              <t-icon name="chevron-right" size="26rpx" color="#6f7f7a" />
+              <t-icon name="chevron-right" size="26rpx" color="{{tool.id === 'wooden-fish' ? '#c89a55' : '#6f7f7a'}}" />
             </view>
           </view>
         </view>

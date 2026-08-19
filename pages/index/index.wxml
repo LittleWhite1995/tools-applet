@@ -78,7 +78,7 @@
         <view
           wx:for="{{hotTools}}"
           wx:key="id"
-          class="tool-card {{pressedKey === item.id ? 'is-pressing' : ''}}"
+          class="tool-card {{item.id === 'wooden-fish' ? 'is-wooden-fish-card' : ''}} {{pressedKey === item.id ? 'is-pressing' : ''}}"
           bindtap="onToolTap"
           data-name="{{item.title}}"
           data-path="{{item.path}}"
@@ -88,9 +88,13 @@
           bindtouchend="onPressEnd"
           bindtouchcancel="onPressEnd"
         >
-          <view class="tool-icon tone-{{item.tone}} {{item.iconBg === 'white' ? 'has-white-icon-bg' : (item.iconBg === 'black' ? 'has-black-icon-bg' : '')}}">
+          <view class="tool-icon tone-{{item.tone}} {{item.iconBg === 'white' ? 'has-white-icon-bg' : (item.iconBg === 'black' ? 'has-black-icon-bg' : (item.iconBg === 'wooden-fish' ? 'has-wooden-fish-icon-bg' : ''))}}">
+            <block wx:if="{{item.id === 'wooden-fish'}}">
+              <image class="wooden-fish-icon-mallet" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
+              <image class="wooden-fish-icon-body" src="/assets/icons/wooden-fish.png" mode="aspectFit" />
+            </block>
             <image
-              wx:if="{{item.iconImage}}"
+              wx:elif="{{item.iconImage}}"
               class="tool-icon-image"
               src="{{item.iconImage}}"
               mode="aspectFit"

@@ -1,0 +1,92 @@
+<view class="shell">
+  <navigation-bar title="电子木鱼" back="{{true}}" color="#f8dfaa" background="#17100d"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">WOODEN FISH</view>
+          <view class="hero-title">轻敲木鱼，积攒今日功德</view>
+          <view class="hero-desc">手动轻敲或开启自动模式，给自己留一刻清静。</view>
+        </view>
+        <view class="hero-mark">
+          <image class="hero-mallet-image" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
+          <image class="hero-fish-image" src="/assets/icons/wooden-fish.png" mode="aspectFit" />
+        </view>
+      </view>
+
+      <view class="stats-row">
+        <view class="stat-card">
+          <view class="stat-label">今日功德</view>
+          <view class="stat-value">{{todayCount}}</view>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-card">
+          <view class="stat-label">累计功德</view>
+          <view class="stat-value">{{totalCount > 9999999 ? '9999999+' : totalCount}}</view>
+        </view>
+      </view>
+
+      <view class="altar-panel">
+        <view class="halo halo-one"></view>
+        <view class="halo halo-two"></view>
+
+        <view class="incense-wrap">
+          <view class="smoke smoke-one"></view>
+          <view class="smoke smoke-two"></view>
+          <view class="incense"></view>
+          <view class="incense-base"></view>
+        </view>
+
+        <view class="wooden-fish-stage" bindtap="onStrike" hover-class="stage-pressed" hover-stay-time="80">
+          <view class="mallet {{isStriking ? 'is-striking' : ''}}">
+            <image class="mallet-image" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
+          </view>
+
+          <view class="fish-assembly {{isStriking ? 'is-striking' : ''}}">
+            <image class="wooden-fish-image" src="/assets/icons/wooden-fish.png" mode="aspectFit" />
+          </view>
+
+          <view wx:if="{{floatVisible}}" class="merit-float">功德 +1</view>
+        </view>
+
+        <view class="tap-hint">{{autoEnabled ? '自动敲击中，也可手动轻触' : '轻触木鱼敲一下'}}</view>
+      </view>
+
+      <view class="control-panel">
+        <view class="control-row">
+          <view class="control-copy">
+            <view class="control-title">自动敲击</view>
+            <view class="control-desc">{{autoEnabled ? '正在持续积攒功德' : '开启后按选定速度敲击'}}</view>
+          </view>
+          <switch checked="{{autoEnabled}}" color="#c59b52" bindchange="onAutoChange" />
+        </view>
+
+        <view class="speed-list">
+          <view
+            wx:for="{{speedOptions}}"
+            wx:key="id"
+            class="speed-item {{speedId === item.id ? 'is-active' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="onSpeedTap"
+          >
+            <view class="speed-name">{{item.label}}</view>
+            <view class="speed-desc">{{item.desc}}</view>
+          </view>
+        </view>
+
+        <view class="control-row sound-row">
+          <view class="control-copy">
+            <view class="control-title">木鱼音效</view>
+            <view class="control-desc">震动只在手动敲击时触发</view>
+          </view>
+          <switch checked="{{soundEnabled}}" color="#c59b52" bindchange="onSoundChange" />
+        </view>
+
+        <view class="reset-action" bindtap="onResetTap" hover-class="reset-pressed">重置功德计数</view>
+      </view>
+
+      <view class="footer-note">数据仅保存在当前设备，仅供休闲解压使用。</view>
+    </view>
+  </scroll-view>
+</view>
