@@ -1,0 +1,96 @@
+<view class="scoreboard-shell">
+  <view
+    class="player-panel player-left tone-red"
+    data-player-id="{{leftPlayer.id}}"
+    bindtap="onAddPoint"
+  >
+    <view class="player-head">
+      <view
+        class="player-name"
+        data-player-id="{{leftPlayer.id}}"
+        catchtap="onEditName"
+      >
+        <text>{{leftPlayer.name}}</text>
+        <text class="edit-mark">✎</text>
+      </view>
+      <view class="games-box">
+        <text class="games-value">{{leftPlayer.games}}</text>
+        <text class="games-label">局</text>
+      </view>
+    </view>
+
+    <view class="score-value">{{leftPlayer.points}}</view>
+
+    <view class="player-foot">
+      <view class="tap-hint">点击比分区 +1</view>
+      <view
+        class="subtract-button"
+        data-player-id="{{leftPlayer.id}}"
+        catchtap="onSubtractPoint"
+      >−1</view>
+    </view>
+  </view>
+
+  <view class="control-rail">
+    <view class="mode-badge">{{modeName}}</view>
+
+    <view class="rail-actions">
+      <view class="rail-button {{canUndo ? '' : 'is-disabled'}}" bindtap="onUndo">
+        <text class="rail-symbol">↶</text>
+        <text class="rail-label">撤销</text>
+      </view>
+
+      <view class="rail-button" bindtap="onSwapSides">
+        <text class="rail-symbol swap-symbol">⇄</text>
+        <text class="rail-label">换边</text>
+      </view>
+
+      <view wx:if="{{isFreeMode}}" class="rail-button finish-button" bindtap="onFinishFreeGame">
+        <text class="rail-symbol">✓</text>
+        <text class="rail-label">结束本局</text>
+      </view>
+
+      <view class="rail-button back-button" bindtap="onBack">
+        <text class="rail-symbol">‹</text>
+        <text class="rail-label">返回</text>
+      </view>
+    </view>
+
+    <view class="last-game {{lastGameText ? 'is-visible' : ''}}">
+      <text wx:if="{{lastGameText}}">{{lastGameText}}</text>
+      <text wx:else>比分自动保存</text>
+    </view>
+  </view>
+
+  <view
+    class="player-panel player-right tone-blue"
+    data-player-id="{{rightPlayer.id}}"
+    bindtap="onAddPoint"
+  >
+    <view class="player-head">
+      <view class="games-box">
+        <text class="games-value">{{rightPlayer.games}}</text>
+        <text class="games-label">局</text>
+      </view>
+      <view
+        class="player-name align-right"
+        data-player-id="{{rightPlayer.id}}"
+        catchtap="onEditName"
+      >
+        <text class="edit-mark">✎</text>
+        <text>{{rightPlayer.name}}</text>
+      </view>
+    </view>
+
+    <view class="score-value">{{rightPlayer.points}}</view>
+
+    <view class="player-foot align-right">
+      <view
+        class="subtract-button"
+        data-player-id="{{rightPlayer.id}}"
+        catchtap="onSubtractPoint"
+      >−1</view>
+      <view class="tap-hint">点击比分区 +1</view>
+    </view>
+  </view>
+</view>

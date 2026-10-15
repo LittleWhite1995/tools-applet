@@ -1,14 +1,14 @@
 const featuredTools = [
   {
-    id: 'pindou',
-    title: '拼豆',
-    desc: '图片转 MARD 色号拼豆图纸',
-    icon: 'image',
-    iconColor: '#a85b52',
+    id: 'scoreboard',
+    title: '双人记分牌',
+    desc: '横屏大比分，羽毛球乒乓球都能记',
+    icon: 'activity',
+    iconColor: '#bf5b47',
     tone: 'coral',
-    category: '图片处理',
-    path: '/pages/pindou/pindou',
-    keywords: ['拼豆', '拼豆图纸', '像素画', '像素图', 'MARD', '迈阿德', '色号', '豆豆图纸', '照片转拼豆'],
+    category: '运动健康',
+    path: '/pages/scoreboard/scoreboard',
+    keywords: ['双人记分牌', '记分牌', '比分', '羽毛球', '乒乓球', '自由计分', '比赛', '运动'],
   },
 ]
 
@@ -83,6 +83,17 @@ const hotTools = [
 
 // 更多工具 - 可搜索，不在首页展示
 const moreTools = [
+  {
+    id: 'pindou',
+    title: '拼豆',
+    desc: '图片转 MARD 色号拼豆图纸',
+    icon: 'image',
+    iconColor: '#a85b52',
+    tone: 'coral',
+    category: '图片处理',
+    path: '/pages/pindou/pindou',
+    keywords: ['拼豆', '拼豆图纸', '像素画', '像素图', 'MARD', '迈阿德', '色号', '豆豆图纸', '照片转拼豆'],
+  },
   {
     id: 'social-security-card',
     title: '电子社保卡',

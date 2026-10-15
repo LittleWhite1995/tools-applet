@@ -1,0 +1,12 @@
+<view class="scoreboard-icon scoreboard-icon-{{variant}}" style="width: {{size}}; height: {{size}};">
+  <view class="scoreboard-frame">
+    <view class="score-panel score-panel-red">
+      <text>2</text>
+    </view>
+    <view class="score-panel score-panel-blue">
+      <text>1</text>
+    </view>
+    <view class="score-hinge"></view>
+  </view>
+  <view class="score-stand"></view>
+</view>

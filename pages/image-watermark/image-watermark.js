@@ -209,14 +209,36 @@ Page({
     })
   },
 
+  wrapWatermarkLines(ctx, lines, maxWidth) {
+    return lines.reduce((wrappedLines, line) => {
+      let currentLine = ''
+
+      Array.from(line).forEach((character) => {
+        const candidate = currentLine + character
+
+        if (!currentLine || ctx.measureText(candidate).width <= maxWidth) {
+          currentLine = candidate
+          return
+        }
+
+        wrappedLines.push(currentLine)
+        currentLine = character
+      })
+
+      if (currentLine) wrappedLines.push(currentLine)
+
+      return wrappedLines
+    }, [])
+  },
+
   drawRepeatedWatermark(ctx, target) {
-    const lines = normalizeWatermarkText(this.data.watermarkText)
+    const sourceLines = normalizeWatermarkText(this.data.watermarkText)
     const opacity = this.getSelectedOpacity()
     const fontSize = Math.max(24, Math.round(Math.min(target.width, target.height) * 0.045))
     const lineHeight = Math.round(fontSize * 1.35)
-    const blockHeight = lineHeight * lines.length
-    const stepX = Math.max(260, Math.round(target.width * 0.42))
-    const stepY = Math.max(190, Math.round(target.height * 0.24))
+    const baseStepX = Math.max(260, Math.round(target.width * 0.42))
+    const baseStepY = Math.max(190, Math.round(target.height * 0.24))
+    const maxTextWidth = Math.max(fontSize * 4, Math.round(baseStepX * 0.76))
 
     ctx.save()
     ctx.globalAlpha = opacity
@@ -224,14 +246,30 @@ Page({
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.font = `500 ${fontSize}px sans-serif`
-    ctx.rotate(-Math.PI / 6)
+
+    const lines = this.wrapWatermarkLines(ctx, sourceLines, maxTextWidth)
+    const blockHeight = lineHeight * lines.length
+    const maxLineWidth = lines.reduce(
+      (maxWidth, line) => Math.max(maxWidth, ctx.measureText(line).width),
+      0,
+    )
+    const rotation = Math.PI / 6
+    const spacing = Math.round(lineHeight * 0.9)
+    const rotatedWidth = maxLineWidth * Math.cos(rotation) + blockHeight * Math.sin(rotation)
+    const rotatedHeight = maxLineWidth * Math.sin(rotation) + blockHeight * Math.cos(rotation)
+    const stepX = Math.max(baseStepX, Math.ceil(rotatedWidth + spacing))
+    const stepY = Math.max(baseStepY, Math.ceil(rotatedHeight + spacing))
+
+    ctx.rotate(-rotation)
 
     const diagonal = Math.ceil(Math.sqrt(target.width * target.width + target.height * target.height))
 
     for (let x = -diagonal; x <= diagonal * 1.4; x += stepX) {
       for (let y = -diagonal; y <= diagonal * 1.4; y += stepY) {
         lines.forEach((line, index) => {
-          ctx.fillText(line, x, y + index * lineHeight - blockHeight / 2)
+          const offsetY = (index - (lines.length - 1) / 2) * lineHeight
+
+          ctx.fillText(line, x, y + offsetY)
         })
       }
     }

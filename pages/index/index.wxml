@@ -52,8 +52,12 @@
           </view>
         </view>
         <view class="hero-visual">
+          <scoreboard-icon
+            wx:if="{{featuredTool.id === 'scoreboard'}}"
+            size="128rpx"
+          />
           <pindou-icon
-            wx:if="{{featuredTool.id === 'pindou'}}"
+            wx:elif="{{featuredTool.id === 'pindou'}}"
             size="112rpx"
           />
           <image
@@ -89,7 +93,11 @@
           bindtouchcancel="onPressEnd"
         >
           <view class="tool-icon tone-{{item.tone}} {{item.iconBg === 'white' ? 'has-white-icon-bg' : (item.iconBg === 'black' ? 'has-black-icon-bg' : (item.iconBg === 'wooden-fish' ? 'has-wooden-fish-icon-bg' : ''))}}">
-            <block wx:if="{{item.id === 'wooden-fish'}}">
+            <scoreboard-icon
+              wx:if="{{item.id === 'scoreboard'}}"
+              size="44rpx"
+            />
+            <block wx:elif="{{item.id === 'wooden-fish'}}">
               <image class="wooden-fish-icon-mallet" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
               <image class="wooden-fish-icon-body" src="/assets/icons/wooden-fish.png" mode="aspectFit" />
             </block>

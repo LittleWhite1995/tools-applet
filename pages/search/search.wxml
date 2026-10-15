@@ -51,6 +51,10 @@
                 wx:if="{{tool.id === 'pindou'}}"
                 size="46rpx"
               />
+              <scoreboard-icon
+                wx:elif="{{tool.id === 'scoreboard'}}"
+                size="48rpx"
+              />
               <block wx:elif="{{tool.id === 'wooden-fish'}}">
                 <image class="wooden-fish-icon-mallet" src="/assets/icons/wooden-fish-mallet.png" mode="aspectFit" />
                 <image class="wooden-fish-icon-body" src="/assets/icons/wooden-fish.png" mode="aspectFit" />

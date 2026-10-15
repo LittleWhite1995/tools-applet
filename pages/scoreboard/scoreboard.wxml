@@ -1,0 +1,123 @@
+<view class="shell">
+  <navigation-bar title="双人记分牌" back="{{true}}" color="#182230" background="#f3f4f6"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-card">
+        <view class="hero-copy">
+          <view class="hero-kicker">COURTSIDE SCOREBOARD</view>
+          <view class="hero-title">手机横过来，比分一眼看清</view>
+          <view class="hero-desc">选好比赛和选手，下一步进入横屏大比分。</view>
+        </view>
+        <view class="hero-mark">
+          <scoreboard-icon size="116rpx" />
+        </view>
+      </view>
+
+      <view wx:if="{{activeMatch}}" class="continue-card">
+        <view class="continue-main">
+          <view class="continue-label">正在进行</view>
+          <view class="continue-title">{{activeSummary}}</view>
+          <view class="continue-note">比分已保存在本机，可直接回到赛场。</view>
+        </view>
+        <view class="continue-button" bindtap="onContinueMatch">继续比赛</view>
+      </view>
+
+      <view class="section-card">
+        <view class="section-heading">
+          <view>
+            <view class="section-title">选择比赛</view>
+            <view class="section-desc">预设会自动判断胜局和清零小分</view>
+          </view>
+          <view class="step-badge">1</view>
+        </view>
+
+        <view class="mode-list">
+          <view
+            wx:for="{{modeOptions}}"
+            wx:key="id"
+            class="mode-card {{selectedMode === item.id ? 'is-selected' : ''}}"
+            data-mode="{{item.id}}"
+            bindtap="onModeSelect"
+          >
+            <view class="mode-icon mode-{{item.id}}">
+              <text wx:if="{{item.id === 'badminton'}}">羽</text>
+              <text wx:elif="{{item.id === 'tableTennis'}}">乒</text>
+              <text wx:else>+</text>
+            </view>
+            <view class="mode-main">
+              <view class="mode-name">{{item.name}}</view>
+              <view class="mode-desc">{{item.description}}</view>
+            </view>
+            <view class="mode-check">
+              <view class="check-dot"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section-card player-card">
+        <view class="section-heading">
+          <view>
+            <view class="section-title">输入选手</view>
+            <view class="section-desc">比赛中点击名字也可以随时修改</view>
+          </view>
+          <view class="step-badge">2</view>
+        </view>
+
+        <view class="player-inputs">
+          <view class="player-input-row">
+            <view class="player-color color-red"></view>
+            <view class="player-input-main">
+              <view class="player-label">选手 A</view>
+              <input
+                class="player-input"
+                value="{{playerAName}}"
+                maxlength="10"
+                placeholder="请输入名字"
+                data-field="playerAName"
+                bindinput="onNameInput"
+              />
+            </view>
+          </view>
+
+          <view class="versus">VS</view>
+
+          <view class="player-input-row">
+            <view class="player-color color-blue"></view>
+            <view class="player-input-main">
+              <view class="player-label">选手 B</view>
+              <input
+                class="player-input"
+                value="{{playerBName}}"
+                maxlength="10"
+                placeholder="请输入名字"
+                data-field="playerBName"
+                bindinput="onNameInput"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="start-button" bindtap="onStartMatch">
+        <text>开始新比赛</text>
+      </view>
+
+      <view class="tips-card">
+        <view class="tip-item">
+          <view class="tip-dot"></view>
+          <text>比分区整块点击加分，减分按钮单独放置</text>
+        </view>
+        <view class="tip-item">
+          <view class="tip-dot"></view>
+          <text>比赛中保持屏幕常亮，退出记分页后恢复默认</text>
+        </view>
+        <view class="tip-item">
+          <view class="tip-dot"></view>
+          <text>每一步都能撤销，换边后比分和局数跟着选手走</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
