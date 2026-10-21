@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="shell">
-  <navigation-bar title="" back="{{false}}" color="#15231f" background="transparent"></navigation-bar>
+  <navigation-bar title="φ(゜▽゜*)♪嗨，你来啦！" back="{{false}}" color="#15231f" background="transparent"></navigation-bar>
 
   <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="page">
@@ -152,9 +152,6 @@
             >
               {{item.button}}
             </t-button>
-          </view>
-          <view class="topic-icon">
-            <t-icon name="{{item.icon}}" size="118rpx" color="currentColor" />
           </view>
         </view>
       </view>

@@ -41,15 +41,6 @@
       "desc": "用于保存生成或处理后的图片、视频到相册"
     }
   },
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "defaultContentBox": true,
-      "disableABTest": true,
-      "sdkVersionBegin": "3.0.0",
-      "sdkVersionEnd": "15.255.255"
-    }
-  },
   "componentFramework": "glass-easel",
   "__usePrivacyCheck__": true,
   "sitemapLocation": "sitemap.json",

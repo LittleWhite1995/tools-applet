@@ -37,7 +37,6 @@ page {
 .result-card,
 .result-topline,
 .result-action,
-.summary-title,
 .group-head,
 .empty-state,
 .empty-icon,
@@ -63,16 +62,7 @@ page {
   padding: 2rpx 4rpx 28rpx;
 }
 
-.summary-title {
-  align-items: center;
-  color: #17231f;
-  font-size: 34rpx;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
 .summary-count {
-  margin-top: 10rpx;
   color: #72817d;
   font-size: 24rpx;
   font-weight: 500;

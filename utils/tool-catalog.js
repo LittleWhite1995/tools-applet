@@ -305,14 +305,14 @@ const moreTools = [
   },
   {
     id: 'zodiac',
-    title: '星座计算器',
-    desc: '输入生日快速查询十二星座',
+    title: '星座查询',
+    desc: '选择星座查看日期范围和基础资料',
     icon: 'star-filled',
     iconColor: '#f0c36b',
     tone: 'indigo',
     category: '生活娱乐',
     path: '/pages/zodiac/zodiac',
-    keywords: ['星座', '生日', '十二星座', '白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
+    keywords: ['星座查询', '星座', '十二星座', '白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
   },
   {
     id: 'choice-helper',

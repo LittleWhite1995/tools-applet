@@ -16,11 +16,10 @@
         />
 
         <view class="result-summary">
-          <view class="summary-title">
-            <block wx:if="{{queryText}}">“{{queryText}}” 的搜索结果</block>
-            <block wx:else>全部工具</block>
+          <view class="summary-count">
+            <block wx:if="{{queryText}}">找到 {{results.length}} 个相关工具</block>
+            <block wx:else>共收录 {{results.length}} 个工具</block>
           </view>
-          <view class="summary-count">{{results.length}} 个匹配项</view>
         </view>
       </view>
 

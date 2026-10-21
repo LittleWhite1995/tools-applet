@@ -462,13 +462,6 @@ page {
   line-height: 1;
 }
 
-.topic-icon {
-  position: absolute;
-  right: 30rpx;
-  bottom: 26rpx;
-  opacity: 0.28;
-}
-
 .is-pressing {
   opacity: 0.94;
   transform: scale(0.99) translateZ(0);

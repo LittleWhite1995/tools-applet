@@ -1,22 +1,22 @@
 page {
-  background: #18233d;
-  color: #162033;
   height: 100vh;
   overflow: hidden;
+  color: #162033;
+  background: #18233d;
 }
 
 .shell {
   display: flex;
-  flex-direction: column;
   height: 100vh;
+  flex-direction: column;
   overflow: hidden;
   background: #18233d;
 }
 
 .page-scroll {
-  flex: 1;
   height: 0;
   min-height: 0;
+  flex: 1;
   background: #18233d;
 }
 
@@ -27,34 +27,28 @@ page {
   background:
     radial-gradient(circle at 88% 10%, rgba(212, 164, 77, 0.12), transparent 24%),
     radial-gradient(circle at 10% 8%, rgba(94, 125, 196, 0.16), transparent 22%),
-    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.04), transparent 28%),
-    linear-gradient(180deg, #141d34 0%, #1c2a48 42%, #223252 100%);
+    linear-gradient(180deg, #141d34 0%, #1c2a48 48%, #223252 100%);
 }
 
 .hero-panel,
 .hero-mark,
-.rule-panel,
-.field-row,
-.field-icon,
+.zodiac-grid,
+.zodiac-option,
 .result-head,
-.basis-panel,
 .info-grid,
-.keyword-list,
-.zodiac-item-head,
-.zodiac-list,
-.zodiac-item {
+.keyword-list {
   display: flex;
 }
 
 .hero-panel {
   position: relative;
+  min-height: 228rpx;
   align-items: center;
   justify-content: space-between;
-  min-height: 228rpx;
   padding: 36rpx 34rpx;
   border-radius: 42rpx;
-  overflow: hidden;
   box-sizing: border-box;
+  overflow: hidden;
   background:
     radial-gradient(circle at 78% 24%, rgba(240, 195, 107, 0.2), transparent 24%),
     linear-gradient(135deg, #16213d, #22345c 56%, #12203c);
@@ -68,15 +62,15 @@ page {
 }
 
 .star-a {
-  left: 46rpx;
   top: 34rpx;
+  left: 46rpx;
   width: 10rpx;
   height: 10rpx;
 }
 
 .star-b {
-  right: 160rpx;
   top: 56rpx;
+  right: 160rpx;
   width: 8rpx;
   height: 8rpx;
 }
@@ -112,42 +106,35 @@ page {
 .hero-mark {
   position: relative;
   z-index: 1;
-  align-items: center;
-  justify-content: center;
   width: 128rpx;
   height: 128rpx;
+  flex: none;
+  align-items: center;
+  justify-content: center;
   border-radius: 38rpx;
   background: rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 0 0 1rpx rgba(240, 195, 107, 0.18);
 }
 
-.form-card,
-.result-card,
-.zodiac-card {
+.selector-card,
+.result-card {
   position: relative;
   margin-top: 28rpx;
   padding: 32rpx;
   border-radius: 34rpx;
-  overflow: hidden;
   box-sizing: border-box;
+  overflow: hidden;
   background:
     radial-gradient(circle at 78% 24%, rgba(240, 195, 107, 0.16), transparent 24%),
     linear-gradient(135deg, #16213d, #22345c 56%, #12203c);
   box-shadow: 0 24rpx 48rpx rgba(13, 21, 42, 0.24);
 }
 
-.form-card::before,
-.result-card::before,
-.zodiac-card::before {
-  content: none;
-}
-
-.form-card::after,
-.result-card::after,
-.zodiac-card::after {
+.selector-card::after,
+.result-card::after {
   position: absolute;
-  right: 68rpx;
   top: 44rpx;
+  right: 68rpx;
   width: 10rpx;
   height: 10rpx;
   border-radius: 999rpx;
@@ -161,18 +148,14 @@ page {
 
 .card-title,
 .card-subtitle,
-.rule-panel,
-.field-row,
-.helper-note,
+.zodiac-grid,
 .result-head,
-.basis-panel,
 .info-grid,
 .section-title,
 .keyword-list,
 .desc-card,
-.reset-link,
-.result-empty,
-.zodiac-list {
+.reference-note,
+.result-empty {
   position: relative;
   z-index: 1;
 }
@@ -189,73 +172,63 @@ page {
   font-size: 23rpx;
 }
 
-.rule-panel {
+.zodiac-grid {
   flex-wrap: wrap;
-  margin-top: 22rpx;
+  margin: 24rpx -6rpx -12rpx;
 }
 
-.rule-chip {
-  margin-right: 12rpx;
-  margin-bottom: 12rpx;
-  padding: 10rpx 18rpx;
-  border-radius: 999rpx;
-  color: #f0c36b;
-  font-size: 22rpx;
-  font-weight: 700;
-  background: rgba(240, 195, 107, 0.12);
-  box-shadow: inset 0 0 0 1rpx rgba(240, 195, 107, 0.18);
-}
-
-.field-row {
-  align-items: center;
-  min-height: 114rpx;
-  margin-top: 14rpx;
-  padding: 18rpx 22rpx;
-  border-radius: 28rpx;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.08);
-}
-
-.field-icon {
+.zodiac-option {
+  width: calc(25% - 12rpx);
+  min-height: 154rpx;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 72rpx;
-  height: 72rpx;
-  margin-right: 22rpx;
+  margin: 0 6rpx 12rpx;
+  padding: 14rpx 4rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
   border-radius: 24rpx;
-  background: rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  color: rgba(229, 235, 245, 0.78);
+  background: rgba(255, 255, 255, 0.07);
+  transition: transform 80ms ease-out, background 120ms ease-out;
 }
 
-.field-main {
-  flex: 1;
-  min-width: 0;
+.zodiac-option:active {
+  transform: scale(0.96);
 }
 
-.field-label {
-  color: rgba(215, 223, 238, 0.68);
-  font-size: 24rpx;
-}
-
-.field-picker {
-  margin-top: 8rpx;
-}
-
-.picker-value {
-  color: rgba(215, 223, 238, 0.48);
-  font-size: 34rpx;
-  font-weight: 700;
-}
-
-.picker-value.has-value {
+.zodiac-option.is-active {
+  border-color: rgba(240, 195, 107, 0.5);
   color: #f4ede3;
+  background: rgba(240, 195, 107, 0.18);
+  box-shadow: inset 0 0 0 1rpx rgba(240, 195, 107, 0.12);
 }
 
-.helper-note {
-  margin-top: 22rpx;
-  color: rgba(215, 223, 238, 0.72);
-  font-size: 24rpx;
-  line-height: 1.55;
+.zodiac-option-symbol {
+  color: #f0c36b;
+  font-size: 52rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.zodiac-option-name {
+  margin-top: 10rpx;
+  font-size: 23rpx;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.zodiac-option-range {
+  margin-top: 8rpx;
+  color: rgba(215, 223, 238, 0.58);
+  font-size: 18rpx;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.zodiac-option.is-active .zodiac-option-range {
+  color: rgba(244, 237, 227, 0.72);
 }
 
 .result-card {
@@ -303,45 +276,28 @@ page {
 
 .result-range {
   margin-top: 8rpx;
-  color: rgba(215, 223, 238, 0.6);
+  color: rgba(215, 223, 238, 0.68);
   font-size: 23rpx;
 }
 
 .zodiac-symbol {
-  flex: none;
   min-width: 96rpx;
+  flex: none;
   margin-left: 20rpx;
-  text-align: center;
   color: #f0c36b;
   font-size: 84rpx;
   line-height: 1;
+  text-align: center;
   text-shadow: 0 8rpx 18rpx rgba(240, 195, 107, 0.18);
-}
-
-.basis-panel {
-  flex-wrap: wrap;
-  margin-top: 22rpx;
-}
-
-.basis-chip {
-  margin-right: 12rpx;
-  margin-bottom: 12rpx;
-  padding: 10rpx 18rpx;
-  border-radius: 999rpx;
-  color: #dce4f4;
-  font-size: 22rpx;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.1);
 }
 
 .info-grid {
   justify-content: space-between;
-  margin-top: 18rpx;
+  margin-top: 26rpx;
 }
 
 .info-item {
-  width: 32%;
+  width: calc(50% - 8rpx);
   min-width: 0;
   padding: 22rpx 18rpx;
   border-radius: 24rpx;
@@ -390,12 +346,27 @@ page {
   box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.08);
 }
 
+.reference-note {
+  margin-top: 20rpx;
+  color: rgba(215, 223, 238, 0.48);
+  font-size: 21rpx;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .result-empty {
   padding: 44rpx 22rpx;
   text-align: center;
 }
 
+.empty-symbol {
+  color: #f0c36b;
+  font-size: 52rpx;
+  line-height: 1;
+}
+
 .empty-title {
+  margin-top: 18rpx;
   color: #f4ede3;
   font-size: 32rpx;
   font-weight: 700;
@@ -408,80 +379,10 @@ page {
   line-height: 1.65;
 }
 
-.empty-tip {
-  margin-top: 16rpx;
-  color: #f0c36b;
-  font-size: 22rpx;
-  line-height: 1.5;
-}
-
-.reset-link {
-  margin-top: 24rpx;
-  color: #f0c36b;
-  font-size: 26rpx;
-  font-weight: 700;
-  text-align: center;
-}
-
-.zodiac-list {
-  display: block;
-  margin-top: 22rpx;
-  border-radius: 28rpx;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.08);
-}
-
-.zodiac-item {
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 20rpx;
-  box-sizing: border-box;
-  border-bottom: 1rpx solid rgba(255, 255, 255, 0.08);
-}
-
-.zodiac-item:last-child {
-  border-bottom: 0;
-}
-
-.zodiac-item-head {
-  align-items: center;
-  min-width: 0;
-  flex: 1;
-}
-
-.zodiac-mini-symbol {
-  width: 52rpx;
-  color: #f0c36b;
-  font-size: 34rpx;
-  font-weight: 700;
-}
-
-.zodiac-mini-copy {
-  min-width: 0;
-  flex: 1;
-  margin-left: 10rpx;
-}
-
-.zodiac-mini-name {
-  color: #f4ede3;
-  font-size: 27rpx;
-  font-weight: 700;
-}
-
-.zodiac-mini-range {
-  margin-left: 20rpx;
-  color: rgba(215, 223, 238, 0.72);
-  font-size: 22rpx;
-  font-weight: 700;
-  text-align: right;
-}
-
 @media (max-width: 360px) {
   .page {
-    padding-left: 22rpx;
     padding-right: 22rpx;
+    padding-left: 22rpx;
   }
 
   .hero-title {
@@ -492,8 +393,19 @@ page {
     max-width: 430rpx;
   }
 
+  .zodiac-option {
+    min-height: 148rpx;
+  }
+
+  .zodiac-option-name {
+    font-size: 21rpx;
+  }
+
+  .zodiac-option-range {
+    font-size: 17rpx;
+  }
+
   .result-name {
     font-size: 44rpx;
   }
-
 }
