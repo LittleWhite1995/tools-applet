@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "party-dice-icon": "/components/party-dice-icon/party-dice-icon",
+    "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon"
+  }
+}

@@ -52,8 +52,12 @@
           </view>
         </view>
         <view class="hero-visual">
+          <party-dice-icon
+            wx:if="{{featuredTool.id === 'party-dice'}}"
+            size="116rpx"
+          />
           <scoreboard-icon
-            wx:if="{{featuredTool.id === 'scoreboard'}}"
+            wx:elif="{{featuredTool.id === 'scoreboard'}}"
             size="128rpx"
           />
           <pindou-icon

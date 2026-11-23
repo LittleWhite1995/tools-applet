@@ -1,14 +1,14 @@
 const featuredTools = [
   {
-    id: 'scoreboard',
-    title: '双人记分牌',
-    desc: '横屏大比分，羽毛球乒乓球都能记',
-    icon: 'activity',
-    iconColor: '#bf5b47',
-    tone: 'coral',
-    category: '运动健康',
-    path: '/pages/scoreboard/scoreboard',
-    keywords: ['双人记分牌', '记分牌', '比分', '羽毛球', '乒乓球', '自由计分', '比赛', '运动'],
+    id: 'party-dice',
+    title: '聚会骰子',
+    desc: '骰盅和公开摇骰，点击晃动都能玩',
+    icon: 'app',
+    iconColor: '#9f4a37',
+    tone: 'green',
+    category: '生活娱乐',
+    path: '/pages/party-dice/party-dice',
+    keywords: ['聚会骰子', '骰子', '骰盅', '摇骰子', '喝酒', '聚会', '吹牛骰', '筛子', '色子', '随机点数'],
   },
 ]
 
@@ -324,6 +324,17 @@ const moreTools = [
     category: '生活娱乐',
     path: '/pages/choice-helper/choice-helper',
     keywords: ['选择困难', '随机决定', '今天吃什么', '喝什么', '周末做什么', '谁来做', '随机选择'],
+  },
+  {
+    id: 'scoreboard',
+    title: '双人记分牌',
+    desc: '横屏大比分，羽毛球乒乓球都能记',
+    icon: 'activity',
+    iconColor: '#bf5b47',
+    tone: 'coral',
+    category: '运动健康',
+    path: '/pages/scoreboard/scoreboard',
+    keywords: ['双人记分牌', '记分牌', '比分', '羽毛球', '乒乓球', '自由计分', '比赛', '运动'],
   },
   {
     id: 'sky-stardust',

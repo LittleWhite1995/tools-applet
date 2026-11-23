@@ -1,0 +1,149 @@
+<view class="shell">
+  <navigation-bar title="聚会骰子" back="{{true}}" color="#292522" background="#f6f3ee"></navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="page">
+      <view class="hero-panel">
+        <view class="hero-copy">
+          <view class="hero-kicker">PARTY DICE</view>
+          <view class="hero-title">手边没骰子，打开就能摇</view>
+          <view class="hero-desc">选择骰盅或公开玩法，按下按钮或晃动手机开始。</view>
+        </view>
+        <view class="hero-mark">
+          <party-dice-icon size="104rpx" />
+        </view>
+      </view>
+
+      <view class="control-card">
+        <view class="card-head">
+          <view>
+            <view class="card-title">玩法设置</view>
+            <view class="card-subtitle">选好模式和骰子数量</view>
+          </view>
+        </view>
+
+        <view class="mode-switch">
+          <view
+            class="mode-option {{mode === 'cup' ? 'is-active' : ''}}"
+            data-mode="cup"
+            bindtap="onModeChange"
+          >骰盅</view>
+          <view
+            class="mode-option {{mode === 'public' ? 'is-active' : ''}}"
+            data-mode="public"
+            bindtap="onModeChange"
+          >公开</view>
+        </view>
+
+        <view class="count-row">
+          <view class="count-copy">
+            <view class="count-title">骰子数量</view>
+            <view class="count-desc">每次同时摇 {{diceCount}} 颗</view>
+          </view>
+          <view class="count-stepper">
+            <view class="count-button {{diceCount <= 1 ? 'is-disabled' : ''}}" data-step="-1" bindtap="onDiceCountChange">－</view>
+            <view class="count-value">{{diceCount}}</view>
+            <view class="count-button {{diceCount >= 6 ? 'is-disabled' : ''}}" data-step="1" bindtap="onDiceCountChange">＋</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="dice-card {{isRolling ? 'is-rolling' : ''}} mode-{{mode}}">
+        <view class="status-row">
+          <view>
+            <view class="status-label">{{mode === 'cup' ? '骰盅模式' : '公开模式'}}</view>
+            <view class="status-title">{{statusText}}</view>
+          </view>
+          <view class="shake-badge {{sensorReady && !isShakeLocked ? 'is-ready' : ''}}">
+            <view class="shake-dot"></view>
+            <text>{{isShakeLocked ? '晃动已锁定' : sensorStatus}}</text>
+          </view>
+        </view>
+
+        <view
+          class="dice-stage {{isPeeking ? 'is-peeking' : ''}} {{isRevealed ? 'is-revealed' : ''}}"
+          bindlongpress="onPeekStart"
+          bindtouchend="onStageTouchEnd"
+          bindtouchcancel="onStageTouchCancel"
+        >
+          <view class="dice-board dice-count-{{diceCount}} {{!hasResult && !isRolling ? 'is-preview' : ''}}">
+            <view
+              wx:for="{{diceItems}}"
+              wx:key="id"
+              class="dice-face dice-value-{{item.value}}"
+              style="transform: translate(-50%, -50%) translate({{item.x}}rpx, {{item.y}}rpx) rotate({{item.angle}}deg);"
+            >
+              <view
+                wx:for="{{item.pips}}"
+                wx:for-item="pipPosition"
+                wx:key="*this"
+                class="dice-pip pip-{{pipPosition}}"
+              ></view>
+            </view>
+          </view>
+
+          <view wx:if="{{mode === 'cup'}}" class="cup-layer">
+            <view class="dice-cup">
+              <view class="cup-shape">
+                <view class="cup-top"></view>
+                <view class="cup-shell">
+                  <view class="cup-highlight"></view>
+                  <view class="cup-side-shade"></view>
+                </view>
+              </view>
+              <view class="cup-floor-shadow"></view>
+            </view>
+          </view>
+
+          <view class="stage-hint">{{stageHint}}</view>
+        </view>
+
+        <view class="result-row">
+          <view>
+            <view class="result-label">总点数</view>
+            <view class="result-value">{{hasResult && (mode === 'public' || isPeeking || isRevealed) ? total : '—'}}</view>
+          </view>
+          <view class="result-note">{{mode === 'cup' ? '长按偷看，松手盖回' : '结果直接展示'}}</view>
+        </view>
+
+        <view class="action-row">
+          <view class="roll-button" bindtap="onRollTap">
+            <t-icon name="refresh" size="30rpx" color="#ffffff" />
+            <text>{{actionText}}</text>
+          </view>
+          <view
+            wx:if="{{mode === 'cup' && hasResult && !isRevealed}}"
+            class="secondary-button"
+            bindtap="onReveal"
+          >揭盅</view>
+          <view
+            wx:elif="{{mode === 'public' && hasResult && !isRolling}}"
+            class="secondary-button lock-result-button {{isShakeLocked ? 'is-locked' : ''}}"
+            bindtap="onLockResult"
+          >
+            <t-icon name="{{isShakeLocked ? 'lock-on-filled' : 'lock-on'}}" size="30rpx" />
+            <text>{{isShakeLocked ? '已锁定' : '锁定结果'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="settings-card">
+        <view class="setting-item">
+          <view>
+            <view class="setting-name">骰子音效</view>
+            <view class="setting-desc">摇动时播放碰撞声</view>
+          </view>
+          <switch checked="{{soundEnabled}}" color="#c65f41" bindchange="onSoundChange" />
+        </view>
+        <view class="setting-divider"></view>
+        <view class="setting-item">
+          <view>
+            <view class="setting-name">结果震动</view>
+            <view class="setting-desc">骰子停下后轻震一下</view>
+          </view>
+          <switch checked="{{vibrationEnabled}}" color="#c65f41" bindchange="onVibrationChange" />
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

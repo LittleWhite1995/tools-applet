@@ -1,0 +1,15 @@
+<view class="party-dice-icon" style="width: {{size}}; height: {{size}};">
+  <view class="mini-cup">
+    <view class="mini-cup-rim"></view>
+    <view class="mini-cup-body"></view>
+  </view>
+  <view class="mini-die mini-die-left">
+    <view class="mini-pip mini-pip-tl"></view>
+    <view class="mini-pip mini-pip-center"></view>
+    <view class="mini-pip mini-pip-br"></view>
+  </view>
+  <view class="mini-die mini-die-right">
+    <view class="mini-pip mini-pip-tr"></view>
+    <view class="mini-pip mini-pip-bl"></view>
+  </view>
+</view>

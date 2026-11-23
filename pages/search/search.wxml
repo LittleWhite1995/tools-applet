@@ -46,8 +46,12 @@
             bindtouchcancel="onPressEnd"
           >
             <view class="tool-icon tone-{{tool.tone}} {{tool.iconBg === 'white' ? 'has-white-icon-bg' : (tool.iconBg === 'black' ? 'has-black-icon-bg' : (tool.iconBg === 'wooden-fish' ? 'has-wooden-fish-icon-bg' : ''))}}">
+              <party-dice-icon
+                wx:if="{{tool.id === 'party-dice'}}"
+                size="52rpx"
+              />
               <pindou-icon
-                wx:if="{{tool.id === 'pindou'}}"
+                wx:elif="{{tool.id === 'pindou'}}"
                 size="46rpx"
               />
               <scoreboard-icon

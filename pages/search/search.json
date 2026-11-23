@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "party-dice-icon": "/components/party-dice-icon/party-dice-icon",
     "pindou-icon": "/components/pindou-icon/pindou-icon",
     "scoreboard-icon": "/components/scoreboard-icon/scoreboard-icon",
     "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",

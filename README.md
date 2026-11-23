@@ -14,7 +14,7 @@
 <p align="center">
   <img alt="微信小程序" src="https://img.shields.io/badge/WeChat-Mini%20Program-07C160">
   <img alt="TDesign" src="https://img.shields.io/badge/UI-TDesign%20MiniProgram-0052D9">
-  <img alt="Renderer" src="https://img.shields.io/badge/Renderer-Skyline-2F7567">
+  <img alt="Renderer" src="https://img.shields.io/badge/Renderer-WebView-2F7567">
 </p>
 
 <p align="center">
@@ -74,7 +74,7 @@ npm install
 - **框架**：微信小程序原生开发
 - **页面结构**：JavaScript + WXML + WXSS + JSON
 - **UI 组件**：TDesign MiniProgram
-- **渲染器**：Skyline
+- **渲染器**：默认 WebView
 - **组件框架**：glass-easel
 - **工具数据**：`utils/tool-catalog.js`
 - **通用能力**：`utils/image-save.js`、`utils/device.js`
@@ -90,7 +90,7 @@ npm install
 | 生活计算 | 房贷计算器、工资计算器、养老金估算器、退休年龄计算器、比价计算器、亲戚关系计算器、商品保质期计算器、日期间隔计算器 |
 | 运动健康 | BMI 计算、基础代谢率 |
 | 理财计算 | 复利 / 定投计算器 |
-| 生活娱乐 | 星座查询、选择困难助手、电子木鱼 |
+| 生活娱乐 | 星座查询、选择困难助手、聚会骰子、电子木鱼 |
 | 图片处理 | 二维码生成、图片压缩、图片尺寸调整、图片水印、长图拼接、九宫格切图、图片转 MARD 色号拼豆图纸 |
 | 视频处理 | 视频压缩 |
 | 棋牌工具 | 打牌记账 |
@@ -107,7 +107,8 @@ npm install
 ├── app.json                       # 页面注册、权限和全局渲染配置
 ├── app.wxss                       # 全局样式
 ├── components/
-│   └── navigation-bar/            # 自定义导航栏组件
+│   ├── navigation-bar/            # 自定义导航栏组件
+│   └── party-dice-icon/           # 聚会骰子代码图标
 ├── pages/
 │   ├── index/                     # 首页
 │   ├── search/                    # 工具搜索页
@@ -127,6 +128,7 @@ npm install
 │   ├── compound/                  # 复利 / 定投计算器
 │   ├── zodiac/                    # 星座查询
 │   ├── choice-helper/             # 选择困难助手
+│   ├── party-dice/                # 聚会骰子
 │   ├── wooden-fish/               # 电子木鱼
 │   ├── shelf-life/                # 商品保质期计算器
 │   ├── date-diff/                 # 日期间隔计算器
